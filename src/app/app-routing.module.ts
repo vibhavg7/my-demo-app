@@ -1,16 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule,PreloadAllModules } from '@angular/router';
 import { WelcomeComponent } from './home/welcome.component';
+import { AuthGuard } from './user/auth.guard';
 
 const routes: any = [ 
     {path:'welcome',component:WelcomeComponent},
-    // {
-    //   path:'products',
+    {
+      path:'products',
     //   canActivate:[AuthGuard],
-    //   data:{ preload:true },
-    //   loadChildren: ()=>
-    //     import('./products/product.module').then(m=>m.ProductModule)
-    // },
+      data:{ preload:true },
+      loadChildren: ()=>
+        import('./products/product.module').then(m=>m.ProductModule)
+    },
     // {
     //   path:'category',
     //   canActivate:[AuthGuard],
