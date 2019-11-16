@@ -10,10 +10,15 @@ import { Router, Event, NavigationStart, NavigationEnd, NavigationError, Navigat
 export class AppComponent {
   pageTitle: string = 'Grostep Panel';
   loading = true;
+  navbarOpen = false;
   constructor(private authService: AuthService, private router: Router) {
     router.events.subscribe((routerevent: Event) => {
       this.checkRouterEvent(routerevent);
     })
+  }
+
+  toggleNavbar() {
+    this.navbarOpen = !this.navbarOpen;
   }
 
   checkRouterEvent(navigatorEvent: Event) {

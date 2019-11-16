@@ -2,22 +2,77 @@
 
 </span>
 
-<nav class='navbar navbar-expand navbar-light bg-light'>
-  <a class='navbar-brand'>{{pageTitle}}</a>
-  <ul class="navbar-nav ml-auto">
-    <li class="nav-item" *ngIf="isLoggedIn">
-      <a class="nav-link">Welcome {{ userName }}</a>
-    </li>
-    <!-- <li class="nav-item">
-      <a class="nav-link">Show Messages</a>
-    </li> -->
-    <li class="nav-item" *ngIf="!isLoggedIn">
-      <a class="nav-link" [routerLink]="['/login']">Log In</a>
-    </li>
-    <li class="nav-item" *ngIf="!!isLoggedIn">
-      <a class="nav-link" style="cursor:pointer;" (click)="logOut()">Log Out</a>
-    </li>
-  </ul>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" [routerLink]="['/welcome']">
+    {{pageTitle}}
+  </a>
+
+  <button class="navbar-toggler" type="button" (click)="toggleNavbar()">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse justify-content-end" [ngClass]="{ 'show': navbarOpen }" id="navbarSupportedContent">
+    <ul class="navbar-nav">
+
+      <li class="nav-item" *ngIf="isLoggedIn">
+        <a class="nav-link" [routerLink]="['/dashboard']">Home</a>
+      </li>
+
+      <li class="nav-item" *ngIf="isLoggedIn">
+        <a class="nav-link" [routerLink]="['/products']">Products</a>
+      </li>
+      <li class="nav-item" *ngIf="isLoggedIn">
+        <a class="nav-link" [routerLink]="['/merchant']">Store</a>
+      </li>
+      <li class="nav-item" *ngIf="isLoggedIn">
+        <a class="nav-link" [routerLink]="['/category/storecategories']">Category</a>
+      </li>
+      <li class="nav-item" *ngIf="isLoggedIn">
+          <a class="nav-link" [routerLink]="['/customer']">Customer</a>
+      </li>
+      <li class="nav-item" *ngIf="isLoggedIn">
+        <a class="nav-link">Order Invoice</a>
+      </li>
+      <li class="nav-item" *ngIf="!isLoggedIn">
+        <a class="nav-link" [routerLink]="['/login']">Log In</a>
+      </li>
+      <li class="nav-item" *ngIf="isLoggedIn">
+        <a class="nav-link">Welcome {{ userName }}</a>
+      </li>
+      <li class="nav-item" *ngIf="!!isLoggedIn">
+        <a class="nav-link" style="cursor:pointer;" (click)="logOut()">Log Out</a>
+      </li>
+    </ul>
+  </div>
+  <!-- <div  class="collapse navbar-collapse justify-content-end" [ngClass]="{ 'show': navbarOpen }">
+    <ul class="navbar-nav mr-auto" >
+      <li class="nav-item" *ngIf="isLoggedIn">
+        <a class="nav-link">Welcome {{ userName }}</a>
+      </li>
+      <li class="nav-item" *ngIf="isLoggedIn">
+        <a class="nav-link" href="#">Home</a>
+      </li>
+
+      <li class="nav-item" *ngIf="isLoggedIn">
+        <a class="nav-link" href="#">Products</a>
+      </li>
+      <li class="nav-item" *ngIf="isLoggedIn">
+        <a class="nav-link" href="#">Store</a>
+      </li>
+      <li class="nav-item" *ngIf="isLoggedIn">
+        <a class="nav-link" href="#">Category</a>
+      </li>
+      <li class="nav-item" *ngIf="isLoggedIn">
+        <a class="nav-link" href="#">Order Invoice</a>
+      </li>
+      <li class="nav-item" *ngIf="!isLoggedIn">
+        <a class="nav-link" [routerLink]="['/login']">Log In</a>
+      </li>
+      <li class="nav-item" *ngIf="!!isLoggedIn">
+        <a class="nav-link" style="cursor:pointer;" (click)="logOut()">Log Out</a>
+      </li>
+    </ul>
+  </div> -->
 </nav>
 <div class='container'>
   <router-outlet>

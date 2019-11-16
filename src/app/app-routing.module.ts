@@ -26,19 +26,26 @@ const routes: any = [
       loadChildren: ()=>
         import('./merchant/merchant.module').then(m=>m.MerchantModule)
     },
-    // {
-    //   path:'customer',
-    //   canActivate:[AuthGuard],
-    //   data:{ preload:true },
-    //   loadChildren: ()=>
-    //     import('./customer/customer.module').then(m=>m.CustomerModule)
-    // },
+    {
+      path:'customer',
+      canActivate:[AuthGuard],
+      data:{ preload:true },
+      loadChildren: ()=>
+        import('./customer/customer.module').then(m=>m.CustomerModule)
+    },
     {
       path:'order',
       canActivate:[AuthGuard],
       data:{ preload:true },
       loadChildren: ()=>
         import('./order/order.module').then(m=>m.OrderModule)
+    },
+    {
+      path:'employee',
+      canActivate:[AuthGuard],
+      data:{ preload:true },
+      loadChildren: ()=>
+        import('./employee/employee.module').then(m=>m.EmployeeModule)
     },
     {path:'',redirectTo:'welcome',pathMatch:'full'},
     {path:'**',redirectTo:'welcome',pathMatch:'full'}
