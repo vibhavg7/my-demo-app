@@ -19,7 +19,8 @@
             <app-pagination *ngIf='productsCount>0' [totalItemCount]="productsCount" (currentPage)="currentPageFn($event)"></app-pagination>
             <div class="list-group">
                 <button type="button" class="list-group-item" (click)="onSelected(product)" *ngFor="let product of products" [ngClass]="{'active' : selectedProduct?.productId == product?.productId}">
-                    {{product?.productName}} - {{product?.productCode}}
+                    {{product?.productName | upperCaseName}}
+                    <!-- - {{product?.productCode}} -->
                 </button>
             </div>
         </div>

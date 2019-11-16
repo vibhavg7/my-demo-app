@@ -30,9 +30,9 @@ export class ProductService implements OnDestroy {
     }
 
     getProducts(page_number: number, page_size: number,filterBy:any): Observable<any> {
-        if (this.products) {
-            return of(this.products);
-        }
+        // if (this.products) {
+        //     return of(this.products);
+        // }
         let obj = {};
         obj['page_number'] = page_number; obj['page_size'] = page_size;obj['filterBy'] = filterBy;
 

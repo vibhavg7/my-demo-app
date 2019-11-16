@@ -51,7 +51,7 @@ export class ProductShellDetailComponent implements OnInit,OnDestroy {
     modalRef.componentInstance['id']= this.product_id;
     modalRef.componentInstance['productImage'].subscribe((data)=>{
       this.image_url = data['imageUrl'];
-      // console.log(data);
+      console.log(data);
     })
     // modalRef.componentInstance.title = 'Image Upload';
   }

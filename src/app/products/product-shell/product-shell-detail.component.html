@@ -7,11 +7,11 @@
             <div class="col-md-6">
                 <div class="row">
                     <div class="col-md-4">Name:</div>
-                    <div class="col-md-8">{{productData?.productName}}</div>
+                    <div class="col-md-8">{{productData?.productName | upperCaseName}}</div>
                 </div>
                 <div class="row">
                     <div class="col-md-4">Code:</div>
-                    <div class="col-md-8">{{productData?.productCode}}</div>
+                    <div class="col-md-8">{{productData?.productCode | upperCaseName}}</div>
                 </div>
                 <div class="row">
                     <div class="col-md-4">Release Date:</div>
@@ -38,7 +38,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4">Category Name:</div>
-                    <div class="col-md-8">{{productData?.categoryName}}</div>
+                    <div class="col-md-8">{{productData?.categoryName | upperCaseName}}</div>
                 </div>
                 <div class="row">
                     <div class="col-md-4">Available:</div>

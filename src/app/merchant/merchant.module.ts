@@ -12,6 +12,7 @@ import { MerchantDetailInfoComponent } from './merchant-detail/merchant-detail-i
 import { MerchantProductEditComponent } from './merchant-detail/merchant-product-edit.component';
 import { MerchantProductComponent } from './merchant-detail/merchant-product.component';
 import { MerchantOrderDetailComponent } from './merchant-detail/merchant-order-detail.component';
+import { MerchantDataComponent } from './merchant-data.component';
 
 // import { HTTP_INTERCEPTORS } from '@angular/common/http';
 // import { AddHeaderInterceptor } from './add-header.interceptor';
@@ -20,7 +21,7 @@ import { MerchantOrderDetailComponent } from './merchant-detail/merchant-order-d
 @NgModule({
   declarations: [MerchantDashboardComponent, MerchantDetailComponent, 
     MerchantEditComponent, MerchantProductsCatalogComponent, MerchantOrdersComponent,
-     MerchantDetailInfoComponent, MerchantProductEditComponent, MerchantProductComponent, MerchantOrderDetailComponent   
+     MerchantDetailInfoComponent, MerchantProductEditComponent, MerchantProductComponent, MerchantOrderDetailComponent, MerchantDataComponent   
       ],
   imports: [
     CommonModule,

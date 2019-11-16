@@ -8,9 +8,10 @@ import { SharedModule } from '../shared/shared.module';
 import { ShopperCategoryComponent } from './shopper-category/shopper-category.component';
 import { AddStoreCategoryComponent } from './shopper-category/add-store-category.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ShopperCategoryDataComponent } from './shopper-category/shopper-category-data.component';
 
 @NgModule({
-  declarations: [CategoryListComponent, CategoryAddComponent, CategoryDetailComponent, ShopperCategoryComponent, AddStoreCategoryComponent],
+  declarations: [CategoryListComponent, CategoryAddComponent, CategoryDetailComponent, ShopperCategoryComponent, AddStoreCategoryComponent, ShopperCategoryDataComponent],
   imports: [
     ReactiveFormsModule,
     CommonModule,

@@ -1,0 +1,32 @@
+<td>
+        <img *ngIf="!storeCategory?.store_image_url" src='assets/product_images/default_image.jpg' [style.width.px]='imageWidth'
+          [style.height.px]='imageHeight' [style.margin.px]='imageMargin'>
+        <span *ngIf="!storeCategory?.store_image_url" (click)="uploadImage(storeCategory.store_category_id)" style="display:block;font-size:14px;cursor:pointer;color:blue">
+          Upload Image
+        </span>
+        <img *ngIf="storeCategory?.store_image_url" src='{{storeCategory?.store_image_url}}' [title]='storeCategory.store_category_name'
+          [style.height.px]='imageHeight' [style.width.px]='imageWidth' [style.margin.px]='imageMargin'>
+
+        <span *ngIf="storeCategory?.store_image_url" (click)="uploadImage(storeCategory.store_category_id)" style="display:block;font-size:14px;cursor:pointer;color:blue">
+          Change Image
+        </span>
+      </td>
+      <td>
+        <a [routerLink]="['/category/storesubcategories', storeCategory.store_category_id]">
+          {{ storeCategory?.store_category_id }}
+        </a>
+      </td>
+      <td>
+        <a [routerLink]="['/category/storesubcategories', storeCategory.store_category_id]">
+          {{ storeCategory?.store_category_name }}
+        </a>
+      </td>
+      <td>{{ storeCategory?.store_category_ranking }}</td>
+      <td style="font-weight:bold">{{ storeCategory?.status ? 'Available' : 'Not Available' }}</td>
+
+      <td>{{ storeCategory.last_updated | date:'medium' }}</td>
+
+
+      <td>
+        <button class="btn btn-outline-secondary" [routerLink]="['/category/storecategories',storeCategory?.store_category_id,'edit']">Edit</button>
+      </td>

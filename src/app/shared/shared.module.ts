@@ -5,12 +5,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CriteriaComponent } from './criteria/criteria.component';
 import { RouterModule } from '@angular/router';
 import { PaginationComponent } from './pagination/pagination.component';
+import { UpperCaseName } from './upper-case-name';
 
 @NgModule({
   declarations: [
     StarComponent,
     CriteriaComponent,
-    PaginationComponent
+    PaginationComponent,
+    UpperCaseName
   ],
   imports: [
     CommonModule,
@@ -23,7 +25,8 @@ import { PaginationComponent } from './pagination/pagination.component';
     CommonModule,
     FormsModule,
     CriteriaComponent,
-    PaginationComponent
+    PaginationComponent,
+    UpperCaseName
   ]
 })
 export class SharedModule { }
