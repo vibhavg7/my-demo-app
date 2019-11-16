@@ -1,11 +1,25 @@
-<!-- <span class="fa fa-spinner spinner" *ngIf="loading">
+<span class="fa fa-spinner spinner" *ngIf="loading">
 
-</span> -->
+</span>
 
 <nav class='navbar navbar-expand navbar-light bg-light'>
   <a class='navbar-brand'>{{pageTitle}}</a>
+  <ul class="navbar-nav ml-auto">
+    <li class="nav-item" *ngIf="isLoggedIn">
+      <a class="nav-link">Welcome {{ userName }}</a>
+    </li>
+    <!-- <li class="nav-item">
+      <a class="nav-link">Show Messages</a>
+    </li> -->
+    <li class="nav-item" *ngIf="!isLoggedIn">
+      <a class="nav-link" [routerLink]="['/login']">Log In</a>
+    </li>
+    <li class="nav-item" *ngIf="!!isLoggedIn">
+      <a class="nav-link" style="cursor:pointer;" (click)="logOut()">Log Out</a>
+    </li>
+  </ul>
 </nav>
-<div class='container'>  
+<div class='container'>
   <router-outlet>
   </router-outlet>
 </div>
