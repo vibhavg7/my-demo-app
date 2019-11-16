@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { User } from './user';
 import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { tap, catchError, map } from 'rxjs/operators';
-import { throwError, Observable } from 'rxjs';
+import { throwError, Observable, of } from 'rxjs';
 
 
 @Injectable({
@@ -22,25 +22,21 @@ export class AuthService {
     constructor(private _http: HttpClient) {
 
     }
-    login(employee): Observable<any> {
+   
 
-        const url = `${this._authURL}${'validate'}`;
-        // const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-        // console.log(employee);
-        return this._http.post(url, employee).pipe(
-            tap(user => {
-                if (user['status'] == 200 && user['employeeData'] != []) {
-                    localStorage.setItem('currentUser', JSON.stringify(user['employeeData'][0]));
+    login(employee) : Observable<any>
+    {
+        return this._http.post(`http://ec2-18-221-38-145.us-east-2.compute.amazonaws.com:3000/employeeapi/validate`, employee).pipe(
+            tap(),
+            map((employeeData)=>{
+                if (employeeData['status'] == 200 && employeeData['employeeData'][0] != undefined) {
+                    console.log('not a valid user' + employeeData['employeeData'][0]);
+                    localStorage.setItem('currentUser', JSON.stringify(employeeData['employeeData'][0]));
                 }
-                // console.log(localStorage.getItem('currentUser'));
-            }, map((data) => {
-                console.log(data);
-                return data;
-                
-                // this.currentUser = data["employeeData"][0];
-            })),
-            catchError(this.handleError)
+                return employeeData;
+            })
         )
+
     }
 
     logout() {

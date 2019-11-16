@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
       this.employee["password"] = password;
       this.authService.login(this.employee).subscribe((data)=>{  
         console.log(data);      
-          if(data['employeeData'] != undefined && data['employeeData'].length > 0 )
+          if(data['employeeData'][0] != undefined && data['employeeData'].length > 0 )
           {            
             if(this.authService.redirectUrl)
             {

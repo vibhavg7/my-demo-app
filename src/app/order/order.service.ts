@@ -10,7 +10,7 @@ import { ErrorTracker } from '../shared/errorTracker';
 export class OrderService {
 
   constructor(private _http:HttpClient) { }
-  private _orderService : any = 'http://ec2-18-224-109-141.us-east-2.compute.amazonaws.com:3000/orderapi/';
+  private _orderService : any = 'http://ec2-18-221-38-145.us-east-2.compute.amazonaws.com:3000/orderapi/';
   public orderDetails : any = '';
 
  
