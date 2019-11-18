@@ -26,7 +26,7 @@ export class AuthService {
 
     login(employee) : Observable<any>
     {
-        return this._http.post(`${this._authURL}/employeeapi/validate`, employee).pipe(
+        return this._http.post(`${this._authURL}employeeapi/validate`, employee).pipe(
             tap(),
             map((employeeData)=>{
                 if (employeeData['status'] == 200 && employeeData['employeeData'][0] != undefined) {
