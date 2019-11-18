@@ -10,7 +10,7 @@ import { ProductResolved } from './product-resolved';
     { providedIn: 'root' }
 )
 export class ProductService implements OnDestroy {
-    private _productServiceUrl = "http://ec2-18-221-38-145.us-east-2.compute.amazonaws.com:3000/productsapi/";
+    private _productServiceUrl = "http://ec2-3-134-77-29.us-east-2.compute.amazonaws.com:3000/productsapi/";
     private products: IProduct[];
     public productResolved: ProductResolved;
     private selectedProductSource = new BehaviorSubject<IProduct | null>(null);

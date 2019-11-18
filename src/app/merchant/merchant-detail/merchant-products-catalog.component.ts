@@ -31,15 +31,20 @@ export class MerchantProductsCatalogComponent implements OnInit {
     this.storeId = +this._activatedRoute.parent.params['_value']['storeId'];
     this._merchantService.fetchStoreProducts(this.storeId,this.currentPage,this.pageSize,"").subscribe((data)=>{
       this.store_products_info = data['store_products_info'];
-      console.log(this.store_products_info)
-      this.store_products_count = data['store_products_count'][0]['store_products_count'];      
+      this.store_products_count = data['store_products_count'][0]['store_products_count'];
+      console.log(this.store_products_info);
+      console.log(this.store_products_count);
     })    
     this.onChanges();
   }
 
-  updateProductStock(event)
+  updateProductStock(event,storeProductId)
   {
-    console.log(event.target);
+    let stock = (+event.target.value == 1)? 0: 1;
+    this._merchantService.updateStoreProductStock(storeProductId, stock).subscribe((data)=>{
+      console.log(data);
+    })
+
   }
 
   onChanges()

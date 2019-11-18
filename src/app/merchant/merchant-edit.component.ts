@@ -110,7 +110,7 @@ export class MerchantEditComponent implements OnInit {
     }
     else {      
       // console.log('Hiiiiiiiiiiiiiiii');
-      this._merchantService.editStore(this.addStoreForm.value,this.storeId).subscribe((data) => {
+      this._merchantService.editStore(this.addStoreForm.value, this.storeId).subscribe((data) => {
         console.log(data);
         if (data.status == "200") {
           this._router.navigate(['merchant']);

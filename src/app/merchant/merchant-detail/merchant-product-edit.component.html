@@ -6,7 +6,7 @@
                 <form [formGroup]="addStoreProductForm" (ngSubmit)="onSubmit()">
                     <div class="form-group">
                         <div class="autocomplete" style="width:490px;">
-                            <input formControlName="storeproductName" class="form-control" type="text" id="keyword" 
+                            <input formControlName="storeproductName" (keyup)="onChanges()" class="form-control" type="text" id="keyword" 
                                 placeholder="Search Product By Name" autocomplete="off"  autofocus/>                            
                             <div class="autocomplete-items">
                                 <div *ngFor="let result of results">
@@ -64,16 +64,7 @@
                             <div *ngIf="f.storeDiscount.errors.required">Store discount is required</div>
                         </div>
                     </div>
-                    <!-- <div class="form-group">
-                        <label>Store Quantity</label>
-                        <input type="text" formControlName="storeQuantity" class="form-control" 
-                            [ngClass]="{ 'is-invalid': submitted && f.storeQuantity.errors }"
-                        />
-                        <div *ngIf="submitted && f.storeQuantity.errors" class="invalid-feedback">
-                            <div *ngIf="f.storeQuantity.errors.required">Store Quantity is required</div>
-                        </div>
-                    </div> -->
-                   
+                 
                     <div class="form-group">
                         <label for="">Status</label>
                         <div>
@@ -82,10 +73,7 @@
                                 <option value="0">Disabled</option>
                             </select>
                         </div>
-                        <!-- <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-                                <div *ngIf="f.email.errors.required">Email is required</div>
-                                <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
-                            </div> -->
+                     
                     </div>
 
                     <div class="form-group">

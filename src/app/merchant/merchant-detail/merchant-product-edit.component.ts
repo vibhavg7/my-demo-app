@@ -36,7 +36,6 @@ export class MerchantProductEditComponent implements OnInit {
       productSellingPrice: ['', Validators.required],
       storeMargin: ['', Validators.required],
       storeDiscount: ['', Validators.required],
-      // storeQuantity: ['', Validators.required],
       status: ['']
     });
   }
@@ -46,7 +45,21 @@ export class MerchantProductEditComponent implements OnInit {
   ngOnInit() {    
     this.storeId = +this._activatedRoute.snapshot.params['storeId'];
     this.storeProductId = +this._activatedRoute.snapshot.params['productId'];
-    this.onChanges();
+    if(this.storeProductId != 0)
+    {
+      this._merchantService.fetchStoreProductById(this.storeProductId).subscribe((data)=>{
+        let productdata = data['products_info'];
+        console.log(productdata[0]);
+        this.addStoreProductForm.get('storeproductName').setValue(productdata[0]['product_name']);
+        this.addStoreProductForm.get('productMarkedPrice').setValue(productdata[0]['product_marked_price']);
+        this.addStoreProductForm.get('productCostPrice').setValue(productdata[0]['store_cost_price']);
+        this.addStoreProductForm.get('productSellingPrice').setValue(productdata[0]['store_selling_price']);
+        this.addStoreProductForm.get('storeMargin').setValue(productdata[0]['store_margin']);
+        this.addStoreProductForm.get('storeDiscount').setValue(productdata[0]['store_discount']);
+        this.addStoreProductForm.get('status').setValue(productdata[0]['status']);        
+      })
+    }
+    // this.onChanges();
 
   }
 
@@ -82,6 +95,17 @@ export class MerchantProductEditComponent implements OnInit {
           this.errorMessage = error;
         }
       );
+    }
+    else
+    {
+      this._merchantService.editStoreProduct(this.addStoreProductForm.value,this.storeProductId).subscribe((data)=>{
+          if (data['status'] == 200) {
+            this._router.navigate([`merchant/${this.storeId}/merchantproducts`]);
+          }
+          if (data['status'] == 400) {
+            alert('Category Not Added . Internal Server Error');
+          }
+      })
     }
     // else {
     //   console.log(this.addStoreProductForm.value);

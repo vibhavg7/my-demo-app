@@ -19,18 +19,16 @@
                 <thead>
                     <tr>
                         <th>
-                            <!-- <button style="width:113px" class='btn btn-primary' (click)='toggleImage()'>
-                                {{showImage ? 'Hide' : 'Show'}} Image
-                            </button> -->
+                         
                         </th>
                         <th style="width:90px !important">Name</th>
                         <th>MP</th>
                         <th>CP</th>
                         <th>SP</th>
                         <th>Discount</th>
-                        <th>Store Margin</th>
-                        <!-- <th>Product Rating</th> -->
+                        <th>Store Margin</th>                        
                         <th>Stock</th>
+                        <th>Edit</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -46,20 +44,24 @@
                             <a>{{ store_product?.product_name }}</a>
                         </td>
                         <td>
-                            <i class="fas fa-rupee-sign"></i> {{ store_product?.product_marked_price }}</td>
+                            <i class="fas fa-rupee-sign"></i> Rs{{ store_product?.product_marked_price }}</td>
                         <td>
-                            <i class="fas fa-rupee-sign"></i> {{ store_product?.store_cost_price }}</td>
+                            <i class="fas fa-rupee-sign"></i> Rs{{ store_product?.store_cost_price }}</td>
                         <td>
-                            <i class="fas fa-rupee-sign"></i> {{ store_product?.store_selling_price }}</td>
-                        <td>{{ store_product?.store_discount }}%</td>
-                        <td>{{ store_product?.store_margin }}%</td>
-                        <!-- <td>
-                            <app-star [rating]='store_product?.store_product_rating' (ratingClicked)='onRatingClicked($event)'>
-                            </app-star>
-                        </td> -->
+                            <i class="fas fa-rupee-sign"></i> Rs{{ store_product?.store_selling_price }}</td>
                         <td>
-                            <input type="checkbox" value="{{store_product.stock.data[0]}}" name="{{store_product.store_product_mapping_id}}" [checked]="(store_product.stock.data[0] ? 'checked' : '')"
-                                (change)="updateProductStock($event)">
+                            {{ store_product?.store_discount }}%
+                        </td>
+                        <td>
+                            {{ store_product?.store_margin }}%
+                        </td>
+                       
+                        <td>
+                            <input type="checkbox" value="{{store_product.stock}}" name="{{store_product.store_product_mapping_id}}" [checked]="(store_product.stock ? 'checked' : '')"
+                                (change)="updateProductStock($event,store_product.store_product_mapping_id)">
+                        </td>
+                        <td>
+                            <button class="btn btn-outline-secondary" [routerLink]="[store_product.store_product_mapping_id,'edit']">Edit</button>
                         </td>
                     </tr>
                 </tbody>

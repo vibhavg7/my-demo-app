@@ -17,7 +17,7 @@ export class AuthService {
     }
     // currentUser: User;
     redirectUrl: any;
-    _authURL: any = "http://ec2-18-221-38-145.us-east-2.compute.amazonaws.com:3000/employeeapi/";
+    _authURL: any = "http://ec2-3-134-77-29.us-east-2.compute.amazonaws.com:3000/employeeapi/";
 
     constructor(private _http: HttpClient) {
 
@@ -26,7 +26,7 @@ export class AuthService {
 
     login(employee) : Observable<any>
     {
-        return this._http.post(`http://ec2-18-221-38-145.us-east-2.compute.amazonaws.com:3000/employeeapi/validate`, employee).pipe(
+        return this._http.post(`${this._authURL}/employeeapi/validate`, employee).pipe(
             tap(),
             map((employeeData)=>{
                 if (employeeData['status'] == 200 && employeeData['employeeData'][0] != undefined) {

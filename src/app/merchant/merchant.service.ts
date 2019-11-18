@@ -11,81 +11,129 @@ export class MerchantService {
 
   constructor(private _http: HttpClient) { }
   stores: any;
-  private _storeServiceUrl = "http://ec2-18-221-38-145.us-east-2.compute.amazonaws.com:3000/storesapi/";
+  private _storeServiceUrl = "http://ec2-3-134-77-29.us-east-2.compute.amazonaws.com:3000/storesapi/";
+  private _storeServiceUrl1 = "http://localhost:3000/storesapi/";
 
-  fetchAllStores(page_number: number, page_size: any,filterBy : any): Observable<any> {
+  fetchAllStores(page_number: number, page_size: any, filterBy: any): Observable<any> {
     let obj = {};
-    obj['page_number'] = page_number; obj['page_size'] = page_size;obj['filterBy'] = filterBy;
+    obj['page_number'] = page_number; obj['page_size'] = page_size; obj['filterBy'] = filterBy;
     console.log(obj);
-    return this._http.post<any[]>(`${this._storeServiceUrl}storeinfo`,obj)
+    return this._http.post<any[]>(`${this._storeServiceUrl}storeinfo`, obj)
       .pipe(
         tap(data => {
           console.log(JSON.stringify(data))
         })
         , map((data) => {
-            return data;
+          return data;
         })
         , catchError(this.handleError)
       );
 
   }
 
-  fetchStoreProducts(storeId:number,page_number: number, page_size: number,filterBy:any)
-  {  
+  editStoreProduct(storeProductForm, storeProductId) {
+
+    const url = `${this._storeServiceUrl}storeinfo/storeproducts/edit`;
+    let obj = {};
+    obj['productId'] = storeProductId;
+    obj['store_cost_price'] = storeProductForm['productCostPrice'];
+    obj['store_selling_price'] = storeProductForm['productSellingPrice'];
+    obj['store_margin'] = storeProductForm['storeMargin'];
+    obj['store_discount'] = storeProductForm['storeDiscount'];
+    obj['status'] = storeProductForm['status'];
+    obj['product_marked_price'] = storeProductForm['productMarkedPrice'];
+    obj['stock'] = 1;
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this._http.post(url, obj, { headers }).pipe(
+      tap(data => { console.log(JSON.stringify(data)) }),
+      map((data) => {
+        return data;
+      }),
+      catchError(this.handleError)
+    )
+  }
+
+  updateStoreProductStock(storeProductId,stock)
+  {
+    let obj = {};
+    obj["stock"] = stock;    
+    const url = `${this._storeServiceUrl1}storeinfo/storeproducts/updatestock/${storeProductId}`;
+    console.log(obj);
+    console.log(url);
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this._http.patch(url, obj, { headers }).pipe(
+      tap(data => { console.log(JSON.stringify(data)) }),
+      map((data) => {
+        return data;
+      }),
+      catchError(this.handleError)
+    )
+  }
+
+  fetchStoreProducts(storeId: number, page_number: number, page_size: number, filterBy: any) {
     let obj = {};
     obj['page_number'] = page_number; obj['page_size'] = page_size; obj['storeId'] = storeId;
     obj['filterBy'] = filterBy;
-    
-    return this._http.post<any[]>(`${this._storeServiceUrl}storeinfo/storeproducts`,obj)
+
+    return this._http.post<any[]>(`${this._storeServiceUrl}storeinfo/storeproducts`, obj)
       .pipe(
-        tap(data => {          
+        tap(data => {
         })
         , map((data) => {
-            return data;
+          return data;
         })
         , catchError(this.handleError)
       );
   }
 
-  fetchOrderProducts(orderId:number)
-  {  
-   
+  fetchStoreProductById(storeProductId: number) {
+    return this._http.get<any[]>(`${this._storeServiceUrl}storeinfo/storeproducts/${storeProductId}`)
+      .pipe(
+        tap(data => {
+        })
+        , map((data) => {
+          return data;
+        })
+        , catchError(this.handleError)
+      );
+  }
+
+  fetchOrderProducts(orderId: number) {
+
     return this._http.get<any[]>(`${this._storeServiceUrl}storeinfo/storeorderproducts/${orderId}`)
       .pipe(
-        tap(data => {          
+        tap(data => {
         })
         , map((data) => {
-            return data;
+          return data;
         })
         , catchError(this.handleError)
       );
   }
 
-  fetchAllStoreOrders(storeId:number,page_number: number, page_size: number,filterBy:any)
-  {  
+  fetchAllStoreOrders(storeId: number, page_number: number, page_size: number, filterBy: any) {
     let obj = {};
     obj['page_number'] = page_number; obj['page_size'] = page_size; obj['storeId'] = storeId;
     obj['filterBy'] = filterBy;
 
     console.log(obj);
-    
-    return this._http.post<any[]>(`${this._storeServiceUrl}storeinfo/storeorders`,obj)
+
+    return this._http.post<any[]>(`${this._storeServiceUrl}storeinfo/storeorders`, obj)
       .pipe(
-        tap(data => {          
+        tap(data => {
           console.log(data);
         })
         , map((data) => {
-            return data;
+          return data;
         })
         , catchError(this.handleError)
       );
   }
 
-  addNewStore(store) : Observable<any>
-  {
+  addNewStore(store): Observable<any> {
     let obj = {};
     obj['storeName'] = store['storeName'];
-    obj['storeCategoryName'] = store['storeCategoryName'];    
+    obj['storeCategoryName'] = store['storeCategoryName'];
     obj['city'] = store['city'];
     obj['country'] = store['country'];
     obj['pinCode'] = store['pinCode'];
@@ -106,23 +154,22 @@ export class MerchantService {
     const url = `${this._storeServiceUrl}addnewstore`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this._http.post(url, obj, { headers }).pipe(
-        tap(data => { 
-          //console.log(JSON.stringify(data)) 
-        }),
-        map((data)=>{
-            return data;
-        }),
-        catchError(err=>this.handleError(err))
+      tap(data => {
+        //console.log(JSON.stringify(data)) 
+      }),
+      map((data) => {
+        return data;
+      }),
+      catchError(err => this.handleError(err))
     )
   }
 
-  addStoreProducts(addStoreProductForm,product_id,storeId) : Observable<any>
-  {
+  addStoreProducts(addStoreProductForm, product_id, storeId): Observable<any> {
     let obj = {};
 
     obj['store_cost_price'] = addStoreProductForm['productCostPrice'];
     obj['store_marked_price'] = addStoreProductForm['productMarkedPrice'];
-    obj['store_selling_price'] = addStoreProductForm['productSellingPrice'];    
+    obj['store_selling_price'] = addStoreProductForm['productSellingPrice'];
     obj['store_discount'] = +addStoreProductForm['storeDiscount'];
     obj['store_margin'] = +addStoreProductForm['storeMargin'];
     obj['store_initial_quantity'] = 0//+addStoreProductForm['storeQuantity'];
@@ -132,22 +179,21 @@ export class MerchantService {
     obj['store_id'] = storeId;
     obj['status'] = addStoreProductForm['status'];
     obj['stock'] = 1;
-    
+
     console.log(obj);
     const url = `${this._storeServiceUrl}addstoreproducts`;
     console.log(url);
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this._http.post(url, obj, { headers }).pipe(
-        tap(data => { console.log(JSON.stringify(data)) }),
-        map((data)=>{
-            return data;
-        }),
-        catchError(this.handleError)
+      tap(data => { console.log(JSON.stringify(data)) }),
+      map((data) => {
+        return data;
+      }),
+      catchError(this.handleError)
     )
   }
 
-  editStore(store,storeId) : Observable<any>
-  {
+  editStore(store, storeId): Observable<any> {
     console.log(store);
     let obj = {};
 
@@ -175,37 +221,35 @@ export class MerchantService {
     console.log(url);
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this._http.put(url, obj, { headers }).pipe(
-        tap(data => { console.log(JSON.stringify(data)) }),
-        map((data)=>{
-            return data;
-        }),
-        catchError(this.handleError)
+      tap(data => { console.log(JSON.stringify(data)) }),
+      map((data) => {
+        return data;
+      }),
+      catchError(this.handleError)
     )
   }
 
-  searchStoreByName(page_number: number, page_size: any,filterBy : any) : Observable<any>
-  {
+  searchStoreByName(page_number: number, page_size: any, filterBy: any): Observable<any> {
     if (this.stores) {
       return of(this.stores);
     }
     let obj = {};
-    obj['page_number'] = page_number; obj['page_size'] = page_size;obj['filterBy'] = filterBy;
+    obj['page_number'] = page_number; obj['page_size'] = page_size; obj['filterBy'] = filterBy;
     console.log(obj);
-    return this._http.post<any[]>(`${this._storeServiceUrl}`,obj)
+    return this._http.post<any[]>(`${this._storeServiceUrl}`, obj)
       .pipe(
         tap(data => {
           console.log(JSON.stringify(data))
         })
         , map((data) => {
-            return data;
+          return data;
         })
         , catchError(this.handleError)
       );
   }
 
-  fetchAllStoreById(storeId): Observable<any> 
-  {
-   
+  fetchAllStoreById(storeId): Observable<any> {
+
     return this._http.get(`${this._storeServiceUrl}storeinfo/${storeId}`).pipe(
       tap(data => {
         // this.storeCategories = data['store_categories'];
@@ -218,11 +262,11 @@ export class MerchantService {
     )
   }
 
-  private handleError(err: HttpErrorResponse) :Observable<ErrorTracker> {
-    
+  private handleError(err: HttpErrorResponse): Observable<ErrorTracker> {
+
     let dataError = new ErrorTracker();
     dataError.errorNumber = 100;
-    dataError.errorMessage =`Server returned code: ${err.status}, error message is: ${err.message}`;
+    dataError.errorMessage = `Server returned code: ${err.status}, error message is: ${err.message}`;
     dataError.friendlyMessage = "An error retriving data";
     return throwError(dataError);
     // let errorMessage = '';

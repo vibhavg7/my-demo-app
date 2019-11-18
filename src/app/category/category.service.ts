@@ -11,7 +11,7 @@ export class CategoryService {
 
   constructor(private _http: HttpClient) { }
   public storecategories: any;
-  private _categoryServiceUrl = "http://ec2-18-221-38-145.us-east-2.compute.amazonaws.com:3000/";
+  private _categoryServiceUrl = "http://ec2-3-134-77-29.us-east-2.compute.amazonaws.com:3000/";
   private categoryData = {
     "message": "Category Data",
     "status": 200,
