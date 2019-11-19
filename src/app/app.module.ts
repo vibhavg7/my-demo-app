@@ -9,6 +9,7 @@ import { ImageUploadComponent } from './products/image-upload/image-upload.compo
 import { UserModule } from './user/user.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MerchantOrderProductListComponent } from './merchant/merchant-detail/merchant-order-product-list.component';
+// import { ProductService } from './products/product.service';
 
 @NgModule({
   declarations: [

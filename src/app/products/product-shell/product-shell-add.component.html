@@ -36,15 +36,8 @@
                                 <option *ngFor="let subCategory of subCategoryData" value="{{subCategory?.category_id}}">
                                     {{subCategory.category_name}}
                                 </option>
-                                <!-- <option value="0">Disabled</option> -->
                             </select>
                         </div>
-                        <!-- <input type="text" formControlName="storeCategoryName" class="form-control" 
-                            [ngClass]="{ 'is-invalid': submitted && f.storeCategoryName.errors }"
-                        />
-                        <div *ngIf="submitted && f.storeCategoryName.errors" class="invalid-feedback">
-                            <div *ngIf="f.storeCategoryName.errors.required">Store Category Name is required</div>
-                        </div> -->
                     </div>
                     <div class="form-group">
                         <label>Weight Type</label>
@@ -58,12 +51,6 @@
                                 <option value="6">pieces</option>
                             </select>
                         </div>
-                        <!-- <input type="text" formControlName="storeCategoryName" class="form-control" 
-                            [ngClass]="{ 'is-invalid': submitted && f.storeCategoryName.errors }"
-                        />
-                        <div *ngIf="submitted && f.storeCategoryName.errors" class="invalid-feedback">
-                            <div *ngIf="f.storeCategoryName.errors.required">Store Category Name is required</div>
-                        </div> -->
                     </div>
                     <div class="form-group">
                         <label>Orignal Price(M.R.P)</label>
@@ -75,8 +62,8 @@
                     </div>
                     <div class="form-group">
                         <label>Product Weight</label>
-                        <input type="text" formControlName="productWeight" class="form-control" 
-                                [ngClass]="{ 'is-invalid': submitted && f.productWeight.errors }" />
+                        <input type="text" formControlName="productWeight" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.productWeight.errors }"
+                        />
                         <div *ngIf="submitted && f.productWeight.errors" class="invalid-feedback">
                             <div *ngIf="f.productWeight.errors.required">Product weight is required</div>
                         </div>
@@ -112,14 +99,13 @@
                                 <option value="0">Disabled</option>
                             </select>
                         </div>
-                        <!-- <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-                            <div *ngIf="f.email.errors.required">Email is required</div>
-                            <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
-                        </div> -->
                     </div>
 
                     <div class="form-group">
-                        <button class="btn btn-primary">Save</button>
+                        <button class="btn btn-primary mr-3"><i class='fa fa-save'></i> Save</button>
+                        <button *ngIf="productId !=0" class="btn btn-primary mr-3" (click)="deleteProduct()">
+                            <i class='fa fa-trash'></i> Delete
+                        </button>
                     </div>
                 </form>
             </div>

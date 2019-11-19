@@ -12,7 +12,6 @@ export class MerchantService {
   constructor(private _http: HttpClient) { }
   stores: any;
   private _storeServiceUrl = "http://ec2-3-134-77-29.us-east-2.compute.amazonaws.com:3000/storesapi/";
-  private _storeServiceUrl1 = "http://localhost:3000/storesapi/";
 
   fetchAllStores(page_number: number, page_size: any, filterBy: any): Observable<any> {
     let obj = {};
@@ -29,6 +28,30 @@ export class MerchantService {
         , catchError(this.handleError)
       );
 
+  }
+
+  deleteStore(store_id) : Observable<any>
+  {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const url = `${this._storeServiceUrl}storeinfo/${store_id}`;
+    return this._http.delete(url, { headers }).pipe(
+        tap(data => {
+            // console.log(JSON.stringify(data)) 
+        }),
+        catchError(this.handleError)
+    ) 
+  }
+
+  deleteStoreProduct(store_product_id) : Observable<any>
+  {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const url = `${this._storeServiceUrl}storeinfo/storeproducts/${store_product_id}`;
+    return this._http.delete(url, { headers }).pipe(
+        tap(data => {
+            // console.log(JSON.stringify(data)) 
+        }),
+        catchError(this.handleError)
+    ) 
   }
 
   editStoreProduct(storeProductForm, storeProductId) {
@@ -57,7 +80,7 @@ export class MerchantService {
   {
     let obj = {};
     obj["stock"] = stock;    
-    const url = `${this._storeServiceUrl1}storeinfo/storeproducts/updatestock/${storeProductId}`;
+    const url = `${this._storeServiceUrl}storeinfo/storeproducts/updatestock/${storeProductId}`;
     console.log(obj);
     console.log(url);
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });

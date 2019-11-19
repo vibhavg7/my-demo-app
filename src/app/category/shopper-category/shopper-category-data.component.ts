@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ImageUploadComponent } from '../../products/image-upload/image-upload.component';
+import { CategoryService } from '../category.service';
 
 @Component({
   selector: '[app-shopper-category-data]',
@@ -9,45 +10,35 @@ import { ImageUploadComponent } from '../../products/image-upload/image-upload.c
 })
 export class ShopperCategoryDataComponent implements OnInit {
 
-  constructor(private modalService:NgbModal) { }
-  @Input('storeCategoryInfo1') storeCategory: any;
+  constructor(private modalService: NgbModal, private _categoryService: CategoryService) { }
+  @Input('storeCategoryInfo') storeCategory: any;
   imageWidth: number = 80;
-  imageHeight : number = 80;
+  imageHeight: number = 80;
   imageMargin: number = 2;
   ngOnInit() {
-    console.log(this.storeCategory);
+    // console.log(this.storeCategory);
   }
 
-  ngOnChange()
-  {
-    console.log(this.storeCategory);
+  ngOnChange() {
+    // console.log(this.storeCategory);
   }
 
-  // uploadImage(store_id: any) {
-  //   const modalRef = this.modalService.open(ImageUploadComponent);
-  //   modalRef.componentInstance['title'] = 'Image Upload';
-  //   modalRef.componentInstance['id'] = store_id;
-  //   modalRef.componentInstance['image_type'] = 'merchants';
-  //   modalRef.componentInstance['productImage'].subscribe((data) => {
-  //   console.log(data);
-  //   this.storeCategory = data;
-  //     // this.stores.filter((cat) => cat['store_category_id'] == data['store_category_id'])['store_image_url'] = data['image_url'];
-  //     // console.log(this.storeCategories);
-  //   })
-  // }
-
-  uploadImage(store_category_id:any)
-  {
+  uploadImage(store_category_id: any) {
     const modalRef = this.modalService.open(ImageUploadComponent);
-    modalRef.componentInstance['title']= 'Image Upload';
-    modalRef.componentInstance['id']= store_category_id;
-    modalRef.componentInstance['image_type']= 'category';
-    modalRef.componentInstance['productImage'].subscribe((data)=>{
-      this.storeCategory = data;
-      console.log(data);
-      // this.storeCategories.filter((cat) => cat['store_category_id'] == data['store_category_id'])['store_image_url'] = data['image_url'];
-      // console.log(this.storeCategories);
+    modalRef.componentInstance['title'] = 'Image Upload';
+    modalRef.componentInstance['id'] = store_category_id;
+    modalRef.componentInstance['image_type'] = 'category';
+    modalRef.componentInstance['productImage'].subscribe((data) => {
+      this.storeCategory['store_image_url'] = data['image_url'];
     })
+  }
+
+  deleteCategory(store_category_id) {
+    if (confirm("Are you sure to delete ")) {
+      this._categoryService.deleteStoreCategory(store_category_id).subscribe((data) => {
+        console.log(data);
+      })
+    }
   }
 
 }

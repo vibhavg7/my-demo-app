@@ -4,10 +4,10 @@ import { IProduct } from './product';
 
 export class ProductResolved
 {
-    products: IProduct;
+    products: IProduct[];
     productCount : any;
     error?: any
     constructor() {
-        this.products = new IProduct();
+        // this.products = new IProduct();
     }
 }

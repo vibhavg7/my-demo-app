@@ -56,6 +56,15 @@ export class CategoryListComponent implements OnInit {
     this.route.navigate(['category', 0, 'edit']);
   }
 
+  deleteSubCategory(category_id)
+  {
+    if (confirm("Are you sure to delete ")) {
+      this._categoryService.deleteStoreSubCategory(category_id).subscribe((data) => {
+        console.log(data);
+      })
+    }
+  }
+
   getAllProducts() {
     this._productService.getProducts(1, 25, "").subscribe({
       next: p => {

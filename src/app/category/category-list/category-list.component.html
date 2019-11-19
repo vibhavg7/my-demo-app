@@ -54,7 +54,12 @@
 
 
                         <td>
-                            <button class="btn btn-outline-secondary" [routerLink]="['/category/storesubcategories',category?.category_id,'edit']">Edit</button>
+                            <button class="btn btn-outline-secondary mr-3" [routerLink]="['/category/storesubcategories',category?.category_id,'edit']">
+                                Edit
+                            </button>
+                            <button class="btn btn-outline-secondary mr-3" (click)="deleteSubCategory(category?.category_id)">
+                                     Delete
+                            </button>
                         </td>
                     </tr>
                 </tbody>

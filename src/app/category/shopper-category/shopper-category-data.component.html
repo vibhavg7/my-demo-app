@@ -28,5 +28,10 @@
 
 
       <td>
-        <button class="btn btn-outline-secondary" [routerLink]="['/category/storecategories',storeCategory?.store_category_id,'edit']">Edit</button>
+        <button class="btn btn-outline-secondary mr-3" [routerLink]="['/category/storecategories',storeCategory?.store_category_id,'edit']">
+          <i class='fa fa-edit'></i>Edit
+        </button>
+        <button class="btn btn-outline-secondary mr-3" (click)="deleteCategory(storeCategory?.store_category_id)">
+            <i class='fa fa-trash'></i> Delete
+        </button>
       </td>

@@ -26,7 +26,6 @@ export class ProductShellDetailComponent implements OnInit,OnDestroy {
   //   return this._productService._currentProduct;
   // }
   ngOnInit() {
-    // console.log('product shell detail page');
     this.sub = this._productService.selectProductChanges$.subscribe((data)=>{
       if(data) 
       {
@@ -50,10 +49,9 @@ export class ProductShellDetailComponent implements OnInit,OnDestroy {
     modalRef.componentInstance['image_type']= 'products';
     modalRef.componentInstance['id']= this.product_id;
     modalRef.componentInstance['productImage'].subscribe((data)=>{
-      this.image_url = data['imageUrl'];
-      console.log(data);
+      this.image_url = data['image_url'];
+      this._productService.updateProductImageUrl(this.image_url,this.product_id);
     })
-    // modalRef.componentInstance.title = 'Image Upload';
   }
 
   ngOnDestroy()

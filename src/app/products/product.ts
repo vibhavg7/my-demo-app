@@ -8,7 +8,7 @@ export class IProduct
     description: string;
     price: number;
     starRating: number;
-    imageUrl : string;
+    image_url : string;
     categoryName : string;
     available : boolean;
 }

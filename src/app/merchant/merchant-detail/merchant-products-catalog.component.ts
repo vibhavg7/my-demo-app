@@ -14,51 +14,57 @@ export class MerchantProductsCatalogComponent implements OnInit {
   filterBy: any = "";
   searchCriteriaForm: FormGroup;
   storeId: number;
-  currentPage : number = 1;
+  currentPage: number = 1;
   pageSize: number = 20;
-  store_products_info : any = [];
-  store_products_count : any;
-  showImage : any = false;
+  store_products_info: any = [];
+  store_products_count: any;
+  showImage: any = false;
   displaytype: any = 'SP';
-  errorMessage :any = "";
-  constructor(private _merchantService:MerchantService,private _activatedRoute:ActivatedRoute,private formBuilder:FormBuilder) {
+  errorMessage: any = "";
+  constructor(private _merchantService: MerchantService, private _activatedRoute: ActivatedRoute, private formBuilder: FormBuilder) {
     this.searchCriteriaForm = this.formBuilder.group({
       searchCriteria: ['']
     });
-   }
+  }
 
   ngOnInit() {
     this.storeId = +this._activatedRoute.parent.params['_value']['storeId'];
-    this._merchantService.fetchStoreProducts(this.storeId,this.currentPage,this.pageSize,"").subscribe((data)=>{
+    this._merchantService.fetchStoreProducts(this.storeId, this.currentPage, this.pageSize, "").subscribe((data) => {
       this.store_products_info = data['store_products_info'];
       this.store_products_count = data['store_products_count'][0]['store_products_count'];
       console.log(this.store_products_info);
       console.log(this.store_products_count);
-    })    
+    })
     this.onChanges();
   }
 
-  updateProductStock(event,storeProductId)
-  {
-    let stock = (+event.target.value == 1)? 0: 1;
-    this._merchantService.updateStoreProductStock(storeProductId, stock).subscribe((data)=>{
+  updateProductStock(event, storeProductId) {
+    let stock = (+event.target.value == 1) ? 0 : 1;
+    this._merchantService.updateStoreProductStock(storeProductId, stock).subscribe((data) => {
       console.log(data);
     })
 
   }
 
-  onChanges()
-  {
-    this.searchCriteriaForm.get('searchCriteria').valueChanges.pipe(tap(data => {
-    }), distinctUntilChanged(), debounceTime(200),
-      switchMap(query => ( this.filterBy = query,this._merchantService.fetchStoreProducts(this.storeId,this.currentPage, this.pageSize,query)))
-      )
-    .subscribe(res => { this.store_products_count = res['store_products_count'][0]['store_products_count'];console.log(res); this.store_products_info = res['store_products_info']; })
+  deleteStoreProduct(store_product_id) {
+    if (confirm("Are you sure to delete ")) {
+      this._merchantService.deleteStoreProduct(store_product_id).subscribe((data) => {
+        console.log(data);
+      })
+    }
   }
 
-  currentPageFn(page){
+  onChanges() {
+    this.searchCriteriaForm.get('searchCriteria').valueChanges.pipe(tap(data => {
+    }), distinctUntilChanged(), debounceTime(200),
+      switchMap(query => (this.filterBy = query, this._merchantService.fetchStoreProducts(this.storeId, this.currentPage, this.pageSize, query)))
+    )
+      .subscribe(res => { this.store_products_count = res['store_products_count'][0]['store_products_count']; console.log(res); this.store_products_info = res['store_products_info']; })
+  }
+
+  currentPageFn(page) {
     // console.log(page);
-    this._merchantService.fetchStoreProducts(this.storeId,page, this.pageSize,this.filterBy)
+    this._merchantService.fetchStoreProducts(this.storeId, page, this.pageSize, this.filterBy)
       .subscribe((data) => {
         // this.store_products_count = data['store_products_count'][0]['store_products_count'];
         this.store_products_info = data['store_products_info'];

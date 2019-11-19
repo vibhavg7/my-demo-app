@@ -62,6 +62,9 @@
                         </td>
                         <td>
                             <button class="btn btn-outline-secondary" [routerLink]="[store_product.store_product_mapping_id,'edit']">Edit</button>
+                            <button class="btn btn-outline-secondary" style="margin-left:5px" (click)="deleteStoreProduct(store_product.store_product_mapping_id)">
+                                    Delete
+                            </button>
                         </td>
                     </tr>
                 </tbody>

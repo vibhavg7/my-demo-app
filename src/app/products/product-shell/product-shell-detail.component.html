@@ -58,9 +58,6 @@
                 <span *ngIf="image_url" (click)="uploadImage()" style="display:block;text-align:center;cursor:pointer;color:blue">
                     Change Image
                 </span>
-                <!-- <span *ngIf="image_url" style="display:block;text-align:center;">
-                    <a [routerLink]="['/products',productData.productId,'edit']">Change Image</a>
-                </span> -->
             </div>
         </div>
     </div>
@@ -68,8 +65,9 @@
         <div class="row mb-2">
             <div class="col-md-8">
                 <button class="btn btn-primary mr-3" [routerLink]="['/products',productData.productId,'edit']">
-                    <i class='fa fa-chevron-left'></i> Edit
+                    <i class='fa fa-edit'></i> Edit
                 </button>
+              
             </div>
         </div>
     </div>

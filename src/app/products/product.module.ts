@@ -12,6 +12,8 @@ import { ProductShellSearchComponent } from './product-shell/product-shell-searc
 import { ProductShellAddComponent } from './product-shell/product-shell-add.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ImageUploadComponent } from './image-upload/image-upload.component';
+import { ProductShellListItemComponent } from './product-shell/product-shell-list-item.component';
+import { ProductService } from './product.service';
 // import { ProductService } from './product.service';
 
 
@@ -25,7 +27,7 @@ import { ImageUploadComponent } from './image-upload/image-upload.component';
     ProductShellDetailComponent,
     ProductShellComponent,
     ProductShellSearchComponent,    
-    ProductShellAddComponent,
+    ProductShellAddComponent, ProductShellListItemComponent,
     // ImageUploadComponent
   ],
   imports: [
@@ -34,7 +36,7 @@ import { ImageUploadComponent } from './image-upload/image-upload.component';
     SharedModule
   ],
   providers:[
-    ProductParameterService,
+    // ProductParameterService,
     // ProductService
   ]
 })

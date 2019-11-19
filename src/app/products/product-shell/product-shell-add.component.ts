@@ -17,7 +17,7 @@ export class ProductShellAddComponent implements OnInit {
   addProductForm: any;
   subCategories: any;
   errorMessage: any;
-  subCategoryData :any;
+  subCategoryData: any;
   productId: any;
   constructor(private formBuilder: FormBuilder,
     private _router: Router,
@@ -30,7 +30,7 @@ export class ProductShellAddComponent implements OnInit {
       subCategoryName: ['', Validators.required],
       productWeightType: ['', Validators.required],
       productPrice: ['', Validators.required],
-      productWeight : ['',Validators.required],
+      productWeight: ['', Validators.required],
       productCode: ['', Validators.required],
       productDescription: ['', Validators.required],
       productRating: ['', Validators.required],
@@ -41,27 +41,39 @@ export class ProductShellAddComponent implements OnInit {
   get f() { return this.addProductForm.controls; }
 
   ngOnInit() {
-    this._categoryService.getAllStoreCategory("").subscribe(data => {      
+    this._categoryService.getAllStoreCategory("").subscribe(data => {
       this.storeCategories = data['store_categories'];
       console.log(this.storeCategories);
       this.productId = this._activatedRoute.snapshot.paramMap.get('id');
       if (this.productId != 0) {
         const productData: any = this._activatedRoute.snapshot.data['productData']['product'];
         // console.log(productData);
-        this.subCategoryData = _.filter(this.storeCategories, (element) =>  element['store_category_id'] == productData['storeCategoryName'])[0]['store_sub_category_name'];
+        this.subCategoryData = _.filter(this.storeCategories, (element) => element['store_category_id'] == productData['storeCategoryName'])[0]['store_sub_category_name'];
         this.addProductForm.get('productName').setValue(productData['productName']);
         this.addProductForm.get('storeCategoryName').setValue(productData['storeCategoryName']);
         this.addProductForm.get('productWeightType').setValue(productData['productWeightType']);
         this.addProductForm.get('subCategoryName').setValue(productData['subCategoryName']);
         this.addProductForm.get('productPrice').setValue(productData['price']);
         this.addProductForm.get('productCode').setValue(productData['productCode']);
-        this.addProductForm.get('productWeight').setValue(productData['product_weight']);        
+        this.addProductForm.get('productWeight').setValue(productData['product_weight']);
         this.addProductForm.get('productDescription').setValue(productData['description']);
         this.addProductForm.get('productRating').setValue(productData['starRating']);
         this.addProductForm.get('status').setValue(productData['available']);
       }
     });
 
+  }
+
+  deleteProduct() {
+    if (this.productId != 0) {
+      if (confirm("Are you sure to delete ")) {
+        this._productService.deleteProduct(this.productId).subscribe((data) => {
+          console.log(data);
+          this._router.navigate(['products']);
+        })
+      }
+
+    }
   }
 
   onSubmit() {

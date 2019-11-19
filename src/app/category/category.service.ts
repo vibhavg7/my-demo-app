@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { tap, catchError, map } from 'rxjs/operators';
 import { throwError, Observable, of } from 'rxjs';
 import { ICategory } from './category';
@@ -240,6 +240,30 @@ export class CategoryService {
       }),
       catchError(this.handleError)
     )
+  }
+
+  deleteStoreCategory(store_category_id) : Observable<any>
+  {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const url = `${this._categoryServiceUrl}categoryapi/storecategories/${store_category_id}`;
+    return this._http.delete(url, { headers }).pipe(
+        tap(data => {
+            // console.log(JSON.stringify(data)) 
+        }),
+        catchError(this.handleError)
+    )
+  }
+
+  deleteStoreSubCategory(sub_category_id) : Observable<any>
+  {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const url = `${this._categoryServiceUrl}categoryapi/storesubcategories/${sub_category_id}`;
+    return this._http.delete(url, { headers }).pipe(
+        tap(data => {
+            // console.log(JSON.stringify(data)) 
+        }),
+        catchError(this.handleError)
+    ) 
   }
 
   editStoreCategory(categorydata, storeCategoryId): Observable<any> {

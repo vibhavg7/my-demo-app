@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ImageUploadComponent } from '../products/image-upload/image-upload.component';
+import { MerchantService } from './merchant.service';
 
 @Component({
   selector: '[app-merchant-data]',
@@ -9,7 +10,7 @@ import { ImageUploadComponent } from '../products/image-upload/image-upload.comp
 })
 export class MerchantDataComponent implements OnInit {
 
-  constructor(private modalService: NgbModal) { }
+  constructor(private modalService: NgbModal,private _merchantService:MerchantService) { }
   @Input('storeInfo') store: any;
   imageWidth: number = 80;
   imageHeight: number = 80;
@@ -29,6 +30,15 @@ export class MerchantDataComponent implements OnInit {
       // this.stores.filter((cat) => cat['store_category_id'] == data['store_category_id'])['store_image_url'] = data['image_url'];
       // console.log(this.storeCategories);
     })
+  }
+
+  deleteStore(store_id)
+  {
+    if (confirm("Are you sure to delete ")) {
+      this._merchantService.deleteStore(store_id).subscribe((data) => {
+        console.log(data);
+      })
+    }
   }
 
 }

@@ -13,30 +13,44 @@ export class ProductService implements OnDestroy {
     private _productServiceUrl = "http://ec2-3-134-77-29.us-east-2.compute.amazonaws.com:3000/productsapi/";
     private products: IProduct[];
     public productResolved: ProductResolved;
-    private selectedProductSource = new BehaviorSubject<IProduct | null>(null);
+    private selectedProductSource = new Subject<IProduct | null>();
+    // private selectedProductSource = new BehaviorSubject<IProduct | null>(null);
     selectProductChanges$ = this.selectedProductSource.asObservable();
 
     constructor(private _http: HttpClient) {
-        // console.log('product service constructor');
         this.productResolved = new ProductResolved();
     }
 
     ngOnDestroy() {
-        // console.log('product service ngOnDestroy constructor');
     }
 
-    changeSelectedProduct(product: IProduct) {
-        this.selectedProductSource.next(product);
+    changeSelectedProduct(productId: any) {
+        this.productResolved.products.forEach(product => {
+            if (product.productId == productId) {
+                this.selectedProductSource.next(product);
+            }
+        })
+
     }
 
-    getProducts(page_number: number, page_size: number,filterBy:any): Observable<any> {
+    updateProductImageUrl(image_url, product_id) {
+        this.productResolved.products.forEach(product => {
+            if (product.productId == product_id) {
+                product.image_url = image_url;
+                console.log(product);
+            }
+        });
+        console.log(this.productResolved.products);
+    }
+
+    getProducts(page_number: number, page_size: number, filterBy: any): Observable<any> {
         // if (this.products) {
         //     return of(this.products);
         // }
         let obj = {};
-        obj['page_number'] = page_number; obj['page_size'] = page_size;obj['filterBy'] = filterBy;
+        obj['page_number'] = page_number; obj['page_size'] = page_size; obj['filterBy'] = filterBy;
 
-        return this._http.post(`${this._productServiceUrl}fetchProducts`,obj)
+        return this._http.post(`${this._productServiceUrl}fetchProducts`, obj)
             .pipe(
                 tap(data => {
                     // console.log(JSON.stringify(data)) 
@@ -44,7 +58,7 @@ export class ProductService implements OnDestroy {
                 , map((data) => {
                     this.productResolved.products = data['products'];
                     this.productResolved.productCount = data['products_total_count']['products_count'];
-                    // console.log(this.productResolved);   
+                    console.log(this.productResolved.products);
                     // return this.products = data['products'];
                     // console.log(data['products']);
                     // return this.products = data['products'];
@@ -202,7 +216,7 @@ export class ProductService implements OnDestroy {
             categoryName: null,
             available: null,
             //   tags: [],
-            imageUrl: null
+            image_url: null
         };
     }
 }

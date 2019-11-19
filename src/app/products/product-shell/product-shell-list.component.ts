@@ -64,7 +64,8 @@ export class ProductShellListComponent implements OnInit, OnDestroy {
 
 
   onSelected(product) {
-    this._productService.changeSelectedProduct(product);
+    // console.log(product);
+    this._productService.changeSelectedProduct(product.productId);
   }
 
   onProductRetrieved(productsData) {

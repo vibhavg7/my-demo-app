@@ -33,4 +33,7 @@
     <td style="font-weight:bold">{{ store?.status ? 'Available' : 'Not Available' }}</td>
     <td>
         <button class="btn btn-outline-secondary" [routerLink]="['/merchant',store?.store_id,'edit']">Edit</button>
+        <button class="btn btn-outline-secondary" style="margin-left:5px" (click)="deleteStore(store?.store_id)">
+                Delete
+        </button>
     </td>
