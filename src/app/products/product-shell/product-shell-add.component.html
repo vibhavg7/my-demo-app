@@ -19,26 +19,36 @@
                                 <option *ngFor="let storeCategory of storeCategories" value="{{storeCategory?.store_category_id}}">
                                     {{storeCategory.store_category_name}}
                                 </option>
-                                <!-- <option value="0">Disabled</option> -->
-                            </select>
-                        </div>
-                        <!-- <input type="text" formControlName="storeCategoryName" class="form-control" 
-                            [ngClass]="{ 'is-invalid': submitted && f.storeCategoryName.errors }"
-                        />
-                        <div *ngIf="submitted && f.storeCategoryName.errors" class="invalid-feedback">
-                            <div *ngIf="f.storeCategoryName.errors.required">Store Category Name is required</div>
-                        </div> -->
-                    </div>
-                    <div class="form-group">
-                        <label>Sub Category Name</label>
-                        <div>
-                            <select class="form-control" formControlName="subCategoryName">
-                                <option *ngFor="let subCategory of subCategoryData" value="{{subCategory?.category_id}}">
-                                    {{subCategory.category_name}}
-                                </option>
                             </select>
                         </div>
                     </div>
+                   <div class="row">
+                       <div class="col-md-6">
+                            <div class="form-group">
+                                    <label>Store Sub Category</label>
+                                    <div>
+                                        <select class="form-control" (change)="storeSubCategoryChange($event.target.value)" 
+                                                formControlName="storeSubCategoryName">
+                                            <option *ngFor="let subCategory of storeSubCategoryData" value="{{subCategory?.store_sub_category_id}}">
+                                                {{subCategory.store_sub_category | upperCaseName}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                       </div>
+                       <div class="col-md-6">
+                            <div class="form-group">
+                                    <label>Sub Category</label>
+                                    <div>
+                                        <select class="form-control" formControlName="subCategoryName">
+                                            <option *ngFor="let subCategory of subCategoryData" value="{{subCategory?.sub_category_id}}">
+                                                {{subCategory.sub_category_name | upperCaseName}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                       </div>
+                   </div>
                     <div class="form-group">
                         <label>Weight Type</label>
                         <div>

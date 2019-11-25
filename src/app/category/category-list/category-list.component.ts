@@ -18,6 +18,7 @@ export class CategoryListComponent implements OnInit {
   products: any;
   errorMessage: any;
   categories: any;
+  storeSubCategoryData : any;
   imageWidth: number = 50;
   imageMargin: number = 2;
   subCategories: any = [];
@@ -34,13 +35,28 @@ export class CategoryListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.categories = this._activatedRoute.snapshot.data['storesubcategorydata']['storesubcategorydata'];
-    console.log(this.categories);
-    this.storeCategoryId = this._activatedRoute.snapshot.paramMap.get('id');
-    this.pageTitle = 'Store Sub Category ';
+    this.categories = this._activatedRoute.snapshot.data['storesubcategorydata']['storesubcategorydata'][0];
+    this.storeSubCategoryData = this.categories['store_sub_category_name'];
+    this.storeSubCategoryData.map(function(o) {
+      o.isActive = false;
+      return o;
+    })
+    // console.log(this.categories);
+    console.log(this.storeSubCategoryData);
+    this.pageTitle = `${this.categories['main_category']} Sub Category`;
     this.errorMessage = this._activatedRoute.snapshot.data['storesubcategorydata']['error'];
     
     this.onChanges();
+  }
+
+  activesubcategory(id)
+  {
+    this.storeSubCategoryData.map(function(o) {
+        if(o.store_sub_category_id == id)
+        {
+          o.isActive = !o.isActive;
+        }
+    })
   }
 
   onChanges()
@@ -56,10 +72,25 @@ export class CategoryListComponent implements OnInit {
     this.route.navigate(['category', 0, 'edit']);
   }
 
-  deleteSubCategory(category_id)
+  deleteStoreSubCategory(category_id)
   {
     if (confirm("Are you sure to delete ")) {
       this._categoryService.deleteStoreSubCategory(category_id).subscribe((data) => {
+        console.log(data);
+        for( var i = 0; i < this.storeSubCategoryData.length; i++){ 
+          if ( this.storeSubCategoryData[i].store_sub_category_id === +data['store_sub_category_id']) {
+            console.log(this.categories['store_sub_category_name'][i])
+            this.categories['store_sub_category_name'].splice(i, 1); 
+          }
+       }
+      })
+    }
+  }
+
+  deleteSubCategory(category_id)
+  {
+    if (confirm("Are you sure to delete ")) {
+      this._categoryService.deleteSubCategory(category_id).subscribe((data) => {
         console.log(data);
       })
     }

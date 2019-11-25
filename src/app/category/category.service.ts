@@ -11,139 +11,9 @@ export class CategoryService {
 
   constructor(private _http: HttpClient) { }
   public storecategories: any;
-  private _categoryServiceUrl = "http://ec2-3-134-77-29.us-east-2.compute.amazonaws.com:3000/";
-  private categoryData = {
-    "message": "Category Data",
-    "status": 200,
-    "categories": [
-      {
-        "category_id": "3",
-        "category_name": "Grocery",
-        "category_image_url": "",
-        "sub_categories": [
-          {
-            "category_id": "17",
-            "category_name": "Kitchen Staples",
-            "category_image_url": "",
-            "sub_categories": [
-              {
-                "category_id": "18",
-                "category_image_url": "",
-                "category_name": "Dal & Beans"
-              },
-              {
-                "category_id": "19",
-                "category_image_url": "",
-                "category_name": "Masala & Spices"
-              },
-              {
-                "category_id": "20",
-                "category_image_url": "",
-                "category_name": "Aata"
-              },
-              {
-                "category_id": "21",
-                "category_image_url": "",
-                "category_name": "Sugar & Substitutes"
-              }
-            ]
-          },
-          {
-            "category_id": "8",
-            "category_image_url": "",
-            "category_name": "Egg",
-            "sub_categories": []
-          },
-          {
-            "category_id": "12",
-            "category_image_url": "",
-            "category_name": "Biscuits",
-            "sub_categories": []
-          },
-          {
-            "category_id": "16",
-            "category_image_url": "",
-            "category_name": "Oil",
-            "sub_categories": []
-          }
-        ]
-      },
-      {
-        "category_id": "7",
-        "category_name": "Milk Products",
-        "category_image_url": "",
-        "sub_categories": [
-          {
-            "category_id": "9",
-            "category_name": "Curd",
-            "category_image_url": "",
-            "sub_categories": []
-          },
-          {
-            "category_id": "10",
-            "category_name": "Milk",
-            "category_image_url": "",
-            "sub_categories": []
-          },
-          {
-            "category_id": "11",
-            "category_name": "Yoghurt",
-            "category_image_url": "",
-            "sub_categories": []
-          }
-        ]
-      },
-      {
-        "category_id": "6",
-        "category_name": "Fruits & Vegetables",
-        "category_image_url": "",
-        "sub_categories": [
-          {
-            "category_id": "13",
-            "category_name": "Fruits",
-            "category_image_url": "",
-            "sub_categories": []
-          },
-          {
-            "category_id": "14",
-            "category_name": "Vegetables",
-            "category_image_url": "",
-            "sub_categories": []
-          },
-          {
-            "category_id": "15",
-            "category_name": "Exotic Fruits",
-            "category_image_url": "",
-            "sub_categories": []
-          }
-        ]
-      },
-      {
-        "category_id": "1",
-        "category_name": "Meat",
-        "category_image_url": "",
-        "sub_categories": []
-      },
-      {
-        "category_id": "2",
-        "category_name": "Pan Shop",
-        "category_image_url": "",
-        "sub_categories": []
-      },
-      {
-        "category_id": "4",
-        "category_name": "Medical Store",
-        "category_image_url": "",
-        "sub_categories": []
-      },
-      {
-        "category_id": "5",
-        "category_name": "Pan Shop",
-        "category_image_url": "",
-        "sub_categories": []
-      }
-    ]
-  };
+  public categoryData :any = [];
+  private _categoryServiceUrl = "http://ec2-3-134-77-29.us-east-2.compute.amazonaws.com:3000/categoryapi";
+ 
 
 
   get storeCategories() : Observable<any>
@@ -159,12 +29,12 @@ export class CategoryService {
   }
 
 
-  getAllStoreCategory(filterBy : any): Observable<any> {
+  getAllStoreCategory(filterBy): Observable<any> {
     
     let obj = {};    
     obj['filterBy'] = filterBy;
 
-    return this._http.post(`${this._categoryServiceUrl}categoryapi/storecategories/0`,obj).pipe(
+    return this._http.post(`${this._categoryServiceUrl}/storecategories`,obj).pipe(
       tap(data => {
         this.storecategories = data;
       })
@@ -174,11 +44,13 @@ export class CategoryService {
       , catchError(this.handleError)
     )
   }
+
+
   //To fetch store category detail
   getStoreCategoryData(store_category_id): Observable<any> {
-    let obj = {};
-    obj['page_number'] = 1; obj['page_size'] = 20;obj['filterBy'] = '';
-    return this._http.post(`${this._categoryServiceUrl}categoryapi/storecategories/${store_category_id}`,obj).pipe(
+    // let obj = {};
+    // obj['page_number'] = 1; obj['page_size'] = 20;obj['filterBy'] = '';
+    return this._http.get(`${this._categoryServiceUrl}/storesubcategories/${store_category_id}`).pipe(
       tap(data => {
       })
       , map((storecategorydata) => {
@@ -189,9 +61,9 @@ export class CategoryService {
   }
   // to fetch all sub categories of store category
   getStoreSubCategoryData(category_id,filterBy): Observable<any> {
-    let obj = {};
-    obj['filterBy'] = filterBy;
-    return this._http.post(`${this._categoryServiceUrl}categoryapi/storesubcategories/${category_id}`,obj).pipe(
+    // let obj = {};
+    // obj['filterBy'] = filterBy;
+    return this._http.get(`${this._categoryServiceUrl}/storesubcategories/${category_id}`).pipe(
       tap(data => {
       })
       , map((storesubcategorydata) => {
@@ -201,20 +73,12 @@ export class CategoryService {
     )
   }
 
-  // to fetch all sub category information
-  getSubCategoryData(sub_category_id): Observable<any> {
-    return this._http.get(`${this._categoryServiceUrl}categoryapi/subcategories/${sub_category_id}`).pipe(
-      tap(data => {
-      })
-      , map((subcategorydata) => {
-        return subcategorydata['store_sub_categories'];
-      })
-      , catchError(this.handleError)
-    )
-  }
-
-  addNewStoreCategory(categorydata): Observable<any> {
-    return this._http.post(`${this._categoryServiceUrl}categoryapi/storecategories`, categorydata).pipe(
+  addNewSubCategory(subCategorydata) : Observable<any>
+  {
+    let obj= {};
+    obj['store_sub_category_id'] = subCategorydata.storeCategoryName;
+    obj['subCategoryName'] = subCategorydata.subcategoryName;
+    return this._http.post(`${this._categoryServiceUrl}/subcategories`, obj).pipe(
       tap(data => {
         // console.log(JSON.stringify(data));
       }),
@@ -225,14 +89,57 @@ export class CategoryService {
     )
   }
 
-  addNewStoreSubCategory1(subcategorydata): Observable<any> {
+  editSubCategory(subCategorydata) : Observable<any>
+  {
+    let obj= {};
+    obj['category_id'] = subCategorydata.subcategoryId;
+    obj['name'] = subCategorydata.subcategoryName;
+    obj['parent_category_id'] = subCategorydata.storeCategoryName;
+
+    return this._http.put(`${this._categoryServiceUrl}/subcategories`, obj).pipe(
+      tap(data => {
+        // console.log(JSON.stringify(data));
+      }),
+      map((data) => {
+        return data;
+      }),
+      catchError(this.handleError)
+    )
+  }
+
+  // to fetch all sub category information
+  getSubCategoryData(sub_category_id): Observable<any> {
+    return this._http.get(`${this._categoryServiceUrl}/subcategories/${sub_category_id}`).pipe(
+      tap(data => {
+      })
+      , map((subcategorydata) => {
+        return subcategorydata['store_sub_categories'];
+      })
+      , catchError(this.handleError)
+    )
+  }
+
+  addNewStoreCategory(categorydata): Observable<any> {
+    console.log(categorydata);
+    return this._http.post(`${this._categoryServiceUrl}/addstorecategory`, categorydata).pipe(
+      tap(data => {
+        // console.log(JSON.stringify(data));
+      }),
+      map((data) => {
+        return data;
+      }),
+      catchError(this.handleError)
+    )
+  }
+
+  addNewStoreSubCategory(subcategorydata): Observable<any> {
     console.log(subcategorydata);
     let obj = {};
     obj['store_category_id'] = subcategorydata['storeCategoryName'];
     obj['categoryName'] = subcategorydata['categoryName'];
     obj['status'] = subcategorydata['status'];
     obj['categoryRanking'] = subcategorydata['categoryRanking'];
-    return this._http.post(`${this._categoryServiceUrl}categoryapi/storesubcategories`, obj).pipe(
+    return this._http.post(`${this._categoryServiceUrl}/storesubcategories`, obj).pipe(
       tap(data => {
       }),
       map((data) => {
@@ -245,7 +152,7 @@ export class CategoryService {
   deleteStoreCategory(store_category_id) : Observable<any>
   {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    const url = `${this._categoryServiceUrl}categoryapi/storecategories/${store_category_id}`;
+    const url = `${this._categoryServiceUrl}/storecategories/${store_category_id}`;
     return this._http.delete(url, { headers }).pipe(
         tap(data => {
             // console.log(JSON.stringify(data)) 
@@ -257,7 +164,19 @@ export class CategoryService {
   deleteStoreSubCategory(sub_category_id) : Observable<any>
   {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    const url = `${this._categoryServiceUrl}categoryapi/storesubcategories/${sub_category_id}`;
+    const url = `${this._categoryServiceUrl}/storesubcategories/${sub_category_id}`;
+    return this._http.delete(url, { headers }).pipe(
+        tap(data => {
+            // console.log(JSON.stringify(data)) 
+        }),
+        catchError(this.handleError)
+    ) 
+  }
+
+  deleteSubCategory(sub_category_id) : Observable<any>
+  {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const url = `${this._categoryServiceUrl}/subcategories/${sub_category_id}`;
     return this._http.delete(url, { headers }).pipe(
         tap(data => {
             // console.log(JSON.stringify(data)) 
@@ -285,15 +204,15 @@ export class CategoryService {
 
   editStoreSubCategory(subcategorydata, categoryId): Observable<any>
   {
-    console.log(subcategorydata);
+    // console.log(subcategorydata);
     let obj = {};
     obj['category_id'] = +categoryId;
-    obj['category_name'] = subcategorydata['categoryName'];
+    obj['name'] = subcategorydata['categoryName'];
     obj['store_category_id'] = +subcategorydata['storeCategoryName'];
-    obj['status'] = +subcategorydata['status'];
-    obj['ranking'] = +subcategorydata['categoryRanking'];
-
-    return this._http.put(`${this._categoryServiceUrl}categoryapi/storesubcategories`, obj).pipe(
+    // obj['status'] = +subcategorydata['status'];
+    // obj['ranking'] = +subcategorydata['categoryRanking'];
+    console.log(obj);
+    return this._http.put(`${this._categoryServiceUrl}/storesubcategories`, obj).pipe(
       tap(data => {
       }),
       map((data) => {

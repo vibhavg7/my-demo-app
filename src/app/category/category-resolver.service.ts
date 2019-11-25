@@ -20,7 +20,7 @@ export class CategoryResolverService implements Resolve<any> {
         tap(data => {
           // console.log(JSON.stringify(data));
         }),
-        map(storesubcategorydata => ({ storesubcategorydata: storesubcategorydata['store_sub_categories'], error: '' })),
+        map(storesubcategorydata => ({ storesubcategorydata: storesubcategorydata['store_categories'], error: '' })),
         catchError(error => {
           const message = `Retrieval error: ${error}`;
           return of({ storesubcategorydata: null, error: message });

@@ -15,7 +15,6 @@ export class StoreCategoryResolver implements Resolve<any>
         return this.categoryService.getAllStoreCategory("")
         .pipe(
             map(storeCategoryResolver => (
-                // console.log(storeCategoryResolver),
                 { categories: storeCategoryResolver['store_categories'],error:'' }
             )),
             catchError(error => {

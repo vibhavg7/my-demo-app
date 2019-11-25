@@ -17,10 +17,12 @@ export class CategoryAddComponent implements OnInit {
   addCategoryForm: any;
   storeCategories: any;
   pageTitle: string = "Add Category";
-  constructor(private _categoryService: CategoryService,
+  constructor(
+    private _categoryService: CategoryService,
     private _router: Router,
     private _activatedRoute: ActivatedRoute,
-    private formBuilder: FormBuilder) {
+    private formBuilder: FormBuilder
+  ) {
     this.addCategoryForm = this.formBuilder.group({
       categoryName: ['', Validators.required],
       storeCategoryName: ['', Validators.required],
@@ -34,18 +36,15 @@ export class CategoryAddComponent implements OnInit {
     this.categoryId = +this._activatedRoute.snapshot.params['categoryId'];
     if (this.categoryId != 0) {
       this._categoryService.getSubCategoryData(this.categoryId).subscribe((data) => {
-        // console.log(data);
-        this.addCategoryForm.get('categoryName').setValue(data[0]['sub_category_name']);
-        // // this.addCategoryForm.get('storeCategoryName').setValue(data[0]['store_category_name']);
+        console.log(data);
+        this.addCategoryForm.get('categoryName').setValue(data[0]['name']);
         this.addCategoryForm.get('storeCategoryName').setValue(data[0]['store_category_id']);
         this.addCategoryForm.get('categoryRanking').setValue(data[0]['ranking']);
         this.addCategoryForm.get('status').setValue(data[0]['status']);
       });
     }
     this._categoryService.storeCategories.subscribe((data)=>{
-      console.log(data);
       this.storeCategories = data['store_categories'];
-      console.log(this.storeCategories);
     });
   }
 
@@ -56,8 +55,7 @@ export class CategoryAddComponent implements OnInit {
       return;
     }
     if (this.categoryId == 0) {      
-      this._categoryService.addNewStoreSubCategory1(this.addCategoryForm.value).subscribe((data) => {
-        console.log(data);
+      this._categoryService.addNewStoreSubCategory(this.addCategoryForm.value).subscribe((data) => {
         if (data.status == "200") {
           this._router.navigate(['category/storesubcategories',this.addCategoryForm.value['storeCategoryName']]);
         }
@@ -70,11 +68,8 @@ export class CategoryAddComponent implements OnInit {
         })
     }
     else {
-      console.log(this.addCategoryForm.value);
-      // this._categoryService.editStoreCategory(this.addStoreCategoryForm.value,this.storeCategoryId);
       this._categoryService.editStoreSubCategory(this.addCategoryForm.value, this.categoryId)
       .subscribe((data) => {
-        console.log(data);
         if (data.status == "200") {
           this._router.navigate(['category/storecategories']);
         }

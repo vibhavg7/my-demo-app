@@ -46,6 +46,7 @@ export class AddStoreCategoryComponent implements OnInit {
       return;
     }
     if (this.storeCategoryId == '') {
+      console.log(this.addStoreCategoryForm.value);
       this._categoryService.addNewStoreCategory(this.addStoreCategoryForm.value).subscribe((data) => {
         console.log(data);
         if (data.status == "200") {

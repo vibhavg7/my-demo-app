@@ -13,59 +13,82 @@
             </div>
             <div class="col-md-6">
                 <button class="btn btn-outline-secondary" style="float:right" [routerLink]="['/category/storesubcategories/',0,'edit']">
-                    Add Category
+                    Add Store Sub Category
                 </button>
             </div>
         </div>
 
         <div class='table-responsive'>
-            <table class='table' *ngIf='categories?.length'>
+            <table class='table' *ngIf='storeSubCategoryData?.length'>
                 <thead>
                     <tr>
                         <th>Category Id</th>
-                        <th>Sub Category Name</th>
-                        <th>Store Category Name</th>
-                        <th>Ranking</th>
-                        <th>Status</th>
-                        <th>Last Updated</th>
+                        <th>Category Name</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor='let category of categories'>
-                      
+                    <tr *ngFor='let storeSubCategory of storeSubCategoryData'>
                         <td>
-                            <a [routerLink]="['/category/storesubcategories', category.category_id]">
-                                {{ category?.category_id }}
+                            <a [routerLink]="['/category/storesubcategories', storeSubCategory?.store_sub_category_id]">
+                                {{ storeSubCategory?.store_sub_category_id }}
                             </a>
                         </td>
                         <td>
-                            <a [routerLink]="['/category/storesubcategories', category.category_id]">
-                                {{ category?.sub_category_name }}
+                            <a [routerLink]="['/category/storesubcategories', storeSubCategory?.store_sub_category_id]">
+                                {{ storeSubCategory?.store_sub_category | upperCaseName }}
                             </a>
                         </td>
                         <td>
-                            {{ category?.store_category_name }}
+                            <i class="fa fa-edit" [routerLink]="['/category/storesubcategories',storeSubCategory?.store_sub_category_id,'edit']"></i>
+                            <i class="fa fa-trash" (click)="deleteStoreSubCategory(storeSubCategory?.store_sub_category_id)"></i>
+                            <i class="fa fa-angle-down" *ngIf="!storeSubCategory?.isActive" (click)="activesubcategory(storeSubCategory?.store_sub_category_id)"></i>
+                            <i class="fa fa-angle-up" *ngIf="storeSubCategory?.isActive" (click)="activesubcategory(storeSubCategory?.store_sub_category_id)"></i>
                         </td>
-                        <td>{{ category?.ranking }}</td>
-                        <td style="font-weight:bold">{{ category?.status ? 'Available' : 'Not Available' }}</td>
 
-                        <td>{{ category.last_update | date:'short' }}</td>
+                        <div id="resp-table" style="background: #eee;" *ngIf="storeSubCategory?.isActive">
+                            <div id="resp-table-header">
+                                <div class="table-header-cell">
+                                    Category Id
+                                </div>
+                                <div class="table-header-cell">
+                                    Catergory Name
+                                </div>
+                                <div class="table-header-cell">
+                                    <button class="btn btn-outline-secondary" 
+                                        [routerLink]="['sub',0,'edit']"
+                                        style="float:right">
+                                        Add Sub Category
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="resp-table-body">
+                                <div class="resp-table-row" *ngFor='let subCategory of storeSubCategory?.sub_category_data'>
+                                    <div class="table-body-cell">
+                                        <a [routerLink]="['/category/storesubcategories', subCategory?.sub_category_id]">
+                                            {{ subCategory?.sub_category_id }}
+                                        </a>
+                                    </div>
+                                    <div class="table-body-cell">
+                                        <a [routerLink]="['/category/storesubcategories', subCategory?.sub_category_id]">
+                                            {{ subCategory?.sub_category_name | upperCaseName }}
+                                        </a>
+                                    </div>
+                                    <div class="table-body-cell">
+                                        <i class="fa fa-edit" [routerLink]="['sub',subCategory?.sub_category_id,'edit']"></i>
+                                        <i class="fa fa-trash" (click)="deleteSubCategory(subCategory?.sub_category_id)"></i>
+                                    </div>
 
+                                </div>
+                            </div>
 
-                        <td>
-                            <button class="btn btn-outline-secondary mr-3" [routerLink]="['/category/storesubcategories',category?.category_id,'edit']">
-                                Edit
-                            </button>
-                            <button class="btn btn-outline-secondary mr-3" (click)="deleteSubCategory(category?.category_id)">
-                                     Delete
-                            </button>
-                        </td>
+                        </div>
                     </tr>
+
                 </tbody>
             </table>
-            
-            <div *ngIf='categories?.length == 0'>
+
+            <div *ngIf='storeSubCategoryData?.length == 0'>
                 No Sub Category Data Found
             </div>
         </div>

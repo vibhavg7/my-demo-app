@@ -9,9 +9,10 @@ import { ShopperCategoryComponent } from './shopper-category/shopper-category.co
 import { AddStoreCategoryComponent } from './shopper-category/add-store-category.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ShopperCategoryDataComponent } from './shopper-category/shopper-category-data.component';
+import { AddSubCategoryComponent } from './shopper-category/add-sub-category.component';
 
 @NgModule({
-  declarations: [CategoryListComponent, CategoryAddComponent, CategoryDetailComponent, ShopperCategoryComponent, AddStoreCategoryComponent, ShopperCategoryDataComponent],
+  declarations: [CategoryListComponent, CategoryAddComponent, CategoryDetailComponent, ShopperCategoryComponent, AddStoreCategoryComponent, ShopperCategoryDataComponent, AddSubCategoryComponent],
   imports: [
     ReactiveFormsModule,
     CommonModule,

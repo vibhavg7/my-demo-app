@@ -7,7 +7,8 @@
       <div class='col-md-2'>Filter by:</div>
       <div class='col-md-4'>
         <form [formGroup]="searchCriteriaForm">
-          <input formControlName="searchCriteria" class="form-control" type="text" id="keyword" placeholder="Search Category By Name"
+          <input formControlName="searchCriteria" (keyup)="onChanges()" class="form-control" type="text" 
+            id="searchCriteria" placeholder="Search Category By Name" name="searchCriteria"
             autocomplete="off" autofocus/>
         </form>
       </div>
@@ -34,7 +35,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor='let storeCategory of storeCategories' app-shopper-category-data [storeCategoryInfo]="storeCategory">
+          <tr *ngFor='let storeCategory of storeCategories' app-shopper-category-data (deletestorecategory) = deletestorecategory($event) [storeCategoryInfo]="storeCategory">
             
           </tr>
         </tbody>

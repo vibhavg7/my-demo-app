@@ -12,6 +12,7 @@ import * as _ from 'lodash';
 })
 export class ProductShellAddComponent implements OnInit {
 
+  storeSubCategoryData: any;
   submitted: boolean;
   storeCategories: any;
   addProductForm: any;
@@ -25,15 +26,16 @@ export class ProductShellAddComponent implements OnInit {
     private _categoryService: CategoryService,
     private _productService: ProductService) {
     this.addProductForm = this.formBuilder.group({
-      productName: ['', Validators.required],
-      storeCategoryName: ['', Validators.required],
-      subCategoryName: ['', Validators.required],
-      productWeightType: ['', Validators.required],
-      productPrice: ['', Validators.required],
-      productWeight: ['', Validators.required],
-      productCode: ['', Validators.required],
-      productDescription: ['', Validators.required],
-      productRating: ['', Validators.required],
+      productName: [''],
+      storeCategoryName:  [''],
+      storeSubCategoryName :  [''],
+      subCategoryName:  [''],
+      productWeightType:  [''],
+      productPrice:  [''],
+      productWeight:  [''],
+      productCode:  [''],
+      productDescription:  [''],
+      productRating:  [''],
       status: ['']
     });
   }
@@ -43,16 +45,21 @@ export class ProductShellAddComponent implements OnInit {
   ngOnInit() {
     this._categoryService.getAllStoreCategory("").subscribe(data => {
       this.storeCategories = data['store_categories'];
-      console.log(this.storeCategories);
+      // console.log(this.storeCategories);
       this.productId = this._activatedRoute.snapshot.paramMap.get('id');
       if (this.productId != 0) {
         const productData: any = this._activatedRoute.snapshot.data['productData']['product'];
-        // console.log(productData);
-        this.subCategoryData = _.filter(this.storeCategories, (element) => element['store_category_id'] == productData['storeCategoryName'])[0]['store_sub_category_name'];
+        console.log(productData);
+      //   this.subCategoryData = _.filter(this.storeCategories, (element) => element['store_category_id'] == productData['storeCategoryName'])[0]['store_sub_category_name'];
         this.addProductForm.get('productName').setValue(productData['productName']);
         this.addProductForm.get('storeCategoryName').setValue(productData['storeCategoryName']);
         this.addProductForm.get('productWeightType').setValue(productData['productWeightType']);
-        this.addProductForm.get('subCategoryName').setValue(productData['subCategoryName']);
+
+        this.addProductForm.get('storeCategoryName').setValue(productData['store_category_id']);
+        this.addProductForm.get('storeSubCategoryName').setValue(productData['store_sub_category_id']);
+        this.addProductForm.get('subCategoryName').setValue(productData['sub_category_id']);
+
+      //   this.addProductForm.get('subCategoryName').setValue(productData['subCategoryName']);
         this.addProductForm.get('productPrice').setValue(productData['price']);
         this.addProductForm.get('productCode').setValue(productData['productCode']);
         this.addProductForm.get('productWeight').setValue(productData['product_weight']);
@@ -77,7 +84,7 @@ export class ProductShellAddComponent implements OnInit {
   }
 
   onSubmit() {
-    // console.log(this.addProductForm.value);
+    console.log(this.addProductForm.value);
     this.submitted = true;
     if (this.addProductForm.invalid) {
       return;
@@ -115,12 +122,22 @@ export class ProductShellAddComponent implements OnInit {
   }
 
   storeCategoryChange(store_category_id) {
-    // console.log(store_category_id);
+    console.log('dsdsdsd');
     this._categoryService.getStoreCategoryData(+store_category_id).subscribe(data => {
-      console.log(data['store_sub_categories']);
-      this.subCategoryData = data['store_sub_categories'];
-      this.addProductForm.get('subCategoryName').setValue(this.subCategoryData[0]['category_id']);
-      // console.log(this.subCategoryData);
+      this.storeSubCategoryData = data['store_categories'][0]['store_sub_category_name'];
+      this.addProductForm.get('storeSubCategoryName').setValue(this.storeSubCategoryData[0]['store_sub_category_id']);
+      console.log(this.storeSubCategoryData);
     });
+  }
+
+  storeSubCategoryChange(store_sub_category_id)
+  {
+    this.storeSubCategoryData.filter(data=>{
+      if(data.store_sub_category_id == store_sub_category_id)
+      {
+        this.subCategoryData = data['sub_category_data'];
+        this.addProductForm.get('subCategoryName').setValue(this.subCategoryData[0]['sub_category_id']);
+      }
+    })
   }
 }

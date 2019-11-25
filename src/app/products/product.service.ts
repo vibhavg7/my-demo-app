@@ -49,7 +49,7 @@ export class ProductService implements OnDestroy {
         // }
         let obj = {};
         obj['page_number'] = page_number; obj['page_size'] = page_size; obj['filterBy'] = filterBy;
-
+        console.log(`${this._productServiceUrl}fetchProducts`);
         return this._http.post(`${this._productServiceUrl}fetchProducts`, obj)
             .pipe(
                 tap(data => {
@@ -111,7 +111,15 @@ export class ProductService implements OnDestroy {
         obj['product_rating'] = product['productRating'];
         obj['status'] = product['status'];
         obj['product_weight'] = +product['productWeight'];
-        obj['category_id'] = product['subCategoryName'];
+        // obj['category_id'] = product['subCategoryName'];
+        if(!!product['subCategoryName'])
+        {            
+            obj['category_id'] = product['subCategoryName'];    
+        }
+        else if(!!product['storeSubCategoryName'])
+        {
+            obj['category_id'] = product['storeSubCategoryName'];
+        }
         console.log(obj);
         const url = `${this._productServiceUrl}${productId}`;
         const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
@@ -125,24 +133,34 @@ export class ProductService implements OnDestroy {
     }
 
     createProduct(product: any): Observable<any> {
-        // console.log(product);
+        // console.log(product['subCategoryName']);
+        // console.log(product['storeSubCategoryName']);
+        // console.log(!product['subCategoryName']);
         let obj = {};
         obj['product_name'] = product['productName'];
         obj['product_price'] = +product['productPrice'];
         obj['weight_type'] = +product['productWeightType'];
-        obj['category_id'] = product['subCategoryName'];
         obj['product_code'] = product['productCode'];
         obj['product_description'] = product['productDescription'];
         obj['product_rating'] = +product['productRating'];
         obj['status'] = +product['status'];
         obj['product_weight'] = +product['productWeight'];
+        if(!!product['subCategoryName'])
+        {            
+            obj['category_id'] = product['subCategoryName'];    
+        }
+        else if(!!product['storeSubCategoryName'])
+        {
+            obj['category_id'] = product['storeSubCategoryName'];
+        }
+
         console.log(obj);
-        const url = `${this._productServiceUrl}`;
-        // console.log(url);
+
+        const url = `${this._productServiceUrl}`;        
         const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
         return this._http.post(url, obj, { headers }).pipe(
             tap(data => {
-                // console.log(JSON.stringify(data)) 
+                console.log(JSON.stringify(data)) 
             }),
             map((data) => {
                 return data;
@@ -165,7 +183,7 @@ export class ProductService implements OnDestroy {
         if (productId == 0) {
             return of(this.initializeProduct());
         }
-        console.log(productId);
+        // console.log(productId);
         // if (this.products && this.products.length > 0) {
         //     let foundItem: IProduct = this.products.find(p => p.productId == productId);
         //     console.log(foundItem);

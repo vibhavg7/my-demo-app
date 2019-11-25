@@ -7,6 +7,7 @@ import { ShopperCategoryComponent } from './shopper-category/shopper-category.co
 import { AddStoreCategoryComponent } from './shopper-category/add-store-category.component';
 import { StoreCategoryResolver } from './store-category-resolver.service';
 import { CategoryResolverService } from './category-resolver.service';
+import { AddSubCategoryComponent } from './shopper-category/add-sub-category.component';
 
 const routes: Routes = [
     {
@@ -23,10 +24,19 @@ const routes: Routes = [
         component: AddStoreCategoryComponent
     },
     {
+        path: 'storesubcategories/:categoryId/sub/:subcategory/edit',
+        component: AddSubCategoryComponent
+    },
+    {
         path: 'storesubcategories/:id',
         component: CategoryListComponent,
         resolve:{storesubcategorydata:CategoryResolverService}
     },
+    // {
+    //     path: 'storesubcategories/:categoryId/sub/:subcategory/edit',
+    //     component: CategoryListComponent,
+    //     // resolve:{storesubcategorydata:CategoryResolverService}
+    // },
     {
         path: 'storesubcategories/:categoryId/edit',
         component: CategoryAddComponent
