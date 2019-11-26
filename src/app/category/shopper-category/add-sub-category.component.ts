@@ -56,7 +56,6 @@ export class AddSubCategoryComponent implements OnInit {
     }
     if (this.subcategoryId == 0) {
       this._categoryService.addNewSubCategory(this.addSubCategoryForm.value).subscribe((data) => {
-        console.log(data);
         if (data.status == "200") {
           this._router.navigate(['category/storesubcategories',this.categoryId]);
         }
@@ -69,13 +68,11 @@ export class AddSubCategoryComponent implements OnInit {
         })
     }
     else {
-      console.log(this.addSubCategoryForm.value);
-      // this._categoryService.editStoreCategory(this.addStoreCategoryForm.value,this.storeCategoryId);
       this._categoryService.editSubCategory(this.addSubCategoryForm.value)
       .subscribe((data) => {
         console.log(data);
         if (data.status == "200") {
-          this._router.navigate(['category/storesubcategories',this.storesubcategoryId]);
+          this._router.navigate(['category/storesubcategories',this.categoryId]);
         }
         if (data.status == "400") {
           alert('Category Not Added . Internal Server Error');

@@ -26,17 +26,17 @@ export class ProductShellAddComponent implements OnInit {
     private _categoryService: CategoryService,
     private _productService: ProductService) {
     this.addProductForm = this.formBuilder.group({
-      productName: [''],
-      storeCategoryName:  [''],
-      storeSubCategoryName :  [''],
-      subCategoryName:  [''],
-      productWeightType:  [''],
-      productPrice:  [''],
-      productWeight:  [''],
-      productCode:  [''],
-      productDescription:  [''],
-      productRating:  [''],
-      status: ['']
+      productName: ['',Validators.required],
+      storeCategoryName:  ['',Validators.required],
+      storeSubCategoryName :  ['',Validators.required],
+      subCategoryName:  ['',Validators.required],
+      productWeightType:  ['',Validators.required],
+      productPrice:  ['',Validators.required],
+      productWeight:  ['',Validators.required],
+      productCode:  ['',Validators.required],
+      productDescription:  ['',Validators.required],
+      productRating:  ['',Validators.required],
+      status: ['',Validators.required]
     });
   }
 
@@ -45,7 +45,6 @@ export class ProductShellAddComponent implements OnInit {
   ngOnInit() {
     this._categoryService.getAllStoreCategory("").subscribe(data => {
       this.storeCategories = data['store_categories'];
-      // console.log(this.storeCategories);
       this.productId = this._activatedRoute.snapshot.paramMap.get('id');
       if (this.productId != 0) {
         const productData: any = this._activatedRoute.snapshot.data['productData']['product'];
@@ -125,6 +124,7 @@ export class ProductShellAddComponent implements OnInit {
     console.log('dsdsdsd');
     this._categoryService.getStoreCategoryData(+store_category_id).subscribe(data => {
       this.storeSubCategoryData = data['store_categories'][0]['store_sub_category_name'];
+      this.subCategoryData = this.storeSubCategoryData[0]['sub_category_data'];
       this.addProductForm.get('storeSubCategoryName').setValue(this.storeSubCategoryData[0]['store_sub_category_id']);
       console.log(this.storeSubCategoryData);
     });
@@ -132,6 +132,7 @@ export class ProductShellAddComponent implements OnInit {
 
   storeSubCategoryChange(store_sub_category_id)
   {
+    console.log('storeSubCategoryChange');
     this.storeSubCategoryData.filter(data=>{
       if(data.store_sub_category_id == store_sub_category_id)
       {
