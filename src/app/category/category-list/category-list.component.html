@@ -43,47 +43,46 @@
                             <i class="fa fa-edit" [routerLink]="['/category/storesubcategories',storeSubCategory?.store_sub_category_id,'edit']"></i>
                             <i class="fa fa-trash" (click)="deleteStoreSubCategory(storeSubCategory?.store_sub_category_id)"></i>
                             <i class="fa fa-angle-down" *ngIf="!storeSubCategory?.isActive" (click)="activesubcategory(storeSubCategory?.store_sub_category_id)"></i>
-                            <i class="fa fa-angle-up" *ngIf="storeSubCategory?.isActive" (click)="activesubcategory(storeSubCategory?.store_sub_category_id)"></i>
+                            <i class="fa fa-angle-up" *ngIf="storeSubCategory?.isActive" (click)="activesubcategory(storeSubCategory?.store_sub_category_id)">
+                                    <div id="resp-table" style="background: #eee;" *ngIf="storeSubCategory?.isActive">
+                                            <div id="resp-table-header">
+                                                <div class="table-header-cell">
+                                                    Category Id
+                                                </div>
+                                                <div class="table-header-cell">
+                                                    Catergory Name
+                                                </div>
+                                                <div class="table-header-cell">
+                                                    <button class="btn btn-outline-secondary" (click)="addSubCat(storeSubCategory?.store_sub_category_id,0)" style="float:right">
+                                                        Add Sub Category
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div id="resp-table-body">
+                                                <div class="resp-table-row" *ngFor='let subCategory of storeSubCategory?.sub_category_data'>
+                                                    <div class="table-body-cell">
+                                                        <a [routerLink]="['/category/storesubcategories', subCategory?.sub_category_id]">
+                                                            {{ subCategory?.sub_category_id }}
+                                                        </a>
+                                                    </div>
+                                                    <div class="table-body-cell">
+                                                        <a [routerLink]="['/category/storesubcategories', subCategory?.sub_category_id]">
+                                                            {{ subCategory?.sub_category_name | upperCaseName }}
+                                                        </a>
+                                                    </div>
+                                                    <div class="table-body-cell">
+                                                        <i class="fa fa-edit" (click)="addSubCat(storeSubCategory?.store_sub_category_id,subCategory?.sub_category_id)"></i>
+                                                        <i class="fa fa-trash" (click)="deleteSubCategory(subCategory?.sub_category_id,storeSubCategory?.store_sub_category_id )"></i>
+                                                    </div>
+                
+                                                </div>
+                                            </div>
+                
+                                        </div>
+                            </i>
                         </td>
 
-                        <div id="resp-table" style="background: #eee;" *ngIf="storeSubCategory?.isActive">
-                            <div id="resp-table-header">
-                                <div class="table-header-cell">
-                                    Category Id
-                                </div>
-                                <div class="table-header-cell">
-                                    Catergory Name
-                                </div>
-                                <div class="table-header-cell">
-                                    <button class="btn btn-outline-secondary" 
-                                        (click)="addSubCat(storeSubCategory?.store_sub_category_id,0)"
-                                        style="float:right">
-                                        Add Sub Category
-                                    </button>
-                                </div>
-                            </div>
-                            <div id="resp-table-body">
-                                <div class="resp-table-row" *ngFor='let subCategory of storeSubCategory?.sub_category_data'>
-                                    <div class="table-body-cell">
-                                        <a [routerLink]="['/category/storesubcategories', subCategory?.sub_category_id]">
-                                            {{ subCategory?.sub_category_id }}
-                                        </a>
-                                    </div>
-                                    <div class="table-body-cell">
-                                        <a [routerLink]="['/category/storesubcategories', subCategory?.sub_category_id]">
-                                            {{ subCategory?.sub_category_name | upperCaseName }}
-                                        </a>
-                                    </div>
-                                    <div class="table-body-cell">
-                                        <i class="fa fa-edit" 
-                                        (click)="addSubCat(storeSubCategory?.store_sub_category_id,subCategory?.sub_category_id)"></i>
-                                        <i class="fa fa-trash" (click)="deleteSubCategory(subCategory?.sub_category_id,storeSubCategory?.store_sub_category_id )"></i>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                        </div>
+                     
                     </tr>
 
                 </tbody>
