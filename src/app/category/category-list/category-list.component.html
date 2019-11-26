@@ -56,7 +56,7 @@
                                 </div>
                                 <div class="table-header-cell">
                                     <button class="btn btn-outline-secondary" 
-                                        [routerLink]="['sub',0,'edit']"
+                                        (click)="addSubCat(storeSubCategory?.store_sub_category_id,0)"
                                         style="float:right">
                                         Add Sub Category
                                     </button>
@@ -75,8 +75,9 @@
                                         </a>
                                     </div>
                                     <div class="table-body-cell">
-                                        <i class="fa fa-edit" [routerLink]="['sub',subCategory?.sub_category_id,'edit']"></i>
-                                        <i class="fa fa-trash" (click)="deleteSubCategory(subCategory?.sub_category_id)"></i>
+                                        <i class="fa fa-edit" 
+                                        (click)="addSubCat(storeSubCategory?.store_sub_category_id,subCategory?.sub_category_id)"></i>
+                                        <i class="fa fa-trash" (click)="deleteSubCategory(subCategory?.sub_category_id,storeSubCategory?.store_sub_category_id )"></i>
                                     </div>
 
                                 </div>

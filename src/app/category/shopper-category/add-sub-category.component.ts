@@ -10,6 +10,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class AddSubCategoryComponent implements OnInit {
 
+  categoryId: number;
   errorMessage: any;
   submitted: boolean;
   addSubCategoryForm: FormGroup;
@@ -32,29 +33,24 @@ export class AddSubCategoryComponent implements OnInit {
   get f() { return this.addSubCategoryForm.controls; }
 
   ngOnInit() {
-    this.storesubcategoryId = +this._activatedRoute.snapshot.params['categoryId'];
+    this.categoryId = +this._activatedRoute.snapshot.params['categoryId'];
     this.subcategoryId = +this._activatedRoute.snapshot.params['subcategory'];
-    console.log(this.subcategoryId);
+    this.storesubcategoryId = +this._activatedRoute.snapshot.params['storesubcat'];console.log(this.storesubcategoryId)
+
     if (this.subcategoryId != 0) {
       this._categoryService.getSubCategoryData(this.subcategoryId).subscribe((data) => {
-        console.log(data);
         this.addSubCategoryForm.get('subcategoryName').setValue(data[0]['name']);
-        this.addSubCategoryForm.get('subcategoryId').setValue(data[0]['category_id']);
-        // this.addSubCategoryForm.get('storeCategoryName').setValue(this.storesubcategoryId);        
-        // this.addSubCategoryForm.get('categoryRanking').setValue(data[0]['ranking']);
-        // this.addSubCategoryForm.get('status').setValue(data[0]['status']);
+        this.addSubCategoryForm.get('subcategoryId').setValue(data[0]['category_id']);        
       });
     }
-    this._categoryService.getStoreSubCategoryData(this.storesubcategoryId,"").subscribe((data) => {
-      // console.log(data['store_categories'][0]['store_sub_category_name']);
+    this._categoryService.getStoreSubCategoryData(this.categoryId,"").subscribe((data) => {
       this.storeSubCategories = data['store_categories'][0]['store_sub_category_name'];
-      console.log(this.storeSubCategories);
+      this.addSubCategoryForm.get('storeCategoryName').setValue(this.storesubcategoryId);
     });
   }
 
   onSubmit() {
     this.submitted = true;
-    console.log(this.addSubCategoryForm.value);
     if (this.addSubCategoryForm.invalid) {
       return;
     }
@@ -62,7 +58,7 @@ export class AddSubCategoryComponent implements OnInit {
       this._categoryService.addNewSubCategory(this.addSubCategoryForm.value).subscribe((data) => {
         console.log(data);
         if (data.status == "200") {
-          this._router.navigate(['category/storesubcategories',this.storesubcategoryId]);
+          this._router.navigate(['category/storesubcategories',this.categoryId]);
         }
         if (data.status == "400") {
           alert('Category Not Added . Internal Server Error');

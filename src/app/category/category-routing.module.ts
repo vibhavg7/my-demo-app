@@ -24,7 +24,7 @@ const routes: Routes = [
         component: AddStoreCategoryComponent
     },
     {
-        path: 'storesubcategories/:categoryId/sub/:subcategory/edit',
+        path: 'storesubcategories/:categoryId/storesub/:storesubcat/sub/:subcategory/edit',
         component: AddSubCategoryComponent
     },
     {
