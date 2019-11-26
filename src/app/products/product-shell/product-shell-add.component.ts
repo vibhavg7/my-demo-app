@@ -44,12 +44,11 @@ export class ProductShellAddComponent implements OnInit {
 
   ngOnInit() {
     this._categoryService.getAllStoreCategory("").subscribe(data => {
-      this.storeCategories = data['store_categories'];
+      this.storeCategories = data['store_categories'];console.log(this.storeCategories);
       this.productId = this._activatedRoute.snapshot.paramMap.get('id');
       if (this.productId != 0) {
         const productData: any = this._activatedRoute.snapshot.data['productData']['product'];
-        console.log(productData);
-      //   this.subCategoryData = _.filter(this.storeCategories, (element) => element['store_category_id'] == productData['storeCategoryName'])[0]['store_sub_category_name'];
+        this.storeCategoryChange(productData['store_category_id']);        
         this.addProductForm.get('productName').setValue(productData['productName']);
         this.addProductForm.get('storeCategoryName').setValue(productData['storeCategoryName']);
         this.addProductForm.get('productWeightType').setValue(productData['productWeightType']);
@@ -58,7 +57,6 @@ export class ProductShellAddComponent implements OnInit {
         this.addProductForm.get('storeSubCategoryName').setValue(productData['store_sub_category_id']);
         this.addProductForm.get('subCategoryName').setValue(productData['sub_category_id']);
 
-      //   this.addProductForm.get('subCategoryName').setValue(productData['subCategoryName']);
         this.addProductForm.get('productPrice').setValue(productData['price']);
         this.addProductForm.get('productCode').setValue(productData['productCode']);
         this.addProductForm.get('productWeight').setValue(productData['product_weight']);
@@ -67,6 +65,11 @@ export class ProductShellAddComponent implements OnInit {
         this.addProductForm.get('status').setValue(productData['available']);
       }
     });
+
+  }
+
+  fetchSubCategories(store_category_id)
+  {
 
   }
 
@@ -121,12 +124,10 @@ export class ProductShellAddComponent implements OnInit {
   }
 
   storeCategoryChange(store_category_id) {
-    console.log('dsdsdsd');
     this._categoryService.getStoreCategoryData(+store_category_id).subscribe(data => {
       this.storeSubCategoryData = data['store_categories'][0]['store_sub_category_name'];
       this.subCategoryData = this.storeSubCategoryData[0]['sub_category_data'];
       this.addProductForm.get('storeSubCategoryName').setValue(this.storeSubCategoryData[0]['store_sub_category_id']);
-      console.log(this.storeSubCategoryData);
     });
   }
 
