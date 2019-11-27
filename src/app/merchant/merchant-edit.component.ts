@@ -49,18 +49,15 @@ export class MerchantEditComponent implements OnInit {
 
   ngOnInit() {
     this.storeId = +this._activatedRoute.snapshot.params['storeId'];
-    this._categoryService.getAllStoreCategory("").subscribe((data)=>{
-      this.storeCategories = data['store_categories'];
-    });
+    
     if (this.storeId != 0) {
-      this._merchantService.fetchAllStoreById(this.storeId).subscribe((data) => {
-        let storedata = data['store'];
-        console.log(storedata);
+      this._merchantService.storeDataCatData(this.storeId).subscribe(responseList=>{
+        let storedata = responseList[0]['store'];
         this.addStoreForm.get('storeAddress').setValue(storedata[0]['address']);
         this.addStoreForm.get('storeAlternateNumber').setValue(storedata[0]['alternative_number']);
         this.addStoreForm.get('storePhoneNumber').setValue(storedata[0]['phone_number']);
         this.addStoreForm.get('storeLandlineNumber').setValue(storedata[0]['landline_number']);
-        this.addStoreForm.get('status').setValue(storedata[0]['status']['data'][0]);
+        this.addStoreForm.get('status').setValue(storedata[0]['status']);
         this.addStoreForm.get('country').setValue(storedata[0]['country']);
         this.addStoreForm.get('state').setValue(storedata[0]['state']);
         this.addStoreForm.get('city').setValue(storedata[0]['city']);
@@ -70,14 +67,21 @@ export class MerchantEditComponent implements OnInit {
         this.addStoreForm.get('storeGSTNumber').setValue(storedata[0]['gst_number']);
         this.addStoreForm.get('storePANNumber').setValue(storedata[0]['pan_number']);
         this.addStoreForm.get('pinCode').setValue(storedata[0]['pin_code']);
-
         this.addStoreForm.get('storeLatitude').setValue(storedata[0]['latitude']);
         this.addStoreForm.get('storeLongitude').setValue(storedata[0]['longitude']);
         this.addStoreForm.get('storeDescription').setValue(storedata[0]['store_description']);
         this.addStoreForm.get('storeRating').setValue(storedata[0]['store_rating']);
         this.addStoreForm.get('storeCategoryName').setValue(storedata[0]['store_parent_category']);
+        this.storeCategories = responseList[1]['store_categories'];       
+      })
+    }
+    else
+    {
+      this._categoryService.getAllStoreCategory("").subscribe((data)=>{
+        this.storeCategories = data['store_categories'];
       });
     }
+
     this.locationService.getPosition().then(pos => {
       // console.log(`Positon: ${pos.lng} ${pos.lat}`);
       this.addStoreForm.patchValue({

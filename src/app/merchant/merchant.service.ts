@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, of, throwError, forkJoin } from 'rxjs';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { tap, map, catchError, debounceTime } from 'rxjs/operators';
 import { ErrorTracker } from '../shared/errorTracker';
@@ -12,6 +12,7 @@ export class MerchantService {
   constructor(private _http: HttpClient) { }
   stores: any;
   private _storeServiceUrl = "http://ec2-3-134-77-29.us-east-2.compute.amazonaws.com:3000/storesapi/";
+  private _categoryServiceUrl = "http://ec2-3-134-77-29.us-east-2.compute.amazonaws.com:3000/categoryapi";
 
   fetchAllStores(page_number: number, page_size: any, filterBy: any): Observable<any> {
     let obj = {};
@@ -269,6 +270,14 @@ export class MerchantService {
         })
         , catchError(this.handleError)
       );
+  }
+
+  public storeDataCatData(storeId) :Observable<any[]> {
+    let obj = {};    
+    obj['filterBy'] = "";
+    let response1 = this._http.get(`${this._storeServiceUrl}storeinfo/${storeId}`);
+    let response2 = this._http.post(`${this._categoryServiceUrl}/storecategories`,obj);
+    return forkJoin([response1,response2]);
   }
 
   fetchAllStoreById(storeId): Observable<any> {
