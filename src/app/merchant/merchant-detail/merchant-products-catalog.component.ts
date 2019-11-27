@@ -39,11 +39,25 @@ export class MerchantProductsCatalogComponent implements OnInit {
   }
 
   updateProductStock(event, storeProductId) {
-    let stock = (+event.target.value == 1) ? 0 : 1;
-    this._merchantService.updateStoreProductStock(storeProductId, stock).subscribe((data) => {
-      console.log(data);
-    })
-
+    if (confirm("Are you sure you want to update ")) {
+      let stock = (+event.target.value == 1) ? 0 : 1;
+      this._merchantService.updateStoreProductStock(storeProductId, stock).subscribe((data) => {
+        if(data['status'] == 200)
+        {
+          alert(data['message']);
+        }
+      })   
+    }
+    else
+    {
+      this.store_products_info.map(data=>{
+          if(data.store_product_mapping_id == storeProductId)
+          {
+            console.log(data);
+            data.stock = 0;
+          }
+      })
+    }
   }
 
   deleteStoreProduct(store_product_id) {

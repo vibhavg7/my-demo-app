@@ -57,7 +57,8 @@
                         </td>
                        
                         <td>
-                            <input type="checkbox" value="{{store_product.stock}}" name="{{store_product.store_product_mapping_id}}" [checked]="(store_product.stock ? 'checked' : '')"
+                            <input class="stockcheckbox" type="checkbox" value="{{store_product.stock}}" name="{{store_product.store_product_mapping_id}}" 
+                                [checked]="(store_product.stock ? 'checked' : '')"
                                 (change)="updateProductStock($event,store_product.store_product_mapping_id)">
                         </td>
                         <td>
