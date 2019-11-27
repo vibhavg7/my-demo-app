@@ -29,9 +29,8 @@ export class AddStoreCategoryComponent implements OnInit {
   ngOnInit() {
     this.storeCategoryId = +this._activatedRoute.snapshot.params['storeCategoryId'];
     if (this.storeCategoryId != 0) {
-      this._categoryService.getStoreCategoryData(this.storeCategoryId).subscribe((data) => {
-        // console.log(data);
-        let storecategorydata = data['store_categories'];
+      this._categoryService.getStoreCategory(this.storeCategoryId).subscribe((data) => {
+        let storecategorydata = data['category'];
         console.log(storecategorydata);
         this.addStoreCategoryForm.get('storeCategoryName').setValue(storecategorydata[0]['store_category_name']);
         this.addStoreCategoryForm.get('storeCategoryRanking').setValue(storecategorydata[0]['store_category_ranking']);
@@ -61,9 +60,8 @@ export class AddStoreCategoryComponent implements OnInit {
         })
     }
     else {
-      // this._categoryService.editStoreCategory(this.addStoreCategoryForm.value,this.storeCategoryId);
       this._categoryService.editStoreCategory(this.addStoreCategoryForm.value,this.storeCategoryId).subscribe((data) => {
-        console.log(data);
+        // console.log(data);
         if (data.status == "200") {
           this._router.navigate(['category/storecategories']);
         }

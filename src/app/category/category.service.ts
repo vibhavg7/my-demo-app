@@ -59,6 +59,9 @@ export class CategoryService {
       , catchError(this.handleError)
     )
   }
+
+
+
   // to fetch all sub categories of store category
   getStoreSubCategoryData(category_id,filterBy): Observable<any> {
     // let obj = {};
@@ -161,6 +164,20 @@ export class CategoryService {
     )
   }
 
+  getStoreCategory(store_category_id) : Observable<any>
+  {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const url = `${this._categoryServiceUrl}/storecategories/${store_category_id}`;
+    return this._http.get(url, { headers }).pipe(
+        tap(data => {
+            // console.log(JSON.stringify(data)) 
+        },map((data) => {
+          return data;
+        })),
+        catchError(this.handleError)
+    )
+  }
+
   deleteStoreSubCategory(sub_category_id) : Observable<any>
   {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
@@ -192,7 +209,7 @@ export class CategoryService {
     obj['status'] = +categorydata['status'];
     obj['store_category_ranking'] = +categorydata['storeCategoryRanking'];
 
-    return this._http.put(`${this._categoryServiceUrl}categoryapi/storecategories`, obj).pipe(
+    return this._http.put(`${this._categoryServiceUrl}/storecategories`, obj).pipe(
       tap(data => {
       }),
       map((data) => {

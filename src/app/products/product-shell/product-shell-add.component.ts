@@ -29,7 +29,7 @@ export class ProductShellAddComponent implements OnInit {
       productName: ['',Validators.required],
       storeCategoryName:  ['',Validators.required],
       storeSubCategoryName :  ['',Validators.required],
-      subCategoryName:  ['',Validators.required],
+      subCategoryName:  [''],
       productWeightType:  ['',Validators.required],
       productPrice:  ['',Validators.required],
       productWeight:  ['',Validators.required],
