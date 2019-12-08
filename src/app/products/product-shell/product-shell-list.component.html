@@ -30,6 +30,19 @@
             <span>No Products Found in catelog</span>
         </div>
     </div>
+    <div class="card-footer">
+        <div class="row">
+          <div class="form-check col-md-12">
+            <label>
+              <input class="form-check-input"
+                     type="checkbox"
+                     (change)="checkChanged($event.target.checked)"
+                     [checked]="displayCode">
+              Display Product Code
+            </label>
+          </div>
+         
+      </div>
 </div>
 
 <div *ngIf='errorMessage' class='alert alert-danger'>

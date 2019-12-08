@@ -5,7 +5,9 @@ import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, tap, distinctUntilChanged, debounceTime, switchMap } from 'rxjs/operators';
 import { FormBuilder, FormGroup } from '@angular/forms';
-
+import { Store } from '@ngrx/store';
+import { select } from '@ngrx/store';
+import * as fromProduct from '../state/product.reducer';
 @Component({
   selector: 'app-product-shell-list',
   templateUrl: './product-shell-list.component.html',
@@ -17,6 +19,7 @@ export class ProductShellListComponent implements OnInit, OnDestroy {
   searchCriteriaForm: FormGroup;
   constructor(private _productService: ProductService,
     private router: Router, private formBuilder: FormBuilder,
+    private store: Store<fromProduct.State>,
     private _activatedRoute: ActivatedRoute) {
     this.searchCriteriaForm = this.formBuilder.group({
       searchCriteria: ['']
@@ -31,19 +34,22 @@ export class ProductShellListComponent implements OnInit, OnDestroy {
   productsCount: number = 0;
   totalPages: number;
   Pages: any = [];
-  currentPage : any;
-  pageSize:number =20;
+  currentPage: any;
+  pageSize: number = 20;
+  displayCode:boolean;
   ngOnInit() {
     this.currentPage = 1;
-    
     this.sub = this._productService.selectProductChanges$.subscribe((data) => {
       this.selectedProduct = data;
+    });
+    
+    this.store.pipe(select(fromProduct.getShowProductCode)).subscribe((data)=>{
+      this.displayCode = data;
     });
 
     let productsData = this._activatedRoute.snapshot.data['products']['product'];
     this.productsCount = +this._activatedRoute.snapshot.data['products']['product_total_count'];
     this.onProductRetrieved(productsData);
-    this.onChanges();
   }
 
   onChanges() {
@@ -51,20 +57,26 @@ export class ProductShellListComponent implements OnInit, OnDestroy {
     }), distinctUntilChanged(), debounceTime(200),
       switchMap(query => (this.filterBy = query, this._productService.getProducts(this.currentPage, this.pageSize, query)))
     )
-      .subscribe(res => { console.log(res); this.onProductRetrieved(res['products']),this.productsCount = res['productCount']; })
+      .subscribe(res => { console.log(res); this.onProductRetrieved(res['products']), this.productsCount = res['productCount']; })
   }
 
-  currentPageFn(page) {    
+  currentPageFn(page) {
     this.currentPage = page;
-    this._productService.getProducts(this.currentPage, this.pageSize,this.filterBy)
+    this._productService.getProducts(this.currentPage, this.pageSize, this.filterBy)
       .subscribe((data) => {
         this.onProductRetrieved(data['products']);
       })
   }
 
+  checkChanged(value) {
+    this.store.dispatch({
+      type: 'TOGGLE_PRODUCT_CODE',
+      payload: value
+    })
+  }
+
 
   onSelected(product) {
-    // console.log(product);
     this._productService.changeSelectedProduct(product.productId);
   }
 

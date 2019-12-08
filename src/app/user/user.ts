@@ -5,7 +5,4 @@ export class User
     username : string;
     email : string;
     token : string;
-    // id : number;
-    // userName : string;
-    // isAdmin : boolean
 }

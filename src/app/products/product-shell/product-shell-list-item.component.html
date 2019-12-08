@@ -1,2 +1,4 @@
 {{productData?.productName | upperCaseName}}
-    <!-- - {{product?.productCode}} -->
+<ng-container *ngIf="showProductCode">
+    - {{productData?.productCode}}
+</ng-container>

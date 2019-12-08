@@ -228,6 +228,8 @@ export class ProductService implements OnDestroy {
             productCode: null,
             releaseDate: null,
             lastUpdated: null,
+            product_image_id:null,
+            product_weight:null,
             price: null,
             description: null,
             starRating: null,

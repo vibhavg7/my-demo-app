@@ -1,4 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Store, select } from '@ngrx/store';
+import * as fromProduct from '../state/product.reducer';
 
 @Component({
   selector: 'app-product-shell-list-item',
@@ -7,9 +9,13 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ProductShellListItemComponent implements OnInit {
 
-  constructor() { }
+  constructor(private store:Store<fromProduct.State>) { }
   @Input('productInfo1') productData: any;
+  showProductCode:boolean = false;
   ngOnInit() {
+    this.store.pipe(select(fromProduct.getShowProductCode)).subscribe((data)=>{
+        this.showProductCode = data;      
+    });
   }
 
 }

@@ -6,10 +6,12 @@ export class IProduct
     releaseDate : string;
     lastUpdated : string;
     description: string;
+    product_image_id:number;
+    product_weight:number;
     price: number;
     starRating: number;
     image_url : string;
     categoryName : string;
-    available : boolean;
+    available : number;
 }
 

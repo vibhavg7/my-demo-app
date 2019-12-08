@@ -14,6 +14,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ImageUploadComponent } from './image-upload/image-upload.component';
 import { ProductShellListItemComponent } from './product-shell/product-shell-list-item.component';
 import { ProductService } from './product.service';
+import { StoreModule } from '@ngrx/store';
+import { reducer } from './state/product.reducer';
 // import { ProductService } from './product.service';
 
 
@@ -31,6 +33,7 @@ import { ProductService } from './product.service';
     // ImageUploadComponent
   ],
   imports: [
+    StoreModule.forFeature('products',reducer),
     ProductRoutingModule,
     ReactiveFormsModule,
     SharedModule
