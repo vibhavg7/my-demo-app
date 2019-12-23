@@ -11,8 +11,8 @@ export class MerchantService {
 
   constructor(private _http: HttpClient) { }
   stores: any;
-  private _storeServiceUrl = "http://ec2-3-134-77-29.us-east-2.compute.amazonaws.com:3000/storesapi/";
-  private _categoryServiceUrl = "http://ec2-3-134-77-29.us-east-2.compute.amazonaws.com:3000/categoryapi";
+  private _storeServiceUrl = "http://localhost:3000/storesapi/";
+  private _categoryServiceUrl = "http://localhost:3000/categoryapi";
 
   fetchAllStores(page_number: number, page_size: any, filterBy: any): Observable<any> {
     let obj = {};
@@ -37,10 +37,10 @@ export class MerchantService {
     const url = `${this._storeServiceUrl}storeinfo/${store_id}`;
     return this._http.delete(url, { headers }).pipe(
         tap(data => {
-            // console.log(JSON.stringify(data)) 
+            // console.log(JSON.stringify(data))
         }),
         catchError(this.handleError)
-    ) 
+    )
   }
 
   deleteStoreProduct(store_product_id) : Observable<any>
@@ -49,10 +49,10 @@ export class MerchantService {
     const url = `${this._storeServiceUrl}storeinfo/storeproducts/${store_product_id}`;
     return this._http.delete(url, { headers }).pipe(
         tap(data => {
-            // console.log(JSON.stringify(data)) 
+            // console.log(JSON.stringify(data))
         }),
         catchError(this.handleError)
-    ) 
+    )
   }
 
   editStoreProduct(storeProductForm, storeProductId) {
@@ -80,7 +80,7 @@ export class MerchantService {
   updateStoreProductStock(storeProductId,stock)
   {
     let obj = {};
-    obj["stock"] = stock;    
+    obj["stock"] = stock;
     const url = `${this._storeServiceUrl}storeinfo/storeproducts/updatestock/${storeProductId}`;
     console.log(obj);
     console.log(url);
@@ -179,7 +179,7 @@ export class MerchantService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this._http.post(url, obj, { headers }).pipe(
       tap(data => {
-        //console.log(JSON.stringify(data)) 
+        //console.log(JSON.stringify(data))
       }),
       map((data) => {
         return data;
@@ -188,28 +188,30 @@ export class MerchantService {
     )
   }
 
-  addStoreProducts(addStoreProductForm, product_id, storeId): Observable<any> {
-    let obj = {};
+  addStoreProducts(addStoreProductForm, selectedProduct: any, storeId): Observable<any> {
+    const obj: any = {};
 
-    obj['store_cost_price'] = addStoreProductForm['productCostPrice'];
-    obj['store_marked_price'] = addStoreProductForm['productMarkedPrice'];
-    obj['store_selling_price'] = addStoreProductForm['productSellingPrice'];
-    obj['store_discount'] = +addStoreProductForm['storeDiscount'];
-    obj['store_margin'] = +addStoreProductForm['storeMargin'];
-    obj['store_initial_quantity'] = 0//+addStoreProductForm['storeQuantity'];
-    obj['store_updated_quantity'] = 0//+addStoreProductForm['storeQuantity'];
-    obj['store_additional_quantity'] = 0;
-    obj['product_id'] = product_id;
-    obj['store_id'] = storeId;
-    obj['status'] = addStoreProductForm['status'];
-    obj['stock'] = 1;
+    obj.store_cost_price = addStoreProductForm.productCostPrice;
+    obj.store_marked_price = addStoreProductForm.productMarkedPrice;
+    obj.store_selling_price = addStoreProductForm.productSellingPrice;
+    obj.store_discount = +addStoreProductForm.storeDiscount;
+    obj.store_margin = +addStoreProductForm.storeMargin;
+    obj.store_initial_quantity = 0;
+    obj.store_updated_quantity = 0;
+    obj.store_additional_quantity = 0;
+    obj.product_id = selectedProduct.product_id;
+    obj.parent_category_id = selectedProduct.parent_category_id;
+    obj.category_id = selectedProduct.category_id;
+    obj.store_id = storeId;
+    obj.status = addStoreProductForm.status;
+    obj.stock = 1;
 
     console.log(obj);
     const url = `${this._storeServiceUrl}addstoreproducts`;
     console.log(url);
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this._http.post(url, obj, { headers }).pipe(
-      tap(data => { console.log(JSON.stringify(data)) }),
+      tap(data => { console.log(JSON.stringify(data)); }),
       map((data) => {
         return data;
       }),
@@ -273,7 +275,7 @@ export class MerchantService {
   }
 
   public storeDataCatData(storeId) :Observable<any[]> {
-    let obj = {};    
+    let obj = {};
     obj['filterBy'] = "";
     let response1 = this._http.get(`${this._storeServiceUrl}storeinfo/${storeId}`);
     let response2 = this._http.post(`${this._categoryServiceUrl}/storecategories`,obj);

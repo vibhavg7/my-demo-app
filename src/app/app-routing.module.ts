@@ -1,54 +1,61 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule,PreloadAllModules } from '@angular/router';
+import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { WelcomeComponent } from './home/welcome.component';
 import { AuthGuard } from './user/auth.guard';
 
-const routes: any = [ 
-    {path:'welcome',component:WelcomeComponent},
+const routes: any = [
+  { path: 'welcome', component: WelcomeComponent},
     {
-      path:'products',
-      canActivate:[AuthGuard],
-      data:{ preload:true },
-      loadChildren: ()=>
-        import('./products/product.module').then(m=>m.ProductModule)
+      path: 'products',
+      canActivate: [AuthGuard],
+      data: { preload: true },
+      loadChildren: () =>
+        import('./products/product.module').then(m => m.ProductModule)
     },
     {
-      path:'category',
-      canActivate:[AuthGuard],
-      data:{ preload:true },
-      loadChildren: ()=>
-        import('./category/category.module').then(m=>m.CategoryModule)
+      path: 'category',
+      canActivate: [AuthGuard],
+      data: { preload: true },
+      loadChildren: () =>
+        import('./category/category.module').then(m => m.CategoryModule)
     },
     {
-      path:'merchant',
-      canActivate:[AuthGuard],
-      data:{ preload:true },
-      loadChildren: ()=>
-        import('./merchant/merchant.module').then(m=>m.MerchantModule)
+      path: 'merchant',
+      canActivate: [AuthGuard],
+      data: { preload: true },
+      loadChildren: () =>
+        import('./merchant/merchant.module').then(m => m.MerchantModule)
     },
     {
-      path:'customer',
-      canActivate:[AuthGuard],
-      data:{ preload:true },
-      loadChildren: ()=>
-        import('./customer/customer.module').then(m=>m.CustomerModule)
+      path: 'customer',
+      canActivate: [AuthGuard],
+      data: { preload: true },
+      loadChildren: () =>
+        import('./customer/customer.module').then(m => m.CustomerModule)
     },
     {
-      path:'order',
-      canActivate:[AuthGuard],
-      data:{ preload:true },
-      loadChildren: ()=>
-        import('./order/order.module').then(m=>m.OrderModule)
+      path: 'order',
+      canActivate: [AuthGuard],
+      data: { preload: true },
+      loadChildren: () =>
+        import('./order/order.module').then(m => m.OrderModule)
     },
     {
-      path:'employee',
-      canActivate:[AuthGuard],
-      data:{ preload:true },
-      loadChildren: ()=>
-        import('./employee/employee.module').then(m=>m.EmployeeModule)
+      path: 'employee',
+      canActivate: [AuthGuard],
+      data: { preload: true },
+      loadChildren: () =>
+        import('./employee/employee.module').then(m => m.EmployeeModule)
     },
-    {path:'',redirectTo:'welcome',pathMatch:'full'},
-    {path:'**',redirectTo:'welcome',pathMatch:'full'}
+    {
+      path: 'banner',
+      canActivate: [AuthGuard],
+      data: { preload: true },
+      loadChildren: () =>
+        import('./banner/banner.module').then(m => m.BannerModule)
+    },
+    {path: '', redirectTo: 'welcome', pathMatch: 'full'},
+    {path: '**', redirectTo: 'welcome', pathMatch: 'full'}
   ];
 
 @NgModule({

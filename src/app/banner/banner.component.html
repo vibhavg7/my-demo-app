@@ -1,0 +1,49 @@
+<div class='card'>
+  <div class='card-header'>
+    {{pageTitle}}
+  </div>
+  <div class='card-body'>
+    <div class="row">
+      <div class='col-md-2'>Filter by:</div>
+      <div class='col-md-4'>
+        <!-- <form [formGroup]="searchCriteriaForm">
+                  <input formControlName="searchCriteria" class="form-control" type="text" id="keyword" placeholder="Search Merchant By Name"
+                      autocomplete="off" autofocus/>
+              </form> -->
+      </div>
+      <div class="col-md-6">
+        <button class="btn btn-outline-secondary" style="float:right" [routerLink]="['/banner/',0,'edit']">
+          Add New Banner
+        </button>
+      </div>
+    </div>
+    <div class='table-responsive'>
+      <table style="width:1000px !important" class='table' *ngIf='banners.length'>
+        <thead>
+          <tr>
+            <th>
+
+            </th>
+            <th style="width:90px !important">Banner Id</th>
+            <th>Banner Name</th>
+            <th>ZipCode</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor='let banner of banners' app-banner-data [bannerInfo]="banner">
+            <!-- < ></app-banner-data> -->
+          </tr>
+        </tbody>
+      </table>
+      <app-pagination *ngIf='banners.length' [totalItemCount]="bannerTotalCount" (currentPage)="currentPageFn($event)"></app-pagination>
+      <div *ngIf='banners?.length == 0'>
+        No Banners Data Found
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf='errorMessage' class='alert alert-danger'>
+  Error: {{ errorMessage }}
+</div>

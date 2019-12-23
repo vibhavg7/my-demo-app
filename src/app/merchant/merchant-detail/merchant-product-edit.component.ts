@@ -19,19 +19,19 @@ export class MerchantProductEditComponent implements OnInit {
   results: any;
   addStoreProductForm: any;
   selectedProduct: any = '';
-  productValueSet: boolean = false;
-  storeProductId : any;
+  productValueSet = false;
+  storeProductId: any;
   sub: any;
   constructor(
     private formBuilder: FormBuilder,
-    private _router: Router,
-    private _activatedRoute:ActivatedRoute,
-    private _productService: ProductService,
-    private _merchantService: MerchantService
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private productService: ProductService,
+    private merchantService: MerchantService
   ) {
     this.addStoreProductForm = this.formBuilder.group({
       storeproductName: ['', Validators.required],
-      productMarkedPrice: ['', Validators.required],      
+      productMarkedPrice: ['', Validators.required],
       productCostPrice: ['', Validators.required],
       productSellingPrice: ['', Validators.required],
       storeMargin: ['', Validators.required],
@@ -42,34 +42,37 @@ export class MerchantProductEditComponent implements OnInit {
 
   get f() { return this.addStoreProductForm.controls; }
 
-  ngOnInit() {    
-    this.storeId = +this._activatedRoute.snapshot.params['storeId'];
-    this.storeProductId = +this._activatedRoute.snapshot.params['productId'];
-    if(this.storeProductId != 0)
-    {
-      this._merchantService.fetchStoreProductById(this.storeProductId).subscribe((data)=>{
-        let productdata = data['products_info'];
+  ngOnInit() {
+    this.storeId = +this.activatedRoute.snapshot.params.storeId;
+    this.storeProductId = +this.activatedRoute.snapshot.params.productId;
+    if (this.storeProductId !== 0) {
+      this.merchantService.fetchStoreProductById(this.storeProductId).subscribe((data: any) => {
+        const productdata = data.products_info;
         console.log(productdata[0]);
-        this.addStoreProductForm.get('storeproductName').setValue(productdata[0]['product_name']);
-        this.addStoreProductForm.get('productMarkedPrice').setValue(productdata[0]['product_marked_price']);
-        this.addStoreProductForm.get('productCostPrice').setValue(productdata[0]['store_cost_price']);
-        this.addStoreProductForm.get('productSellingPrice').setValue(productdata[0]['store_selling_price']);
-        this.addStoreProductForm.get('storeMargin').setValue(productdata[0]['store_margin']);
-        this.addStoreProductForm.get('storeDiscount').setValue(productdata[0]['store_discount']);
-        this.addStoreProductForm.get('status').setValue(productdata[0]['status']);        
-      })
+        this.addStoreProductForm.get('storeproductName').setValue(productdata[0].product_name);
+        this.addStoreProductForm.get('productMarkedPrice').setValue(productdata[0].product_marked_price);
+        this.addStoreProductForm.get('productCostPrice').setValue(productdata[0].store_cost_price);
+        this.addStoreProductForm.get('productSellingPrice').setValue(productdata[0].store_selling_price);
+        this.addStoreProductForm.get('storeMargin').setValue(productdata[0].store_margin);
+        this.addStoreProductForm.get('storeDiscount').setValue(productdata[0].store_discount);
+        this.addStoreProductForm.get('status').setValue(productdata[0].status);
+      });
     }
-    // this.onChanges();
-
   }
 
   onChanges() {
+    this.productValueSet = false;
     this.addStoreProductForm.get('storeproductName').valueChanges.pipe(tap(data => {
-      console.log(data);
     }), distinctUntilChanged(), debounceTime(200),
-      switchMap(query => !this.productValueSet ? (this._productService.searchProducts(query)) : (this.productValueSet = false, of([]))
-      ))
-    .subscribe(res => { this.results = res; })
+      switchMap((query) => {
+        if (!this.productValueSet) {
+          return this.productService.searchProducts(query);
+        } else {
+          this.productValueSet = true;
+          return of([]);
+        }
+      }))
+      .subscribe(res => { this.results = res; console.log(this.results); });
   }
 
   onSubmit() {
@@ -79,60 +82,41 @@ export class MerchantProductEditComponent implements OnInit {
       return;
     }
 
-    if (this.storeProductId == 0) {      
-      this._merchantService.addStoreProducts(this.addStoreProductForm.value,this.selectedProduct['product_id'],this.storeId)
-      .subscribe((data) => {
-        console.log(data);
-        if (data.status == 200) {
-          this._router.navigate([`merchant/${this.storeId}/merchantproducts`]);
-          // this._router.navigate(['merchant/',this.storeId,'/merchantproducts']);
-        }
-        if (data.status == "400") {
-          alert('Category Not Added . Internal Server Error');
-        }
-      },
-        (error) => {
-          this.errorMessage = error;
-        }
-      );
-    }
-    else
-    {
-      this._merchantService.editStoreProduct(this.addStoreProductForm.value,this.storeProductId).subscribe((data)=>{
-          if (data['status'] == 200) {
-            this._router.navigate([`merchant/${this.storeId}/merchantproducts`]);
+    if (this.storeProductId == 0) {
+      this.merchantService.addStoreProducts(this.addStoreProductForm.value, this.selectedProduct, this.storeId)
+        .subscribe((data) => {
+          console.log(data);
+          if (data.status == 200) {
+            this.router.navigate([`merchant/${this.storeId}/merchantproducts`]);
+            // this._router.navigate(['merchant/',this.storeId,'/merchantproducts']);
           }
-          if (data['status'] == 400) {
+          if (data.status == "400") {
             alert('Category Not Added . Internal Server Error');
           }
-      })
+        },
+          (error) => {
+            this.errorMessage = error;
+          }
+        );
     }
-    // else {
-    //   console.log(this.addStoreProductForm.value);
-    //   // this._categoryService.editStoreCategory(this.addStoreCategoryForm.value,this.storeCategoryId);
-    //   this._merchantService.editStoreProducts(this.addStoreProductForm.value,this.selectedProduct['product_id'], this.storeProductId)
-    //   .subscribe((data) => {
-    //     console.log(data);
-    //     if (data.status == "200") {
-    //       this._router.navigate(['category/storecategories']);
-    //     }
-    //     if (data.status == "400") {
-    //       alert('Category Not Added . Internal Server Error');
-    //     }
-    //   },
-    //     (error) => {
-    //       this.errorMessage = error;
-    //     })
-    // }
-
+    else {
+      this.merchantService.editStoreProduct(this.addStoreProductForm.value, this.storeProductId).subscribe((data: any) => {
+        if (data.status == 200) {
+          this.router.navigate([`merchant/${this.storeId}/merchantproducts`]);
+        }
+        if (data.status == 400) {
+          alert('Category Not Added . Internal Server Error');
+        }
+      });
+    }
 
   }
 
   productSelected(product) {
     this.results = [];
-    this.productValueSet = true;    
-    this.selectedProduct = product;    
-    this.addStoreProductForm.get('storeproductName').setValue(this.selectedProduct['product_name']);
+    this.productValueSet = true;
+    this.selectedProduct = product;
+    this.addStoreProductForm.get('storeproductName').setValue(this.selectedProduct.product_name);
   }
 
 }

@@ -37,18 +37,18 @@
                             </a>
                         </td>
                         <td>
-                            <span (click)="ViewOrderedProducts(storeOrder?.order_id)" 
+                            <span (click)="ViewOrderedProducts(storeOrder?.order_id)"
                                     style="display:block;font-size:14px;cursor:pointer;color:blue">
                                 Ordered Products
                             </span>
                         </td>
                         <td>
-                            <i class="fas fa-rupee-sign"></i> {{ storeOrder?.order_amount }}
+                            &#8377;  {{ storeOrder?.order_amount }}
                         </td>
-                        <td>{{storeOrder?.voucher_code}}</td>
-                        <td><i class="fas fa-rupee-sign"></i>{{storeOrder?.discount_amount}}</td>
-                        <td><i class="fas fa-rupee-sign"></i>{{storeOrder?.order_delivery_fee}}</td>
-                        <td><i class="fas fa-rupee-sign"></i> {{ storeOrder?.final_amount }}</td>
+                        <td>         {{storeOrder?.voucher_code}}</td>
+                        <td>&#8377;  {{storeOrder?.discount_amount}}</td>
+                        <td>&#8377;  {{storeOrder?.order_delivery_fee}}</td>
+                        <td>&#8377;   {{ storeOrder?.final_amount }}</td>
                         <td>{{ storeOrder?.payment_mode == 1 ? 'Online':'Cash' }}</td>
                         <td>{{ storeOrder?.order_placing_date |date:'medium' }}</td>
                         <td style="font-weight:bold">{{ storeOrder?.order_status}}</td>

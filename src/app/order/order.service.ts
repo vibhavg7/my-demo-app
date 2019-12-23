@@ -9,36 +9,34 @@ import { ErrorTracker } from '../shared/errorTracker';
 })
 export class OrderService {
 
-  constructor(private _http:HttpClient) { }
-  private _orderService : any = 'http://ec2-3-134-77-29.us-east-2.compute.amazonaws.com:3000/orderapi/';
-  public orderDetails : any = '';
+  constructor(private http: HttpClient) { }
+  private orderService: any = 'http://localhost:3000/orderapi/';
+  public orderDetails: any = '';
 
- 
-  fetchOrderDetails(orderId) : Observable<any>
-  {
-    console.log(this.orderDetails);
-    if(this.orderDetails)
-    {      
-      return of(this.orderDetails);
-    }
-    return this._http.get<any>(`${this._orderService}${orderId}`).pipe(
+
+  fetchOrderDetails(orderId): Observable<any> {
+    // console.log(this.orderDetails);
+    // if (this.orderDetails) {
+    //   return of(this.orderDetails);
+    // }
+    return this.http.get<any>(`${this.orderService}${orderId}`).pipe(
       tap(data => {
-        console.log(data);
+        // console.log(data);
       })
       , map((data) => {
-          this.orderDetails = data;
+          // this.orderDetails = data;
           return data;
       })
       , catchError(this.handleError)
-    )
+    );
   }
 
-  private handleError(err: HttpErrorResponse) :Observable<ErrorTracker> {
-    
-    let dataError = new ErrorTracker();
+  private handleError(err: HttpErrorResponse): Observable<ErrorTracker> {
+
+    const dataError = new ErrorTracker();
     dataError.errorNumber = 100;
-    dataError.errorMessage =`Server returned code: ${err.status}, error message is: ${err.message}`;
-    dataError.friendlyMessage = "An error retriving data";
+    dataError.errorMessage = `Server returned code: ${err.status}, error message is: ${err.message}`;
+    dataError.friendlyMessage = 'An error retriving data';
     return throwError(dataError);
   }
 }

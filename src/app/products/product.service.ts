@@ -10,13 +10,15 @@ import { ProductResolved } from './product-resolved';
     { providedIn: 'root' }
 )
 export class ProductService implements OnDestroy {
-    private _productServiceUrl = "http://ec2-3-134-77-29.us-east-2.compute.amazonaws.com:3000/productsapi/";
+    // tslint:disable-next-line:variable-name
+    private _productServiceUrl = "http://localhost:3000/productsapi/";
     private products: IProduct[];
     public productResolved: ProductResolved;
     private selectedProductSource = new Subject<IProduct | null>();
     // private selectedProductSource = new BehaviorSubject<IProduct | null>(null);
     selectProductChanges$ = this.selectedProductSource.asObservable();
 
+    // tslint:disable-next-line:variable-name
     constructor(private _http: HttpClient) {
         this.productResolved = new ProductResolved();
     }
@@ -53,7 +55,7 @@ export class ProductService implements OnDestroy {
         return this._http.post(`${this._productServiceUrl}fetchProducts`, obj)
             .pipe(
                 tap(data => {
-                    // console.log(JSON.stringify(data)) 
+                    // console.log(JSON.stringify(data))
                 })
                 , map((data) => {
                     this.productResolved.products = data['products'];
@@ -70,14 +72,14 @@ export class ProductService implements OnDestroy {
     }
 
     searchProducts(queryString: any): Observable<any> {
-        if (queryString != '') {
+        if (queryString !== '') {
             return this._http.get<any[]>(`${this._productServiceUrl}productsearch/${queryString}`)
                 .pipe(
                     tap(data => {
                         // console.log(JSON.stringify(data))
                     })
-                    , map((data) => {
-                        return data['products'];
+                    , map((data: any) => {
+                        return data.products;
 
                     })
                     , catchError(this.handleError)
@@ -93,7 +95,7 @@ export class ProductService implements OnDestroy {
         const url = `${this._productServiceUrl}${product_id}`;
         return this._http.delete(url, { headers }).pipe(
             tap(data => {
-                // console.log(JSON.stringify(data)) 
+                // console.log(JSON.stringify(data))
             }),
             catchError(this.handleError)
         )
@@ -113,8 +115,8 @@ export class ProductService implements OnDestroy {
         obj['product_weight'] = +product['productWeight'];
         // obj['category_id'] = product['subCategoryName'];
         if(!!product['subCategoryName'])
-        {            
-            obj['category_id'] = product['subCategoryName'];    
+        {
+            obj['category_id'] = product['subCategoryName'];
         }
         else if(!!product['storeSubCategoryName'])
         {
@@ -146,8 +148,8 @@ export class ProductService implements OnDestroy {
         obj['status'] = +product['status'];
         obj['product_weight'] = +product['productWeight'];
         if(!!product['subCategoryName'])
-        {            
-            obj['category_id'] = product['subCategoryName'];    
+        {
+            obj['category_id'] = product['subCategoryName'];
         }
         else if(!!product['storeSubCategoryName'])
         {
@@ -156,11 +158,11 @@ export class ProductService implements OnDestroy {
 
         console.log(obj);
 
-        const url = `${this._productServiceUrl}`;        
+        const url = `${this._productServiceUrl}`;
         const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
         return this._http.post(url, obj, { headers }).pipe(
             tap(data => {
-                console.log(JSON.stringify(data)) 
+                console.log(JSON.stringify(data))
             }),
             map((data) => {
                 return data;

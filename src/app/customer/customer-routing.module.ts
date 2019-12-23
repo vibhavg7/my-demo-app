@@ -14,7 +14,7 @@ const routes: Routes = [
   {
     path: '',
     component: CustomerDashboardComponent,
-    resolve:{ customers: CustomerResolverService }
+    resolve: { customers: CustomerResolverService }
   },
   {
     path: ':customerId',
@@ -32,7 +32,7 @@ const routes: Routes = [
     path: ':customerId/edit',
     component: CustomerEditComponent
   }
-]
+];
 
 @NgModule({
   declarations: [],

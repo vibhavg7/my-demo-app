@@ -8,14 +8,13 @@ import { Router } from '@angular/router';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(private _route:Router) { }
+  constructor(private route: Router) { }
 
   ngOnInit() {
   }
 
-  dashboardClick(category)
-  {
-    this._route.navigate([category]);
+  dashboardClick(category) {
+    this.route.navigate([category]);
   }
 
 }

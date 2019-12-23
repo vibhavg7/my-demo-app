@@ -8,73 +8,61 @@ import { tap, map, catchError } from 'rxjs/operators';
 })
 export class CustomerService {
 
-  constructor(private _http:HttpClient) { }
-    
-  private _customerServiceUrl = "http://ec2-3-134-77-29.us-east-2.compute.amazonaws.com:3000/customerapi/";
-  customerData : any;
-  customer_delivery_addresses : any;
+  constructor(private http: HttpClient) { }
 
-  fetchAllCustomers(page_number: number, page_size: any,filterBy : any): Observable<any> {
+  private customerServiceUrl = 'http://localhost:3000/customerapi/';
+  customerData: any;
+  customerDeliveryAddresses: any;
+
+  fetchAllCustomers(pagenumber: number, pagesize: any, filterBy: any): Observable<any> {
     // if (this.custom) {
     //   return of(this.stores);
     // }
-    let obj = {};
-    obj['page_number'] = page_number; obj['page_size'] = page_size;obj['filterBy'] = filterBy;
-    
-    return this._http.post<any[]>(`${this._customerServiceUrl}customerinfo`,obj)
+    const obj: any = {};
+    obj.page_number = pagenumber; obj.page_size = pagesize; obj.filterBy = filterBy;
+
+    return this.http.post<any[]>(`${this.customerServiceUrl}customerinfo`, obj)
       .pipe(
         tap(data => {
           // console.log(JSON.stringify(data))
         })
         , map((data) => {
-            return data;        
+          return data;
         })
         , catchError(this.handleError)
       );
   }
 
-  fetchAllCustomerOrders(customerId:number,page_number: number, page_size: number,filterBy:any)
-  {  
-    let obj = {};
-    obj['page_number'] = page_number; obj['page_size'] = page_size; obj['customerId'] = customerId;
-    obj['filterBy'] = filterBy;
+  fetchAllCustomerOrders(customerId: number, pagenumber: number, pagesize: number, filterBy: any) {
+    const obj: any = {};
+    obj.page_number = pagenumber; obj.page_size = pagesize; obj.customerId = customerId;
+    obj.filterBy = filterBy;
 
-    // console.log(obj);
-    
-    return this._http.post<any[]>(`${this._customerServiceUrl}/customerinfo/customerorders`,obj)
+    return this.http.post<any[]>(`${this.customerServiceUrl}/customerinfo/customerorders`, obj)
       .pipe(
-        tap(data => {          
+        tap(data => {
           console.log(data);
         })
         , map((data) => {
-            return data;
+          return data;
         })
         , catchError(this.handleError)
       );
   }
 
-  fetchCustomerInfoById(customerId:any) : Observable<any>
-  {
-    if(this.customerData)
-    {
-      return of(this.customerData);
-    }
-    // let getHeaders = new HttpHeaders({
-    //   'Accept':'application/json',
-    //   'Authorization':'my-key'
-    // })
-    // ,{
-    //   headers:getHeaders
+  fetchCustomerInfoById(customerId: any): Observable<any> {
+    // if (this.customerData){
+    //   return of(this.customerData);
     // }
-    return this._http.get(`${this._customerServiceUrl}customerinfo/${customerId}`).pipe(
-      tap(data => { 
-        this.customerData = data;
+    return this.http.get(`${this.customerServiceUrl}customerinfo/${customerId}`).pipe(
+      tap(data => {
+        // this.customerData = data;
       })
       , map((customerData) => {
         return customerData;
       })
       , catchError(this.handleError)
-    )
+    );
   }
 
   private handleError(err: HttpErrorResponse) {

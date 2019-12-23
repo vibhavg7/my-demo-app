@@ -22,6 +22,7 @@
             <table class='table' *ngIf='storeSubCategoryData?.length'>
                 <thead>
                     <tr>
+                        <th></th>
                         <th>Category Id</th>
                         <th>Category Name</th>
                         <th></th>
@@ -29,6 +30,22 @@
                 </thead>
                 <tbody>
                     <tr *ngFor='let storeSubCategory of storeSubCategoryData'>
+                        <td>
+                            <img *ngIf="!storeSubCategory?.store_sub_category_image_url" src='assets/product_images/default_image.jpg'
+                              [style.width.px]='imageWidth'
+                              [style.height.px]='imageHeight' [style.margin.px]='imageMargin'>
+                            <span *ngIf="!storeSubCategory?.store_sub_category_image_url"
+                                (click)="uploadImage(storeSubCategory.store_sub_category_id)" style="display:block;font-size:14px;cursor:pointer;color:blue">
+                              Upload Image
+                            </span>
+                            <img *ngIf="storeSubCategory?.store_sub_category_image_url" src='{{storeSubCategory?.store_sub_category_image_url}}'
+                              [title]='storeSubCategory.store_sub_category'
+                              [style.height.px]='imageHeight' [style.width.px]='imageWidth' [style.margin.px]='imageMargin'>
+
+                            <span *ngIf="storeSubCategory?.store_sub_category_image_url" (click)="uploadImage(storeSubCategory.store_sub_category_id)" style="display:block;font-size:14px;cursor:pointer;color:blue">
+                              Change Image
+                            </span>
+                          </td>
                         <td>
                             <a [routerLink]="['/category/storesubcategories', storeSubCategory?.store_sub_category_id]">
                                 {{ storeSubCategory?.store_sub_category_id }}
@@ -74,15 +91,15 @@
                                                         <i class="fa fa-edit" (click)="addSubCat(storeSubCategory?.store_sub_category_id,subCategory?.sub_category_id)"></i>
                                                         <i class="fa fa-trash" (click)="deleteSubCategory(subCategory?.sub_category_id,storeSubCategory?.store_sub_category_id )"></i>
                                                     </div>
-                
+
                                                 </div>
                                             </div>
-                
+
                                         </div>
                             </i>
                         </td>
 
-                     
+
                     </tr>
 
                 </tbody>

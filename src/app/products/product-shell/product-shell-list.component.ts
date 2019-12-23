@@ -42,7 +42,7 @@ export class ProductShellListComponent implements OnInit, OnDestroy {
     this.sub = this._productService.selectProductChanges$.subscribe((data) => {
       this.selectedProduct = data;
     });
-    
+
     this.store.pipe(select(fromProduct.getShowProductCode)).subscribe((data)=>{
       this.displayCode = data;
     });
@@ -53,6 +53,7 @@ export class ProductShellListComponent implements OnInit, OnDestroy {
   }
 
   onChanges() {
+    console.log('aaaa');
     this.searchCriteriaForm.get('searchCriteria').valueChanges.pipe(tap(data => {
     }), distinctUntilChanged(), debounceTime(200),
       switchMap(query => (this.filterBy = query, this._productService.getProducts(this.currentPage, this.pageSize, query)))

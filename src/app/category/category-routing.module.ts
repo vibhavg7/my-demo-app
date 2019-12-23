@@ -13,12 +13,8 @@ const routes: Routes = [
     {
         path: 'storecategories',
         component: ShopperCategoryComponent,
-        resolve:{ storeCategoriesdata: StoreCategoryResolver }
+        resolve: { storeCategoriesdata: StoreCategoryResolver }
     },
-    // {
-    //     path: 'storecategories/:id',
-    //     component: AddStoreCategoryComponent
-    // },
     {
         path: 'storecategories/:storeCategoryId/edit',
         component: AddStoreCategoryComponent
@@ -30,13 +26,8 @@ const routes: Routes = [
     {
         path: 'storesubcategories/:id',
         component: CategoryListComponent,
-        resolve:{storesubcategorydata:CategoryResolverService}
+        resolve: {storesubcategorydata: CategoryResolverService}
     },
-    // {
-    //     path: 'storesubcategories/:categoryId/sub/:subcategory/edit',
-    //     component: CategoryListComponent,
-    //     // resolve:{storesubcategorydata:CategoryResolverService}
-    // },
     {
         path: 'storesubcategories/:categoryId/edit',
         component: CategoryAddComponent
@@ -52,9 +43,8 @@ const routes: Routes = [
     {
         path: ':id/edit',
         component: CategoryAddComponent
-    },
-   
-]
+    }
+];
 
 @NgModule({
     imports: [RouterModule.forChild(routes)],

@@ -1,50 +1,45 @@
 <div class="card">
-    <div class="card-header">
-        {{pageTitle}}
-        <button class="btn btn-outline-secondary" style="float:right" (click)="addProduct()">
-            Add Product
-        </button>
-    </div>
-    <div class="card-body">
-        <div *ngIf="productsCount > 0">
-            <form [formGroup]="searchCriteriaForm">
-                <div class="form-group">
-                    <div>
-                        <input formControlName="searchCriteria" type="text" class="form-control" id="inputError" autocomplete="off" autofocus placeholder="Search Products">
-                        <span class="glyphicon glyphicon-remove form-control-feedback"></span>
-                    </div>
-                </div>
-            </form>
+  <div class="card-header">
+    {{pageTitle}}
+    <button class="btn btn-outline-secondary" style="float:right" (click)="addProduct()">
+      Add Product
+    </button>
+  </div>
+  <div class="card-body">
 
-            <app-pagination *ngIf='productsCount>0' [totalItemCount]="productsCount" (currentPage)="currentPageFn($event)"></app-pagination>
-            <div class="list-group">
-                <button type="button" class="list-group-item" (click)="onSelected(productInfo)" 
-                        *ngFor="let productInfo of products"
-                        [ngClass]="{'active' : selectedProduct?.productId == productInfo?.productId}">
-                        <app-product-shell-list-item [productInfo1]="productInfo"></app-product-shell-list-item>                   
-                </button>
-                
-            </div>
+    <form [formGroup]="searchCriteriaForm">
+      <div class="form-group">
+        <div>
+          <input (keyup)="onChanges()" formControlName="searchCriteria" type="text" class="form-control" id="inputError" autocomplete="off"
+            autofocus placeholder="Search Products">
+          <span class="glyphicon glyphicon-remove form-control-feedback"></span>
         </div>
-        <div *ngIf="productsCount == 0">
-            <span>No Products Found in catelog</span>
-        </div>
-    </div>
-    <div class="card-footer">
-        <div class="row">
-          <div class="form-check col-md-12">
-            <label>
-              <input class="form-check-input"
-                     type="checkbox"
-                     (change)="checkChanged($event.target.checked)"
-                     [checked]="displayCode">
-              Display Product Code
-            </label>
-          </div>
-         
       </div>
-</div>
+    </form>
+    <div *ngIf="productsCount > 0">
+      <app-pagination *ngIf='productsCount>0' [totalItemCount]="productsCount" (currentPage)="currentPageFn($event)"></app-pagination>
+      <div class="list-group">
+        <button type="button" class="list-group-item" (click)="onSelected(productInfo)" *ngFor="let productInfo of products" [ngClass]="{'active' : selectedProduct?.productId == productInfo?.productId}">
+          <app-product-shell-list-item [productInfo1]="productInfo"></app-product-shell-list-item>
+        </button>
 
-<div *ngIf='errorMessage' class='alert alert-danger'>
+      </div>
+    </div>
+    <div *ngIf="productsCount == 0">
+      <span>No Products Found in catelog</span>
+    </div>
+  </div>
+  <div class="card-footer">
+    <div class="row">
+      <div class="form-check col-md-12">
+        <label>
+          <input class="form-check-input" type="checkbox" (change)="checkChanged($event.target.checked)" [checked]="displayCode"> Display Product Code
+        </label>
+      </div>
+
+    </div>
+  </div>
+
+  <div *ngIf='errorMessage' class='alert alert-danger'>
     Error: {{ errorMessage }}
-</div>
+  </div>

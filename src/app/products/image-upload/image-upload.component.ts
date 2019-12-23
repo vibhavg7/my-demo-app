@@ -1,4 +1,4 @@
-import { Component, OnInit,EventEmitter,Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient } from '@angular/common/http';
 import { tap, map } from 'rxjs/operators';
@@ -9,42 +9,44 @@ import { tap, map } from 'rxjs/operators';
 })
 export class ImageUploadComponent implements OnInit {
 
-  constructor(public activeModal: NgbActiveModal, private _http: HttpClient) { }
-  title: any = "";
-  image_type :any = "";
-  id :any =""
+  constructor(public activeModal: NgbActiveModal, private http: HttpClient) { }
+  title: any = '';
+  // tslint:disable-next-line:variable-name
+  image_type: any = '';
+  id: any = '';
   filesToUpload: Array<File> = [];
-  @Output('productImage') productImage = new EventEmitter<any>();
+  @Output() productImage = new EventEmitter<any>();
   res1: any;
   ngOnInit() {
-    
+
   }
 
   fileChangeEvent(fileInput: any) {
-    this.filesToUpload = <Array<File>>fileInput.target.files;
+    this.filesToUpload = fileInput.target.files as Array<File>;
   }
 
   upload() {
     const formData: any = new FormData();
     const files: Array<File> = this.filesToUpload;
 
+    // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < files.length; i++) {
-      formData.append("image", files[i], files[i]['name']);
+      formData.append('image', files[i], files[i].name);
     }
-    this._http.post(`http://ec2-3-134-77-29.us-east-2.compute.amazonaws.com:3000/imageuploadapi/${this.image_type}/${this.id}`, formData).pipe(
+    this.http.post(`http://localhost:3000/imageuploadapi/${this.image_type}/${this.id}`, formData).pipe(
       tap(data => {
       }),
-      map((files:any) => {
-        return files;
+      map((fileData: any) => {
+        return fileData;
        })
     )
-    .subscribe((data) => {
-      console.log(data);
-      this.productImage.emit(data['product']);
+    .subscribe((data: any) => {
+      console.log(data.product);
+      this.productImage.emit(data.product);
       this.activeModal.close('Close click');
       // this.uploaded.emit(data);
-    })
+    });
   }
-  
+
 
 }

@@ -13,10 +13,10 @@ export class AddStoreCategoryComponent implements OnInit {
   addStoreCategoryForm: FormGroup;
   submitted: any;
   errorMessage: any;
-  constructor(private _activatedRoute: ActivatedRoute,
-    private _categoryService: CategoryService,
-    private _router: Router,
-    private formBuilder: FormBuilder) {
+  constructor(private activatedRoute: ActivatedRoute,
+              private categoryService: CategoryService,
+              private router: Router,
+              private formBuilder: FormBuilder) {
     this.addStoreCategoryForm = this.formBuilder.group({
       storeCategoryName: ['', Validators.required],
       storeCategoryRanking: ['', Validators.required],
@@ -27,14 +27,14 @@ export class AddStoreCategoryComponent implements OnInit {
   get f() { return this.addStoreCategoryForm.controls; }
 
   ngOnInit() {
-    this.storeCategoryId = +this._activatedRoute.snapshot.params['storeCategoryId'];
-    if (this.storeCategoryId != 0) {
-      this._categoryService.getStoreCategory(this.storeCategoryId).subscribe((data) => {
-        let storecategorydata = data['category'];
+    this.storeCategoryId = +this.activatedRoute.snapshot.params.storeCategoryId;
+    if (this.storeCategoryId !== 0) {
+      this.categoryService.getStoreCategory(this.storeCategoryId).subscribe((data: any) => {
+        const storecategorydata = data.category;
         console.log(storecategorydata);
-        this.addStoreCategoryForm.get('storeCategoryName').setValue(storecategorydata[0]['store_category_name']);
-        this.addStoreCategoryForm.get('storeCategoryRanking').setValue(storecategorydata[0]['store_category_ranking']);
-        this.addStoreCategoryForm.get('status').setValue(storecategorydata[0]['status']);
+        this.addStoreCategoryForm.get('storeCategoryName').setValue(storecategorydata[0].store_category_name);
+        this.addStoreCategoryForm.get('storeCategoryRanking').setValue(storecategorydata[0].store_category_ranking);
+        this.addStoreCategoryForm.get('status').setValue(storecategorydata[0].status);
       });
     }
   }
@@ -46,10 +46,10 @@ export class AddStoreCategoryComponent implements OnInit {
     }
     if (this.storeCategoryId == '') {
       console.log(this.addStoreCategoryForm.value);
-      this._categoryService.addNewStoreCategory(this.addStoreCategoryForm.value).subscribe((data) => {
+      this.categoryService.addNewStoreCategory(this.addStoreCategoryForm.value).subscribe((data) => {
         console.log(data);
         if (data.status == "200") {
-          this._router.navigate(['category/storecategories']);
+          this.router.navigate(['category/storecategories']);
         }
         if (data.status == "400") {
           alert('Category Not Added . Internal Server Error');
@@ -57,13 +57,12 @@ export class AddStoreCategoryComponent implements OnInit {
       },
         (error) => {
           this.errorMessage = error;
-        })
-    }
-    else {
-      this._categoryService.editStoreCategory(this.addStoreCategoryForm.value,this.storeCategoryId).subscribe((data) => {
+        });
+    } else {
+      this.categoryService.editStoreCategory(this.addStoreCategoryForm.value, this.storeCategoryId).subscribe((data) => {
         // console.log(data);
         if (data.status == "200") {
-          this._router.navigate(['category/storecategories']);
+          this.router.navigate(['category/storecategories']);
         }
         if (data.status == "400") {
           alert('Category Not Added . Internal Server Error');
@@ -71,7 +70,7 @@ export class AddStoreCategoryComponent implements OnInit {
       },
         (error) => {
           this.errorMessage = error;
-        })
+        });
     }
 
 

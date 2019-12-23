@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Route } from '@angular/compiler/src/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { tap, distinctUntilChanged, debounceTime, switchMap } from 'rxjs/operators';
+import { ImageUploadComponent } from '../../products/image-upload/image-upload.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -19,38 +21,42 @@ export class CategoryListComponent implements OnInit {
   errorMessage: any;
   categories: any;
   storeSubCategoryData: any;
-  imageWidth: number = 50;
-  imageMargin: number = 2;
+  imageWidth = 80;
+  imageHeight = 80;
+  imageMargin = 2;
   subCategories: any = [];
   storeCategoryId: any;
   pageTitle: any = '';
   displaytype: any = 'AC';
   filterBy: any = '';
-  constructor(private _categoryService: CategoryService, private _productService: ProductService,
-    private _activatedRoute: ActivatedRoute, private formBuilder: FormBuilder,
-    private route: Router) {
+  constructor(private categoryService: CategoryService,
+              private productService: ProductService,
+              private activatedRoute: ActivatedRoute,
+              private modalService: NgbModal,
+              private formBuilder: FormBuilder,
+              private route: Router) {
     this.searchCriteriaForm = this.formBuilder.group({
       searchCriteria: ['']
     });
   }
 
   ngOnInit() {
-    this.categories = this._activatedRoute.snapshot.data['storesubcategorydata']['storesubcategorydata'][0];
-    this.storeSubCategoryData = this.categories['store_sub_category_name'];
-    this.storeSubCategoryData.map(function (o) {
+    this.categories = this.activatedRoute.snapshot.data.storesubcategorydata.storesubcategorydata[0];
+    this.storeSubCategoryData = this.categories.store_sub_category_name;
+    this.storeSubCategoryData.map( (o) => {
       o.isActive = false;
       return o;
-    })
+    });
     console.log(this.storeSubCategoryData);
-    this.pageTitle = `${this.categories['main_category']} Sub Category`;
-    this.errorMessage = this._activatedRoute.snapshot.data['storesubcategorydata']['error'];
+    this.pageTitle = `${this.categories.main_category} Sub Category`;
+    this.errorMessage = this.activatedRoute.snapshot.data.storesubcategorydata.error;
 
-    this.onChanges();
+    // this.onChanges();
   }
 
   activesubcategory(id) {
-    this.storeSubCategoryData.map(function (o) {
-      if (o.store_sub_category_id == id) {
+    this.storeSubCategoryData.map((o) => {
+      if (o.store_sub_category_id === id) {
         o.isActive = !o.isActive;
       }
     })
@@ -59,69 +65,62 @@ export class CategoryListComponent implements OnInit {
   onChanges() {
     this.searchCriteriaForm.get('searchCriteria').valueChanges.pipe(tap(data => {
     }), distinctUntilChanged(), debounceTime(200),
-      switchMap(query => (this.filterBy = query, this._categoryService.getStoreSubCategoryData(this.storeCategoryId, this.filterBy)))
+      switchMap(query => (this.filterBy = query, this.categoryService.getStoreSubCategoryData(this.storeCategoryId, this.filterBy)))
     )
-      .subscribe(res => { console.log(res); this.categories = res['store_sub_categories'] })
+      .subscribe((res: any) => { console.log(res); this.categories = res.store_sub_categories; });
   }
 
   addNewCategory() {
     this.route.navigate(['category', 0, 'edit']);
   }
 
-  deleteStoreSubCategory(category_id) {
-    if (confirm("Are you sure to delete ")) {
-      this._categoryService.deleteStoreSubCategory(category_id).subscribe((data) => {
+  deleteStoreSubCategory(categoryId) {
+    if (confirm('Are you sure to delete ')) {
+      this.categoryService.deleteStoreSubCategory(categoryId).subscribe((data) => {
         console.log(data);
-        for (var i = 0; i < this.storeSubCategoryData.length; i++) {
-          if (this.storeSubCategoryData[i].store_sub_category_id === +data['store_sub_category_id']) {
-            console.log(this.categories['store_sub_category_name'][i])
-            this.categories['store_sub_category_name'].splice(i, 1);
+        for (let i = 0; i < this.storeSubCategoryData.length; i++) {
+          if (this.storeSubCategoryData[i].store_sub_category_id === +data.store_sub_category_id) {
+            this.categories.store_sub_category_name.splice(i, 1);
           }
         }
       })
     }
   }
 
-  deleteSubCategory(sub_category_id, store_sub_category_id) {
-    if (confirm("Are you sure to delete ")) {
-      console.log(sub_category_id + "---" + store_sub_category_id);
-      this._categoryService.deleteSubCategory(sub_category_id).subscribe((data) => {
-        if (data.status == 200) {
+  deleteSubCategory(subcategoryid, storesubcategoryid) {
+    if (confirm('Are you sure to delete ')) {
+      this.categoryService.deleteSubCategory(subcategoryid).subscribe((data) => {
+        if (data.status === 200) {
           this.storeSubCategoryData.map(storesubcat => {
-            if (storesubcat.store_sub_category_id == store_sub_category_id) {
-              let index = storesubcat.sub_category_data.findIndex(x => x.sub_category_id == sub_category_id);
+            if (storesubcat.store_sub_category_id === storesubcategoryid) {
+              const index = storesubcat.sub_category_data.findIndex(x => x.sub_category_id === subcategoryid);
               storesubcat.sub_category_data.splice(index, 1);
             }
-          })
+          });
         }
-      })
+      });
     }
   }
 
-  addSubCat(store_sub_category_id,sub_category_id)
-  {
-    let category_id = this._activatedRoute.snapshot.params['id'];
-    // [routerLink]="['storesub',0,'edit']"
-    this.route.navigate([`category/storesubcategories/${category_id}/storesub/${store_sub_category_id}/sub/${sub_category_id}/edit`]);
-    // this.route.navigate(['category', 0, 'edit']);
+  addSubCat(storesubcategoryid, subcategoryid) {
+    const categoryid = this.activatedRoute.snapshot.params.id;
+    this.route.navigate([`category/storesubcategories/${categoryid}/storesub/${storesubcategoryid}/sub/${subcategoryid}/edit`]);
   }
 
   getAllProducts() {
-    this._productService.getProducts(1, 25, "").subscribe({
+    this.productService.getProducts(1, 25, '').subscribe({
       next: p => {
-        this.products = p['products'];
+        this.products = p.products;
         this.products = this.products;
-        console.log(this.products);
       },
       error: err => this.errorMessage = err
     });
   }
 
-  categoryProductInfo(category_id) {
-    console.log("hello" + category_id);
-    this._productService.getcategoryProductInfo(category_id).subscribe({
+  categoryProductInfo(categoryid) {
+    this.productService.getcategoryProductInfo(categoryid).subscribe({
       next: cp => {
-        this.products = cp['products'];
+        this.products = cp.products;
         console.log(this.products);
       },
       error: err => this.errorMessage = err
@@ -131,6 +130,19 @@ export class CategoryListComponent implements OnInit {
   showSubCategories(mainCategory) {
     this.subCategories = mainCategory.sub_categories;
     console.log(this.subCategories);
+  }
+
+  uploadImage(categoryid: any) {
+    const modalRef: any = this.modalService.open(ImageUploadComponent);
+    modalRef.componentInstance.title = 'Image Upload';
+    modalRef.componentInstance.id = categoryid;
+    modalRef.componentInstance.image_type = 'subcategories';
+    modalRef.componentInstance.productImage.subscribe((data) => {
+      console.log(data);
+      // this.merchantData['image_url'] = data['image_url'];
+      // this.merchantData.filter((cat) => cat['store_id'] == data['store_id'])['image_url'] = data['image_url'];
+      // console.log(this.storeCategories);
+    });
   }
 
 }

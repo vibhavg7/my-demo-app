@@ -9,18 +9,17 @@ import { map, catchError, tap } from 'rxjs/operators';
 })
 export class CategoryResolverService implements Resolve<any> {
 
-  constructor(private _categoryService: CategoryService) { }
+  constructor(private categoryService: CategoryService) { }
 
-  resolve(_activatedRouteSnapshot: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
-    
-    let id =  _activatedRouteSnapshot.paramMap.get('id');
+  resolve(activatedRouteSnapshot: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
+    const id =  activatedRouteSnapshot.paramMap.get('id');
 
-    return this._categoryService.getStoreSubCategoryData(id,"")
+    return this.categoryService.getStoreSubCategoryData(id, '')
       .pipe(
-        tap(data => {
+        tap((data: any) => {
           // console.log(JSON.stringify(data));
         }),
-        map(storesubcategorydata => ({ storesubcategorydata: storesubcategorydata['store_categories'], error: '' })),
+        map(storesubcategorydata => ({ storesubcategorydata: storesubcategorydata.store_categories, error: '' })),
         catchError(error => {
           const message = `Retrieval error: ${error}`;
           return of({ storesubcategorydata: null, error: message });
