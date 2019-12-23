@@ -5,7 +5,7 @@
   <span *ngIf="!banner?.image_url" (click)="uploadImage(banner.banner_id)" style="display:block;font-size:14px;cursor:pointer;color:blue">
       Upload Image
   </span>
-  <img *ngIf="banner?.image_url" src='{{banner?.image_url}}' [title]='store?.store_name' [style.height.px]='imageHeight'
+  <img *ngIf="banner?.image_url" src='{{banner?.image_url}}' [title]='banner?.banner_name' [style.height.px]='imageHeight'
       [style.width.px]='imageWidth'
       [style.margin.px]='imageMargin'>
 
