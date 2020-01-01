@@ -22,15 +22,32 @@
         </a>
     </td>
     <td>
+        {{store?.store_opening_time % 12 }} {{store?.store_opening_time_clock }}
+        - {{store?.store_closing_time % 12}} {{store?.store_closing_time_clock }}
+
+    </td>
+    <td>
         {{ store?.phone_number }}
     </td>
     <td>
         {{ store?.latitude | number:'2.1-2' }} - {{ store?.longitude | number:'2.1-2'}}
     </td>
     <td>{{ store?.gst_number }}</td>
-    <!-- <td>{{ store?.pan_number }}</td> -->
+    <td>{{ store?.pan_number }}</td>
 
-    <td style="font-weight:bold">{{ store?.status ? 'Available' : 'Not Available' }}</td>
+    <!-- <td>
+        <div class="row">
+            <label>Yes</label>
+            <label class="switch">
+            <input type="checkbox" [(ngModel)]="isNewProfile">
+            <span class="slider round"></span>
+            </label>
+            <label>No</label>
+    </div>
+    </td> -->
+    <td style="font-weight:bold">
+      {{ store?.status ? 'Available' : 'Not Available' }}
+    </td>
     <td>
         <button class="btn btn-outline-secondary" [routerLink]="['/merchant',store?.store_id,'edit']">Edit</button>
         <button class="btn btn-outline-secondary" style="margin-left:5px" (click)="deleteStore(store?.store_id)">

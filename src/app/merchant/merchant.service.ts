@@ -17,11 +17,11 @@ export class MerchantService {
   fetchAllStores(page_number: number, page_size: any, filterBy: any): Observable<any> {
     let obj = {};
     obj['page_number'] = page_number; obj['page_size'] = page_size; obj['filterBy'] = filterBy;
-    console.log(obj);
+    // console.log(obj);
     return this._http.post<any[]>(`${this._storeServiceUrl}storeinfo`, obj)
       .pipe(
         tap(data => {
-          console.log(JSON.stringify(data))
+          // console.log(JSON.stringify(data))
         })
         , map((data) => {
           return data;
@@ -155,37 +155,40 @@ export class MerchantService {
   }
 
   addNewStore(store): Observable<any> {
-    let obj = {};
-    obj['storeName'] = store['storeName'];
-    obj['storeCategoryName'] = store['storeCategoryName'];
-    obj['city'] = store['city'];
-    obj['country'] = store['country'];
-    obj['pinCode'] = store['pinCode'];
-    obj['state'] = store['state'];
-    obj['status'] = store['status'];
-    obj['storeAddress'] = store['storeAddress'];
-    obj['storeAlternateNumber'] = store['storeAlternateNumber'];
-    obj['storeDescription'] = store['storeDescription'];
-    obj['storeEmail'] = store['storeEmail'];
-    obj['storeGSTNumber'] = store['storeGSTNumber'];
-    obj['storeLandlineNumber'] = store['storeLandlineNumber'];
-    obj['latitude'] = store['storeLatitude'];
-    obj['longitude'] = store['storeLongitude'];
-    obj['storePANNumber'] = store['storePANNumber'];
-    obj['storePhoneNumber'] = store['storePhoneNumber'];
-    obj['storeRating'] = +store['storeRating'];
+    const obj: any = {};
+    obj.storeName = store.storeName;
+    obj.storeCategoryName = store.storeCategoryName;
+    obj.city = store.city;
+    obj.openingTime = store.openingTime;
+    obj.openingTimeClock = (store.openingTime / 12 > 1) ? 'PM' : 'AM';
+    obj.closingTime = store.closingTime;
+    obj.closingTimeClock = (store.closingTime / 12 > 1) ? 'PM' : 'AM';
+    obj.country = store.country;
+    obj.pinCode = store.pinCode;
+    obj.state = store.state;
+    obj.status = store.status;
+    obj.storeAddress = store.storeAddress;
+    obj.storeAlternateNumber = store.storeAlternateNumber;
+    obj.storeDescription = store.storeDescription;
+    obj.storeEmail = store.storeEmail;
+    obj.storeGSTNumber = store.storeGSTNumber;
+    obj.storeLandlineNumber = store.storeLandlineNumber;
+    obj.latitude = store.storeLatitude;
+    obj.longitude = store.storeLongitude;
+    obj.storePANNumber = store.storePANNumber;
+    obj.storePhoneNumber = store.storePhoneNumber;
+    obj.storeRating = +store.storeRating;
 
     const url = `${this._storeServiceUrl}addnewstore`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this._http.post(url, obj, { headers }).pipe(
       tap(data => {
-        //console.log(JSON.stringify(data))
       }),
       map((data) => {
         return data;
       }),
       catchError(err => this.handleError(err))
-    )
+    );
   }
 
   addStoreProducts(addStoreProductForm, selectedProduct: any, storeId): Observable<any> {
@@ -216,17 +219,20 @@ export class MerchantService {
         return data;
       }),
       catchError(this.handleError)
-    )
+    );
   }
 
   editStore(store, storeId): Observable<any> {
-    console.log(store);
-    let obj = {};
+    const obj: any = {};
 
     obj['store_name'] = store['storeName'];
     obj['store_parent_category'] = store['storeCategoryName'];
     obj['city'] = store['city'];
     obj['country'] = store['country'];
+    obj.store_opening_time = store.openingTime;
+    obj.store_opening_time_clock = (store.openingTime / 12 > 1) ? 'PM' : 'AM';
+    obj.store_closing_time = store.closingTime;
+    obj.store_closing_time_clock = (store.closingTime / 12 > 1) ? 'PM' : 'AM';
     obj['pin_code'] = store['pinCode'];
     obj['state'] = store['state'];
     obj['status'] = store['status'];
@@ -243,16 +249,20 @@ export class MerchantService {
     obj['store_rating'] = +store['storeRating'];
     obj['status'] = +store['status'];
 
+    console.log(obj);
+
     const url = `${this._storeServiceUrl}storeinfo/${storeId}`;
     console.log(url);
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this._http.put(url, obj, { headers }).pipe(
-      tap(data => { console.log(JSON.stringify(data)) }),
+      tap(data => {
+        // console.log(JSON.stringify(data))
+      }),
       map((data) => {
         return data;
       }),
       catchError(this.handleError)
-    )
+    );
   }
 
   searchStoreByName(page_number: number, page_size: any, filterBy: any): Observable<any> {

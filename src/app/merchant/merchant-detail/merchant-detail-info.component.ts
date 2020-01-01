@@ -13,39 +13,36 @@ export class MerchantDetailInfoComponent implements OnInit {
 
   merchantData: any;
   storeId: number;
-  errorMessage :any = "";
-  constructor(private _merchantService: MerchantService,
-    private modalService : NgbModal,
-    private _activatedRoute: ActivatedRoute) { }
+  errorMessage: any = '';
+  constructor(private merchantService: MerchantService,
+              private modalService: NgbModal,
+              private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    this.storeId = +this._activatedRoute.parent.params['_value']['storeId'];
-    this._merchantService.fetchAllStoreById(this.storeId).subscribe((data) => {
-      this.merchantData = data['store'][0];
-      // console.log(this.merchantData);
-    })
+    // tslint:disable-next-line:no-string-literal
+    this.storeId = +this.activatedRoute.parent.params['_value']['storeId'];
+    this.merchantService.fetchAllStoreById(this.storeId).subscribe((data: any) => {
+      this.merchantData = data.store[0];
+      console.log(this.merchantData);
+    });
   }
 
-  onRatingClicked(data)
-  {
-    
+  onRatingClicked(data) {
+
   }
 
 
 
-  uploadImage(store_id:any)
-  {
-    const modalRef = this.modalService.open(ImageUploadComponent);
-    modalRef.componentInstance['title']= 'Image Upload';
-    modalRef.componentInstance['id']= store_id;
-    modalRef.componentInstance['image_type']= 'merchants';
-    modalRef.componentInstance['productImage'].subscribe((data)=>{
+  uploadImage(storeid: any) {
+    const modalRef: any = this.modalService.open(ImageUploadComponent);
+    modalRef.componentInstance.title = 'Image Upload';
+    modalRef.componentInstance.id = storeid;
+    modalRef.componentInstance.image_type = 'merchants';
+    modalRef.componentInstance.productImage.subscribe((data: any) => {
       console.log(data);
       console.log(this.merchantData);
-      this.merchantData['image_url'] = data['image_url'];
-      // this.merchantData.filter((cat) => cat['store_id'] == data['store_id'])['image_url'] = data['image_url'];
-      // console.log(this.storeCategories);
-    })
+      this.merchantData.image_url = data.image_url;
+    });
   }
 
 }

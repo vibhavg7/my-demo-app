@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class='table-responsive'>
-            <table style="width:1000px !important" class='table' *ngIf='stores.length'>
+            <table style="width:1200px !important" class='table' *ngIf='stores.length'>
                 <thead>
                     <tr>
                         <th>
@@ -29,6 +29,7 @@
                         </th>
                         <th style="width:90px !important">Store Id</th>
                         <th>Store Name</th>
+                        <th>Timings</th>
                         <th>Phone</th>
                         <th>Lat & Long</th>
                         <th>GST Number</th>
@@ -46,7 +47,7 @@
                     </div> -->
                 </tbody>
             </table>
-            <app-pagination *ngIf='stores.length' [totalItemCount]="store_total_count" (currentPage)="currentPageFn($event)"></app-pagination>
+            <app-pagination *ngIf='stores.length' [totalItemCount]="storetotalcount" (currentPage)="currentPageFn($event)"></app-pagination>
             <div *ngIf='stores?.length == 0'>
                 No Stores Data Found
             </div>

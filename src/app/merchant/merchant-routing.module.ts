@@ -14,7 +14,7 @@ const routes: Routes = [
     {
         path: '',
         component: MerchantDashboardComponent,
-        resolve:{ resolvedMerchants:MerchantResolverService }
+        resolve: { resolvedMerchants: MerchantResolverService }
     },
     {
         path: ':storeId',
@@ -42,7 +42,7 @@ const routes: Routes = [
         path: ':storeId/edit',
         component: MerchantEditComponent
     }
-]
+];
 
 @NgModule({
     imports: [

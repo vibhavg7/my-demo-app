@@ -15,37 +15,39 @@ import { ImageUploadComponent } from 'src/app/products/image-upload/image-upload
 export class MerchantDashboardComponent implements OnInit {
 
   searchCriteriaForm: FormGroup;
-  constructor(private _merchantService: MerchantService, private _activatedRoute: ActivatedRoute,
-    private formBuilder: FormBuilder,private modalService : NgbModal) {
+  constructor(
+          private merchantService: MerchantService,
+          private activatedRoute: ActivatedRoute,
+          private formBuilder: FormBuilder,
+          private modalService: NgbModal) {
     this.searchCriteriaForm = this.formBuilder.group({
       searchCriteria: ['']
     });
   }
 
-  pageTitle: any = "Stores Dashboard";
-  store_total_count: any;
+  pageTitle: any = 'Stores Dashboard';
+  storetotalcount: any;
   displaytype: any = 'AM';
   stores: any = [];
   filterBy: any = '';
-  currentPage: number = 1;
-  pageSize: number = 20;
+  currentPage = 1;
+  pageSize = 20;
   errorMessage: any;
-  imageWidth : number = 80;
-  imageHeight : number = 80;
-  imageMargin : number = 2;
+  imageWidth = 80;
+  imageHeight = 80;
+  imageMargin = 2;
 
   ngOnInit() {
-    let resolvedData = this._activatedRoute.snapshot.data['resolvedMerchants'];
+    const resolvedData = this.activatedRoute.snapshot.data.resolvedMerchants;
 
     if (resolvedData instanceof ErrorTracker) {
-      this.errorMessage = resolvedData['errorMessage'];
-    }
-    else {
-      this.store_total_count = resolvedData['store_total_count']['stores_count'];
-      this.stores = resolvedData['store'];
+      this.errorMessage = resolvedData.errorMessage;
+    } else {
+      this.storetotalcount = resolvedData.store_total_count.stores_count;
+      this.stores = resolvedData.store;
     }
     console.log(this.stores);
-   
+
     this.onChanges();
   }
 
@@ -53,32 +55,31 @@ export class MerchantDashboardComponent implements OnInit {
     this.searchCriteriaForm.get('searchCriteria').valueChanges.pipe(tap(data => {
       // console.log(data);
     }), distinctUntilChanged(), debounceTime(200),
-      switchMap(query => (this.filterBy = query, this._merchantService.fetchAllStores(this.currentPage, this.pageSize, query)))
+      switchMap(query => (this.filterBy = query, this.merchantService.fetchAllStores(this.currentPage, this.pageSize, query)))
     )
-      .subscribe(res => { this.store_total_count = res['store_total_count']['stores_count']; this.stores = res['store']; })
+      .subscribe((res: any) => { this.storetotalcount = res.store_total_count.stores_count; this.stores = res.store; });
   }
 
-  uploadImage(store_id:any)
-  {
-    const modalRef = this.modalService.open(ImageUploadComponent);
-    modalRef.componentInstance['title']= 'Image Upload';
-    modalRef.componentInstance['id']= store_id;
-    modalRef.componentInstance['image_type']= 'merchants';
-    modalRef.componentInstance['productImage'].subscribe((data)=>{
+  uploadImage(storeid: any) {
+    const modalRef: any = this.modalService.open(ImageUploadComponent);
+    modalRef.componentInstance.title = 'Image Upload';
+    modalRef.componentInstance.id = storeid;
+    modalRef.componentInstance.image_type = 'merchants';
+    modalRef.componentInstance.productImage.subscribe((data) => {
       console.log(data);
       // this.stores.filter((cat) => cat['store_category_id'] == data['store_category_id'])['store_image_url'] = data['image_url'];
       // console.log(this.storeCategories);
-    })
+    });
   }
 
   currentPageFn(page) {
     // console.log(page + "-" + this.filterBy+ "-"+this.pageSize);
-    this._merchantService.fetchAllStores(page, this.pageSize, this.filterBy)
+    this.merchantService.fetchAllStores(page, this.pageSize, this.filterBy)
       .subscribe((data) => {
-        this.store_total_count = data['store_total_count']['stores_count'];
-        this.stores = data['store'];
+        this.storetotalcount = data.store_total_count.stores_count;
+        this.stores = data.store;
         // console.log(this.store_total_count);
-      })
+      });
   }
 
   onValueChange(filterBy) {

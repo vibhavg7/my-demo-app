@@ -15,6 +15,9 @@ export class MerchantEditComponent implements OnInit {
   storeCategories: any;
   errorMessage: any;
   submitted: boolean;
+  timeArray = [
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 0
+  ];
   addStoreForm: any;
   storeId: any;
   constructor(
@@ -26,6 +29,8 @@ export class MerchantEditComponent implements OnInit {
     private router: Router) {
     this.addStoreForm = this.formBuilder.group({
       storeName: ['', Validators.required],
+      openingTime: ['', Validators.required],
+      closingTime: ['', Validators.required],
       storeCategoryName: ['', Validators.required],
       storeEmail: ['', Validators.required],
       storePhoneNumber: ['', Validators.required],
@@ -55,6 +60,10 @@ export class MerchantEditComponent implements OnInit {
         const storedata: any = responseList[0].store;
         this.addStoreForm.get('storeAddress').setValue(storedata[0].address);
         this.addStoreForm.get('storeAlternateNumber').setValue(storedata[0].alternative_number);
+
+        this.addStoreForm.get('openingTime').setValue(storedata[0].store_opening_time);
+        this.addStoreForm.get('closingTime').setValue(storedata[0].store_closing_time);
+
         this.addStoreForm.get('storePhoneNumber').setValue(storedata[0].phone_number);
         this.addStoreForm.get('storeLandlineNumber').setValue(storedata[0].landline_number);
         this.addStoreForm.get('status').setValue(storedata[0].status);
@@ -95,8 +104,10 @@ export class MerchantEditComponent implements OnInit {
     if (this.addStoreForm.invalid) {
       return;
     }
+    // console.log(this.addStoreForm.value);
     // console.log(this.storeId);
-    if (this.storeId === '') {
+
+    if (this.storeId === 0) {
       this.merchantService.addNewStore(this.addStoreForm.value).subscribe((data) => {
         console.log(data);
         // tslint:disable-next-line:triple-equals
