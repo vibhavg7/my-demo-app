@@ -17,12 +17,12 @@ export class AuthService {
     }
     // currentUser: User;
     redirectUrl: any;
-    _authURL: any = "http://ec2-3-134-77-29.us-east-2.compute.amazonaws.com:3000/";
+    _authURL: any = "http://localhost:3000/";
 
     constructor(private _http: HttpClient) {
 
     }
-   
+
 
     login(employee) : Observable<any>
     {
