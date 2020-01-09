@@ -10,7 +10,7 @@ export class CustomerService {
 
   constructor(private http: HttpClient) { }
 
-  private customerServiceUrl = 'http://localhost:3000/customerapi/';
+  private customerServiceUrl = 'http://ec2-18-188-251-155.us-east-2.compute.amazonaws.com:3000/customerapi/';
   customerData: any;
   customerDeliveryAddresses: any;
 

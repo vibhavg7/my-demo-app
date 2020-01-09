@@ -33,7 +33,8 @@ export class ImageUploadComponent implements OnInit {
     for (let i = 0; i < files.length; i++) {
       formData.append('image', files[i], files[i].name);
     }
-    this.http.post(`http://localhost:3000/imageuploadapi/${this.image_type}/${this.id}`, formData).pipe(
+    // tslint:disable-next-line:max-line-length
+    this.http.post(`http://ec2-18-188-251-155.us-east-2.compute.amazonaws.com:3000/imageuploadapi/${this.image_type}/${this.id}`, formData).pipe(
       tap(data => {
       }),
       map((fileData: any) => {

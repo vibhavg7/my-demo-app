@@ -1,17 +1,17 @@
-export class IProduct
-{
-    productId : number;
+export class IProduct {
+    productId: number;
     productName: string;
-    productCode : string;
-    releaseDate : string;
-    lastUpdated : string;
+    productCode: string;
+    releaseDate: string;
+    lastUpdated: string;
     description: string;
-    product_image_id:number;
-    product_weight:number;
+    product_image_id: number;
+    product_weight: number;
     price: number;
     starRating: number;
-    image_url : string;
-    categoryName : string;
-    available : number;
+    image_url: string;
+    categoryName: string;
+    available: number;
+    weight_text: any;
 }
 

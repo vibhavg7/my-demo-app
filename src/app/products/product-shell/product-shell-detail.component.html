@@ -51,15 +51,15 @@
 
       </div>
       <div class="col-md-4">
-        <img *ngIf="!image_url" class='center-block img-responsive' src='assets/product_images/default_image.jpg' [title]='productData?.productName'
+        <img *ngIf="!imageurl" class='center-block img-responsive' src='assets/product_images/default_image.jpg' [title]='productData?.productName'
           [style.width.px]='200' [style.margin.px]='2'>
-        <img *ngIf="image_url" class='center-block img-responsive' src='{{image_url}}' [title]='productData?.productName' [style.width.px]='200'
+        <img *ngIf="imageurl" class='center-block img-responsive' src='{{imageurl}}' [title]='productData?.productName' [style.width.px]='200'
           [style.margin.px]='2'>
 
-        <span *ngIf="!image_url" (click)="uploadImage()" style="display:block;text-align:center;cursor:pointer;color:blue">
+        <span *ngIf="!imageurl" (click)="uploadImage()" style="display:block;text-align:center;cursor:pointer;color:blue">
           Upload Image
         </span>
-        <span *ngIf="image_url" (click)="uploadImage()" style="display:block;text-align:center;cursor:pointer;color:blue">
+        <span *ngIf="imageurl" (click)="uploadImage()" style="display:block;text-align:center;cursor:pointer;color:blue">
           Change Image
         </span>
       </div>

@@ -13,18 +13,12 @@ import { ImageUploadComponent } from '../image-upload/image-upload.component';
 export class ProductShellDetailComponent implements OnInit, OnDestroy {
 
   constructor(private productService: ProductService, private modalService: NgbModal) { }
-  // productData : IProduct;
   errorMessage: string;
   pageTitle = 'Product Detail';
   productData: IProduct;
   sub: Subscription;
   imageurl: any = '';
   productid: any = '';
-  // productData = this._productService._currentProduct;
-  // get productData() : IProduct | null
-  // {
-  //   return this._productService._currentProduct;
-  // }
   ngOnInit() {
     this.sub = this.productService.selectProductChanges$.subscribe((data: any) => {
       if (data) {
@@ -41,7 +35,6 @@ export class ProductShellDetailComponent implements OnInit, OnDestroy {
   }
 
   uploadImage() {
-    // console.log(this.product_id);
     const modalRef: any = this.modalService.open(ImageUploadComponent);
     modalRef.componentInstance.title = 'Image Upload';
     modalRef.componentInstance.image_type = 'products';

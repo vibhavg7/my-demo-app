@@ -11,7 +11,7 @@ import { ProductResolved } from './product-resolved';
 )
 export class ProductService implements OnDestroy {
   // tslint:disable-next-line:variable-name
-  private _productServiceUrl = "http://localhost:3000/productsapi/";
+  private _productServiceUrl = 'http://ec2-18-188-251-155.us-east-2.compute.amazonaws.com:3000/productsapi/';
   private products: IProduct[];
   public productResolved: ProductResolved;
   private selectedProductSource = new Subject<IProduct | null>();
@@ -45,17 +45,17 @@ export class ProductService implements OnDestroy {
     console.log(this.productResolved.products);
   }
 
-  getProducts(page_number: number, page_size: number, filterBy: any): Observable<any> {
-    let obj = {};
-    obj['page_number'] = page_number; obj['page_size'] = page_size; obj['filterBy'] = filterBy;
+  getProducts(pagenumber: number, pagesize: number, filterBy: any): Observable<any> {
+    const obj: any = {};
+    obj.page_number = pagenumber; obj.page_size = pagesize; obj.filterBy = filterBy;
     return this._http.post(`${this._productServiceUrl}fetchProducts`, obj)
       .pipe(
         tap(data => {
           // console.log(JSON.stringify(data))
         })
-        , map((data) => {
-          this.productResolved.products = data['products'];
-          this.productResolved.productCount = data['products_total_count']['products_count'];
+        , map((data: any) => {
+          this.productResolved.products = data.products;
+          this.productResolved.productCount = data.products_total_count.products_count;
           console.log(this.productResolved.products);
           // return this.products = data['products'];
           // console.log(data['products']);
@@ -230,7 +230,8 @@ export class ProductService implements OnDestroy {
       categoryName: null,
       available: null,
       //   tags: [],
-      image_url: null
+      image_url: null,
+      weight_text: null
     };
   }
 }
