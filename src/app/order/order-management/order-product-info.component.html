@@ -31,11 +31,11 @@
                             {{ orderProduct?.product_name }}
                         </td>
                         <td>
-                            &#8377;  {{orderProduct?.price}}
+                            &#8377;  {{orderProduct?.store_selling_price}}
                         </td>
 
                         <td>{{ orderProduct?.quantity }}</td>
-                        <td>&#8377;  {{ orderProduct?.total_amount }}</td>
+                        <td>&#8377;  {{ orderProduct?.store_selling_price * orderProduct?.quantity }}</td>
                         <td>{{ orderProduct?.buying_date |date:'short' }}</td>
                     </tr>
                 </tbody>

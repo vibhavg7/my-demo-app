@@ -41,6 +41,13 @@ const routes: any = [
         import('./order/order.module').then(m => m.OrderModule)
     },
     {
+      path: 'coupon',
+      canActivate: [AuthGuard],
+      data: { preload: true },
+      loadChildren: () =>
+        import('./coupon/coupon.module').then(m => m.CouponModule)
+    },
+    {
       path: 'employee',
       canActivate: [AuthGuard],
       data: { preload: true },

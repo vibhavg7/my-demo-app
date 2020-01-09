@@ -10,7 +10,7 @@ import { ErrorTracker } from '../shared/errorTracker';
 export class OrderService {
 
   constructor(private http: HttpClient) { }
-  private orderService: any = 'http://localhost:3000/orderapi/';
+  private orderService: any = 'http://localhost:3000/ordersapi/';
   public orderDetails: any = '';
 
 
@@ -21,7 +21,7 @@ export class OrderService {
     // }
     return this.http.get<any>(`${this.orderService}${orderId}`).pipe(
       tap(data => {
-        // console.log(data);
+        console.log(data);
       })
       , map((data) => {
           // this.orderDetails = data;

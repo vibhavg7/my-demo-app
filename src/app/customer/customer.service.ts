@@ -24,7 +24,7 @@ export class CustomerService {
     return this.http.post<any[]>(`${this.customerServiceUrl}customerinfo`, obj)
       .pipe(
         tap(data => {
-          // console.log(JSON.stringify(data))
+          console.log(JSON.stringify(data));
         })
         , map((data) => {
           return data;

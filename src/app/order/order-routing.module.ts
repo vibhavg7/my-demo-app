@@ -13,14 +13,15 @@ const routes: Routes = [
         path: ':orderId',
         component: OrderDashboardComponent,
         children: [
-            { path: 'productsinfo', component: OrderProductInfoComponent,resolve:{resolvedProducts:OrderProductsResolver} },
+            { path: 'productsinfo', component: OrderProductInfoComponent,
+              resolve: {resolvedProducts: OrderProductsResolver} },
             { path: 'customerinfo', component: OrderCustomerInfoComponent },
             { path: 'merchantinfo', component: OrderMerchantInfoComponent },
             { path: 'deliveryinfo', component: OrderDeliveryInfoComponent },
             { path: 'invoiceinfo', component: OrderInvoiceInfoComponent }
         ]
     }
-]
+];
 
 @NgModule({
     imports: [

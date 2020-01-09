@@ -9,12 +9,13 @@ import * as fromProduct from '../state/product.reducer';
 })
 export class ProductShellListItemComponent implements OnInit {
 
-  constructor(private store:Store<fromProduct.State>) { }
+  constructor(private store: Store<fromProduct.State>) { }
+  // tslint:disable-next-line:no-input-rename
   @Input('productInfo1') productData: any;
-  showProductCode:boolean = false;
+  showProductCode = false;
   ngOnInit() {
-    this.store.pipe(select(fromProduct.getShowProductCode)).subscribe((data)=>{
-        this.showProductCode = data;      
+    this.store.pipe(select(fromProduct.getShowProductCode)).subscribe((data) => {
+        this.showProductCode = data;
     });
   }
 

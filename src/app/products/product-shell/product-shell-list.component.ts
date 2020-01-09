@@ -53,12 +53,14 @@ export class ProductShellListComponent implements OnInit, OnDestroy {
   }
 
   onChanges() {
-    console.log('aaaa');
     this.searchCriteriaForm.get('searchCriteria').valueChanges.pipe(tap(data => {
-    }), distinctUntilChanged(), debounceTime(200),
-      switchMap(query => (this.filterBy = query, this._productService.getProducts(this.currentPage, this.pageSize, query)))
+      console.log(data);
+    }), distinctUntilChanged(), debounceTime(2000),
+      // tslint:disable-next-line:max-line-length
+      switchMap(query => (this.filterBy = query, console.log(this.filterBy), this._productService.getProducts(this.currentPage, this.pageSize, this.filterBy)))
     )
-      .subscribe(res => { console.log(res); this.onProductRetrieved(res['products']), this.productsCount = res['productCount']; })
+    // console.log(res);
+      .subscribe(res => {this.onProductRetrieved(res['products']), this.productsCount = res['productCount']; })
   }
 
   currentPageFn(page) {

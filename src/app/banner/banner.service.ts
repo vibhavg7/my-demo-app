@@ -19,7 +19,7 @@ export class BannerService {
     return this.http.post<any[]>(`${this.bannerServiceUrl}bannerinfo`, obj)
       .pipe(
         tap(data => {
-          console.log(JSON.stringify(data));
+          // console.log(JSON.stringify(data));
         })
         , map((data) => {
           return data;

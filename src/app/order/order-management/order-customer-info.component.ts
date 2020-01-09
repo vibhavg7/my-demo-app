@@ -9,21 +9,22 @@ import { OrderService } from '../../order/order.service';
 })
 export class OrderCustomerInfoComponent implements OnInit {
 
-  constructor(private _orderService:OrderService,private _activatedRoute :ActivatedRoute ) { }
-  customerData : any = [];
-  errorMessage:any;
-  order_id :any;
-  ngOnInit() {    
-    this.order_id = this._activatedRoute.parent.snapshot.params['orderId'];
-    this._orderService.fetchOrderDetails(this.order_id).subscribe(
-      (data)=>{
-        this.customerData = data['customerInfo'][0];
+  constructor(private orderService: OrderService,
+              private activatedRoute: ActivatedRoute ) { }
+  customerData: any = [];
+  errorMessage: any;
+  orderid: any;
+  ngOnInit() {
+    this.orderid = this.activatedRoute.parent.snapshot.params.orderId;
+    this.orderService.fetchOrderDetails(this.orderid).subscribe(
+      (data) => {
+        this.customerData = data.customerInfo[0];
         console.log(data);
       },
-      (err)=>{
+      (err) => {
         this.errorMessage = err;
       }
-    )
+    );
   }
 
 }

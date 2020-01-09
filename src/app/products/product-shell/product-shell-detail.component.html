@@ -1,77 +1,81 @@
 <div class="card card-primary" *ngIf="productData">
-    <div class="card-header">
-        {{productData?.productName}}
-    </div>
-    <div class="card-body">
+  <div class="card-header">
+    {{productData?.productName}}
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-6">
         <div class="row">
-            <div class="col-md-6">
-                <div class="row">
-                    <div class="col-md-4">Name:</div>
-                    <div class="col-md-8">{{productData?.productName | upperCaseName}}</div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">Code:</div>
-                    <div class="col-md-8">{{productData?.productCode | upperCaseName}}</div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">Release Date:</div>
-                    <div class="col-md-8">{{productData?.releaseDate |date:'short' }}</div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">Last Updated:</div>
-                    <div class="col-md-8">{{productData?.lastUpdated | date:'short'}}</div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">Description:</div>
-                    <div class="col-md-8">{{productData?.description}}</div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">Price:</div>
-                    <div class="col-md-8">{{productData?.price}}</div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">Star Rating:</div>
-                    <div class="col-md-8">
-                        <app-star [rating]='productData?.starRating' (ratingClicked)='onRatingClicked($event)'>
-                        </app-star>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">Category Name:</div>
-                    <div class="col-md-8">{{productData?.categoryName | upperCaseName}}</div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">Available:</div>
-                    <div class="col-md-8">{{productData?.available ? 'Available':'Not Available' }}</div>
-                </div>
-
-            </div>
-            <div class="col-md-4">
-                <img *ngIf="!image_url" class='center-block img-responsive' src='assets/product_images/default_image.jpg' [title]='productData?.productName'
-                    [style.width.px]='200' [style.margin.px]='2'>
-                <img *ngIf="image_url" class='center-block img-responsive' src='{{image_url}}' [title]='productData?.productName'
-                    [style.width.px]='200' [style.margin.px]='2'>
-
-                <span *ngIf="!image_url" (click)="uploadImage()" style="display:block;text-align:center;cursor:pointer;color:blue">
-                    Upload Image
-                </span>
-                <span *ngIf="image_url" (click)="uploadImage()" style="display:block;text-align:center;cursor:pointer;color:blue">
-                    Change Image
-                </span>
-            </div>
+          <div class="col-md-4">Name:</div>
+          <div class="col-md-8">{{productData?.productName | upperCaseName}}</div>
         </div>
-    </div>
-    <div class="card-footer">
-        <div class="row mb-2">
-            <div class="col-md-8">
-                <button class="btn btn-primary mr-3" [routerLink]="['/products',productData.productId,'edit']">
-                    <i class='fa fa-edit'></i> Edit
-                </button>
-              
-            </div>
+        <div class="row">
+          <div class="col-md-4">Code:</div>
+          <div class="col-md-8">{{productData?.productCode | upperCaseName}}</div>
         </div>
-    </div>
+        <div class="row">
+          <div class="col-md-4">Weight:</div>
+          <div class="col-md-8">{{productData?.product_weight}} {{productData?.weight_text}}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">Release Date:</div>
+          <div class="col-md-8">{{productData?.releaseDate |date:'short' }}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">Last Updated:</div>
+          <div class="col-md-8">{{productData?.lastUpdated | date:'short'}}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">Description:</div>
+          <div class="col-md-8">{{productData?.description}}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">Price:</div>
+          <div class="col-md-8">{{productData?.price}}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">Star Rating:</div>
+          <div class="col-md-8">
+            <app-star [rating]='productData?.starRating' (ratingClicked)='onRatingClicked($event)'>
+            </app-star>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">Category Name:</div>
+          <div class="col-md-8">{{productData?.categoryName | upperCaseName}}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">Available:</div>
+          <div class="col-md-8">{{productData?.available ? 'Available':'Not Available' }}</div>
+        </div>
 
-    <div class='alert alert-danger' *ngIf='errorMessage'>{{errorMessage}}
+      </div>
+      <div class="col-md-4">
+        <img *ngIf="!image_url" class='center-block img-responsive' src='assets/product_images/default_image.jpg' [title]='productData?.productName'
+          [style.width.px]='200' [style.margin.px]='2'>
+        <img *ngIf="image_url" class='center-block img-responsive' src='{{image_url}}' [title]='productData?.productName' [style.width.px]='200'
+          [style.margin.px]='2'>
+
+        <span *ngIf="!image_url" (click)="uploadImage()" style="display:block;text-align:center;cursor:pointer;color:blue">
+          Upload Image
+        </span>
+        <span *ngIf="image_url" (click)="uploadImage()" style="display:block;text-align:center;cursor:pointer;color:blue">
+          Change Image
+        </span>
+      </div>
     </div>
+  </div>
+  <div class="card-footer">
+    <div class="row mb-2">
+      <div class="col-md-8">
+        <button class="btn btn-primary mr-3" [routerLink]="['/products',productData.productId,'edit']">
+          <i class='fa fa-edit'></i> Edit
+        </button>
+
+      </div>
+    </div>
+  </div>
+
+  <div class='alert alert-danger' *ngIf='errorMessage'>{{errorMessage}}
+  </div>
 </div>

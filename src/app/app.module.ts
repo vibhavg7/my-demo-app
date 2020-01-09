@@ -30,15 +30,16 @@ import { environment } from '../environments/environment';
     HttpClientModule,
     AppRoutingModule,
     StoreDevtoolsModule.instrument({
-      name:'Grostep app dev tools',
-      maxAge:25,
-      logOnly:environment.production
+      name: 'Grostep app dev tools',
+      maxAge: 25,
+      logOnly: environment.production
     })
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents:[
-    ImageUploadComponent,MerchantOrderProductListComponent
+  entryComponents: [
+    ImageUploadComponent,
+    MerchantOrderProductListComponent
   ]
 })
 export class AppModule { }

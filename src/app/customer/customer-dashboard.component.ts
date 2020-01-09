@@ -12,19 +12,21 @@ import { ActivatedRoute } from '@angular/router';
 export class CustomerDashboardComponent implements OnInit {
 
   searchCriteriaForm: FormGroup;
-  pageTitle: any = "Customers Dashboard";
+  pageTitle: any = 'Customers Dashboard';
   total_customer_count: any;
   displaytype: any = 'AM';
   customers: any = [];
   filterBy: any = '';
-  currentPage: number = 1;
-  errorMessage:any = "";
-  pageSize: number = 20;
-  imageWidth : number = 80;
-  imageHeight : number = 80;
-  imageMargin : number = 2;
+  currentPage = 1;
+  errorMessage = '';
+  pageSize = 20;
+  imageWidth = 80;
+  imageHeight = 80;
+  imageMargin = 2;
 
-  constructor(private _customerService: CustomerService,private _activatedRoute:ActivatedRoute,private formBuilder: FormBuilder) {
+  constructor(private _customerService: CustomerService,
+              private _activatedRoute:ActivatedRoute,
+              private formBuilder: FormBuilder) {
     this.searchCriteriaForm = this.formBuilder.group({
       searchCriteria: ['']
     });
@@ -42,7 +44,7 @@ export class CustomerDashboardComponent implements OnInit {
     }), distinctUntilChanged(), debounceTime(200),
       switchMap(query => (this.filterBy = query, this._customerService.fetchAllCustomers(this.currentPage, this.pageSize, query)))
     )
-      .subscribe(res => { this.total_customer_count = res['customer_total_count']['customer_count']; 
+      .subscribe(res => { this.total_customer_count = res['customer_total_count']['customer_count'];
             this.customers = res['customers']; })
   }
 
