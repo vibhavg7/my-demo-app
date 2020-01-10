@@ -15,9 +15,7 @@ export class CustomerService {
   customerDeliveryAddresses: any;
 
   fetchAllCustomers(pagenumber: number, pagesize: any, filterBy: any): Observable<any> {
-    // if (this.custom) {
-    //   return of(this.stores);
-    // }
+
     const obj: any = {};
     obj.page_number = pagenumber; obj.page_size = pagesize; obj.filterBy = filterBy;
 

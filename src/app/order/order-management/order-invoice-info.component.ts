@@ -9,20 +9,14 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class OrderInvoiceInfoComponent implements OnInit {
 
-  constructor(private _orderService:OrderService,private _activatedRoute:ActivatedRoute) { }
-  invoiceData : any = [];
-  errorMessage:any;
-  order_id :any;
-  ngOnInit() {    
-    this.order_id = this._activatedRoute.parent.snapshot.params['orderId'];
-    this._orderService.fetchOrderDetails(this.order_id).subscribe(
-      (data)=>{
-        this.invoiceData = data['paymentInfo'][0];
-      },
-      (err)=>{
-        this.errorMessage = err;
-      }
-    )
+  constructor(private activatedRoute: ActivatedRoute) { }
+  invoiceData: any = [];
+  errorMessage: any;
+  orderid: any;
+  ngOnInit() {
+    this.orderid = this.activatedRoute.parent.snapshot.params.orderid;
+    this.invoiceData = this.activatedRoute.snapshot.data.resolvedInvoice.orderInvoice[0];
+    this.errorMessage = this.activatedRoute.snapshot.data.resolvedInvoice.error;
   }
 
 }

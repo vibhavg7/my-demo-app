@@ -32,8 +32,8 @@ export class MerchantProductsCatalogComponent implements OnInit {
     this._merchantService.fetchStoreProducts(this.storeId, this.currentPage, this.pageSize, "").subscribe((data) => {
       this.store_products_info = data['store_products_info'];
       this.store_products_count = data['store_products_count'][0]['store_products_count'];
-      console.log(this.store_products_info);
-      console.log(this.store_products_count);
+      // console.log(this.store_products_info);
+      // console.log(this.store_products_count);
     })
     this.onChanges();
   }
@@ -46,7 +46,7 @@ export class MerchantProductsCatalogComponent implements OnInit {
         {
           alert(data['message']);
         }
-      })   
+      })
     }
     else
     {

@@ -57,9 +57,9 @@ export class MerchantService {
 
   editStoreProduct(storeProductForm, storeProductId) {
 
-    const url = `${this._storeServiceUrl}storeinfo/storeproducts/edit`;
+    const url = `${this._storeServiceUrl}storeinfo/storeproducts/edit/${storeProductId}`;
     let obj = {};
-    obj['productId'] = storeProductId;
+    // obj['productId'] = storeProductId;
     obj['store_cost_price'] = storeProductForm['productCostPrice'];
     obj['store_selling_price'] = storeProductForm['productSellingPrice'];
     obj['store_margin'] = storeProductForm['storeMargin'];
@@ -69,12 +69,14 @@ export class MerchantService {
     obj['stock'] = 1;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this._http.post(url, obj, { headers }).pipe(
-      tap(data => { console.log(JSON.stringify(data)) }),
+      tap(data => {
+        // console.log(JSON.stringify(data))
+      }),
       map((data) => {
         return data;
       }),
       catchError(this.handleError)
-    )
+    );
   }
 
   updateStoreProductStock(storeProductId,stock)
@@ -140,12 +142,12 @@ export class MerchantService {
     obj['page_number'] = page_number; obj['page_size'] = page_size; obj['storeId'] = storeId;
     obj['filterBy'] = filterBy;
 
-    console.log(obj);
+    // console.log(obj);
 
     return this._http.post<any[]>(`${this._storeServiceUrl}storeinfo/storeorders`, obj)
       .pipe(
         tap(data => {
-          console.log(data);
+          // console.log(data);
         })
         , map((data) => {
           return data;

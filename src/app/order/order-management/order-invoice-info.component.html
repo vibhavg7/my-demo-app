@@ -9,18 +9,18 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-8">
-                    <div class="row">
+                    <!-- <div class="row">
                         <div class="col-md-4" class="table-key">Payment Id:</div>
                         <div class="col-md-8">{{invoiceData?.order_payment_info_id}}</div>
-                    </div>
+                    </div> -->
                     <div class="row">
                         <div class="col-md-4" class="table-key">Order Id:</div>
                         <div class="col-md-8">{{invoiceData?.order_id}}</div>
                     </div>
-                    <div class="row">
+                    <!-- <div class="row">
                         <div class="col-md-4" class="table-key">Bill Amount:</div>
                         <div class="col-md-8">&#8377;  {{invoiceData?.bill_amount}}</div>
-                    </div>
+                    </div> -->
                     <div class="row">
                         <div class="col-md-4" class="table-key">Total Order Amount:</div>
                         <div class="col-md-8">&#8377;  {{invoiceData?.total_amount}}</div>
@@ -31,7 +31,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-4" class="table-key">Voucher Amount:</div>
-                        <div class="col-md-8">&#8377; {{invoiceData?.voucher_amount}}</div>
+                        <div class="col-md-8">&#8377; {{invoiceData?.discount_amount}}</div>
                     </div>
                     <div class="row">
                         <div class="col-md-4" class="table-key">Payable Amount:</div>
@@ -39,11 +39,11 @@
                     </div>
                     <div class="row">
                         <div class="col-md-4" class="table-key">Payment Mode:</div>
-                        <div class="col-md-8">{{invoiceData?.payment_mode == 1 ? 'Online':'Cash'}}</div>
+                        <div class="col-md-8">{{invoiceData?.type}}</div>
                     </div>
                     <div class="row">
                         <div class="col-md-4" class="table-key">Payment Date:</div>
-                        <div class="col-md-8">{{invoiceData?.last_updated | date:'medium'}}</div>
+                        <div class="col-md-8">{{invoiceData?.added_date | date:'medium'}}</div>
                     </div>
                     <div class="row">
                         <div class="col-md-4" class="table-key">Order Status:</div>

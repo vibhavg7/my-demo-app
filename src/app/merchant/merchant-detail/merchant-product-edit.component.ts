@@ -46,7 +46,9 @@ export class MerchantProductEditComponent implements OnInit {
     this.storeId = +this.activatedRoute.snapshot.params.storeId;
     this.storeProductId = +this.activatedRoute.snapshot.params.productId;
     if (this.storeProductId !== 0) {
+      // console.log(this.storeProductId);
       this.merchantService.fetchStoreProductById(this.storeProductId).subscribe((data: any) => {
+        // console.log(data);
         const productdata = data.products_info;
         console.log(productdata[0]);
         this.addStoreProductForm.get('storeproductName').setValue(productdata[0].product_name);
@@ -63,6 +65,7 @@ export class MerchantProductEditComponent implements OnInit {
   onChanges() {
     this.productValueSet = false;
     this.addStoreProductForm.get('storeproductName').valueChanges.pipe(tap(data => {
+      console.log(data);
     }), distinctUntilChanged(), debounceTime(200),
       switchMap((query) => {
         if (!this.productValueSet) {
@@ -113,6 +116,7 @@ export class MerchantProductEditComponent implements OnInit {
   }
 
   productSelected(product) {
+    console.log(product);
     this.results = [];
     this.productValueSet = true;
     this.selectedProduct = product;

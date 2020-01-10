@@ -15,16 +15,20 @@ export class OrderCustomerInfoComponent implements OnInit {
   errorMessage: any;
   orderid: any;
   ngOnInit() {
-    this.orderid = this.activatedRoute.parent.snapshot.params.orderId;
-    this.orderService.fetchOrderDetails(this.orderid).subscribe(
-      (data) => {
-        this.customerData = data.customerInfo[0];
-        console.log(data);
-      },
-      (err) => {
-        this.errorMessage = err;
-      }
-    );
+    this.orderid = this.activatedRoute.parent.snapshot.params.orderid;
+    this.customerData = this.activatedRoute.snapshot.data.resolvedCustomer.orderCustomer[0];
+    console.log(this.customerData);
+    this.errorMessage = this.activatedRoute.snapshot.data.resolvedCustomer.error;
+    // this.orderid = this.activatedRoute.parent.snapshot.params.orderId;
+    // this.orderService.fetchOrderDetails(this.orderid).subscribe(
+    //   (data) => {
+    //     this.customerData = data.customerInfo[0];
+    //     console.log(data);
+    //   },
+    //   (err) => {
+    //     this.errorMessage = err;
+    //   }
+    // );
   }
 
 }

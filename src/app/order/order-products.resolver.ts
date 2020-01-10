@@ -13,8 +13,7 @@ export class OrderProductsResolver implements Resolve<any>
     constructor(private _orderService:OrderService,private _merchantService:MerchantService){
 
     }
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) : Observable<any>
-    {
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
         let order_id = route.parent.params['orderId'];
         return this._merchantService.fetchOrderProducts(order_id)
         .pipe(

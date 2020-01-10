@@ -1,5 +1,5 @@
 <div class="card card-primary" *ngIf="customerData">
-    <!-- <div class="card-header">   
+    <!-- <div class="card-header">
         {{customerData?.customer_name}}
     </div> -->
     <div class="card-body">
@@ -17,14 +17,14 @@
                     <div class="col-md-4" class="table-key">Customer Email:</div>
                     <div class="col-md-8">{{customerData?.email}}</div>
                 </div>
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-md-4" class="table-key">Registration Mode:</div>
                     <div class="col-md-8">{{customerData?.registered_mode == 1 ? 'Phone' : 'FB'}}</div>
-                </div>
-                <div class="row">
+                </div> -->
+                <!-- <div class="row">
                     <div class="col-md-4" class="table-key">Customer DOB:</div>
                     <div class="col-md-8">{{customerData?.customer_dob | date}}</div>
-                </div>
+                </div> -->
                 <div class="row">
                     <div class="col-md-4" class="table-key">Customer Phone Number:</div>
                     <div class="col-md-8">{{customerData?.phone}}</div>
