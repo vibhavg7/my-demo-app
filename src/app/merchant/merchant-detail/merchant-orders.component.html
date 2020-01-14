@@ -49,7 +49,7 @@
                         <td>&#8377;  {{storeOrder?.discount_amount}}</td>
                         <td>&#8377;  {{storeOrder?.order_delivery_fee}}</td>
                         <td>&#8377;   {{ storeOrder?.final_amount }}</td>
-                        <td>{{ storeOrder?.payment_mode == 1 ? 'Online':'Cash' }}</td>
+                        <td>{{ storeOrder?.payment_mode_type }}</td>
                         <td>{{ storeOrder?.order_placing_date |date:'medium' }}</td>
                         <td style="font-weight:bold">{{ storeOrder?.order_status}}</td>
 

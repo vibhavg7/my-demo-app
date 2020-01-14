@@ -25,7 +25,7 @@ export class MerchantOrdersComponent implements OnInit {
   pageSize: number = 20;
 
   searchCriteriaForm: FormGroup;
-  constructor(private _merchantService: MerchantService, private formBuilder: FormBuilder, 
+  constructor(private _merchantService: MerchantService, private formBuilder: FormBuilder,
     private _activatedRoute: ActivatedRoute,private modalService : NgbModal) {
     this.searchCriteriaForm = this.formBuilder.group({
       searchCriteria: ['']
@@ -34,11 +34,11 @@ export class MerchantOrdersComponent implements OnInit {
 
   ngOnInit() {
     this.storeId = +this._activatedRoute.parent.params['_value']['storeId'];
-    this._merchantService.fetchAllStoreOrders(this.storeId, this.currentPage, this.pageSize, "").subscribe((data) => {     
+    this._merchantService.fetchAllStoreOrders(this.storeId, this.currentPage, this.pageSize, "").subscribe((data) => {
       this.store_order_total_count = data['store_order_count'][0]['store_orders_count'];
       this.storeOrders = data['store_orders_info'];
-      console.log(this.storeOrders[0]);
-    })
+      console.log(data);
+    });
     this.onChanges();
   }
 
@@ -64,7 +64,7 @@ export class MerchantOrdersComponent implements OnInit {
   currentPageFn(page) {
     console.log(page);
     this._merchantService.fetchAllStoreOrders(this.storeId, page, this.pageSize, this.filterBy)
-      .subscribe((data) => {        
+      .subscribe((data) => {
         this.storeOrders = data['store_orders_info'];
       })
   }

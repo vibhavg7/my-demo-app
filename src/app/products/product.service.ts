@@ -11,7 +11,7 @@ import { ProductResolved } from './product-resolved';
 )
 export class ProductService implements OnDestroy {
   // tslint:disable-next-line:variable-name
-  private _productServiceUrl = 'http://ec2-18-188-251-155.us-east-2.compute.amazonaws.com:3000/productsapi/';
+  private _productServiceUrl = 'http://ec2-18-224-29-78.us-east-2.compute.amazonaws.com:3000/productsapi/';
   private products: IProduct[];
   public productResolved: ProductResolved;
   private selectedProductSource = new Subject<IProduct | null>();

@@ -10,7 +10,7 @@ import { ErrorTracker } from '../shared/errorTracker';
 export class CouponService {
 
   constructor(private http: HttpClient) { }
-  private couponServiceUrl = 'http://ec2-18-188-251-155.us-east-2.compute.amazonaws.com:3000/vouchersapi/';
+  private couponServiceUrl = 'http://ec2-18-224-29-78.us-east-2.compute.amazonaws.com:3000/vouchersapi/';
 
   fetchAllCoupons(pageNumber: number, pageSize: any, filterBy: any): Observable<any> {
     const obj: any = {};
