@@ -17,7 +17,7 @@ export class AuthService {
     }
     // currentUser: User;
     redirectUrl: any;
-    _authURL: any = 'http://ec2-18-224-29-78.us-east-2.compute.amazonaws.com:3000/';
+    _authURL: any = 'http://ec2-13-58-49-153.us-east-2.compute.amazonaws.com:3000/';
 
     constructor(private _http: HttpClient) {
 

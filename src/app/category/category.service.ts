@@ -12,7 +12,7 @@ export class CategoryService {
   constructor(private http: HttpClient) { }
   public storecategories: any;
   public categoryData: any = [];
-  private categoryServiceUrl = 'http://ec2-18-224-29-78.us-east-2.compute.amazonaws.com:3000/categoryapi';
+  private categoryServiceUrl = 'http://ec2-13-58-49-153.us-east-2.compute.amazonaws.com:3000/categoryapi';
 
 
 
