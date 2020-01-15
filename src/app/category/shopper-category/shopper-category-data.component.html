@@ -1,13 +1,13 @@
 <td>
-  <img *ngIf="!storeCategory?.store_image_url" src='assets/product_images/default_image.jpg' [style.width.px]='imageWidth'
+  <img *ngIf="!storeCategory?.image_url" src='assets/product_images/default_image.jpg' [style.width.px]='imageWidth'
     [style.height.px]='imageHeight' [style.margin.px]='imageMargin'>
-  <span *ngIf="!storeCategory?.store_image_url" (click)="uploadImage(storeCategory.store_category_id)" style="display:block;font-size:14px;cursor:pointer;color:blue">
+  <span *ngIf="!storeCategory?.image_url" (click)="uploadImage(storeCategory.store_category_id)" style="display:block;font-size:14px;cursor:pointer;color:blue">
     Upload Image
   </span>
-  <img *ngIf="storeCategory?.store_image_url" src='{{storeCategory?.store_image_url}}' [title]='storeCategory.store_category_name'
+  <img *ngIf="storeCategory?.image_url" src='{{storeCategory?.image_url}}' [title]='storeCategory.store_category_name'
     [style.height.px]='imageHeight' [style.width.px]='imageWidth' [style.margin.px]='imageMargin'>
 
-  <span *ngIf="storeCategory?.store_image_url" (click)="uploadImage(storeCategory.store_category_id)" style="display:block;font-size:14px;cursor:pointer;color:blue">
+  <span *ngIf="storeCategory?.image_url" (click)="uploadImage(storeCategory.store_category_id)" style="display:block;font-size:14px;cursor:pointer;color:blue">
     Change Image
   </span>
 </td>
