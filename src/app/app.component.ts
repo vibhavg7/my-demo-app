@@ -8,13 +8,13 @@ import { Router, Event, NavigationStart, NavigationEnd, NavigationError, Navigat
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  pageTitle: string = 'Grostep Panel';
+  pageTitle = 'Grostep Panel';
   loading = true;
   navbarOpen = false;
   constructor(private authService: AuthService, private router: Router) {
     router.events.subscribe((routerevent: Event) => {
       this.checkRouterEvent(routerevent);
-    })
+    });
   }
 
   toggleNavbar() {
@@ -22,7 +22,6 @@ export class AppComponent {
   }
 
   checkRouterEvent(navigatorEvent: Event) {
-    // console.log('checkRouterEvent');
     if (navigatorEvent instanceof NavigationStart) {
       this.loading = true;
     }
@@ -38,7 +37,7 @@ export class AppComponent {
   }
 
   get userName() {
-    let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     return (currentUser) ? currentUser.username : '';
   }
 

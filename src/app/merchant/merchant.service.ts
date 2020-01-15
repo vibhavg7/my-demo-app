@@ -180,7 +180,7 @@ export class MerchantService {
     obj.storePANNumber = store.storePANNumber;
     obj.storePhoneNumber = store.storePhoneNumber;
     obj.storeRating = +store.storeRating;
-
+    obj.password = store.storePhoneNumber;
     const url = `${this._storeServiceUrl}addnewstore`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this._http.post(url, obj, { headers }).pipe(
