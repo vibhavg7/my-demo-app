@@ -39,10 +39,10 @@ export class ProductService implements OnDestroy {
     this.productResolved.products.forEach(product => {
       if (product.productId == product_id) {
         product.image_url = image_url;
-        console.log(product);
+        // console.log(product);
       }
     });
-    console.log(this.productResolved.products);
+    // console.log(this.productResolved.products);
   }
 
   getProducts(pagenumber: number, pagesize: number, filterBy: any): Observable<any> {
@@ -56,7 +56,7 @@ export class ProductService implements OnDestroy {
         , map((data: any) => {
           this.productResolved.products = data.products;
           this.productResolved.productCount = data.products_total_count.products_count;
-          console.log(this.productResolved.products);
+          // console.log(this.productResolved.products);
           // return this.products = data['products'];
           // console.log(data['products']);
           // return this.products = data['products'];
@@ -81,7 +81,7 @@ export class ProductService implements OnDestroy {
           , catchError(this.handleError)
         );
     }
-    console.log(queryString);
+    // console.log(queryString);
     return of([]);
   }
 
@@ -99,7 +99,7 @@ export class ProductService implements OnDestroy {
 
   updateProduct(product: IProduct, productId: any): Observable<any> {
     // console.log(product);
-    let obj = {};
+    const obj: any = {};
     obj['product_id'] = productId;
     obj['product_name'] = product['productName'];
     obj['product_price'] = product['productPrice'];
@@ -116,12 +116,12 @@ export class ProductService implements OnDestroy {
     else if (!!product['storeSubCategoryName']) {
       obj['category_id'] = product['storeSubCategoryName'];
     }
-    console.log(obj);
+    // console.log(obj);
     const url = `${this._productServiceUrl}${productId}`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this._http.put(url, obj, { headers }).pipe(
       tap(data => {
-        console.log(JSON.stringify(data))
+        // console.log(JSON.stringify(data))
       }),
       // map(()=>),
       catchError(this.handleError)
@@ -148,13 +148,13 @@ export class ProductService implements OnDestroy {
       obj['category_id'] = product['storeSubCategoryName'];
     }
 
-    console.log(obj);
+    // console.log(obj);
 
     const url = `${this._productServiceUrl}`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this._http.post(url, obj, { headers }).pipe(
       tap(data => {
-        console.log(JSON.stringify(data))
+        // console.log(JSON.stringify(data))
       }),
       map((data) => {
         return data;
@@ -168,7 +168,9 @@ export class ProductService implements OnDestroy {
 
     return this._http.get<any[]>(`${this._productServiceUrl}${methodType}${category_id}`)
       .pipe(
-        tap(data => { console.log(JSON.stringify(data)) })
+        tap(data => {
+          // console.log(JSON.stringify(data));
+        })
         , catchError(this.handleError)
       );
   }

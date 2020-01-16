@@ -58,19 +58,18 @@ export class MerchantService {
   editStoreProduct(storeProductForm, storeProductId) {
 
     const url = `${this._storeServiceUrl}storeinfo/storeproducts/edit/${storeProductId}`;
-    let obj = {};
-    // obj['productId'] = storeProductId;
-    obj['store_cost_price'] = storeProductForm['productCostPrice'];
-    obj['store_selling_price'] = storeProductForm['productSellingPrice'];
-    obj['store_margin'] = storeProductForm['storeMargin'];
-    obj['store_discount'] = storeProductForm['storeDiscount'];
-    obj['status'] = storeProductForm['status'];
-    obj['product_marked_price'] = storeProductForm['productMarkedPrice'];
-    obj['stock'] = 1;
+    const obj: any = {};
+    obj.store_cost_price = 0;
+    obj.store_selling_price = storeProductForm.productSellingPrice;
+    obj.store_margin = storeProductForm.storeMargin;
+    obj.store_discount = ((storeProductForm.productMarkedPrice - storeProductForm.productSellingPrice) /
+                            storeProductForm.productMarkedPrice) * 100;
+    obj.status = storeProductForm.status;
+    obj.product_marked_price = storeProductForm.productMarkedPrice;
+    obj.stock = 1;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this._http.post(url, obj, { headers }).pipe(
       tap(data => {
-        // console.log(JSON.stringify(data))
       }),
       map((data) => {
         return data;
@@ -195,11 +194,11 @@ export class MerchantService {
 
   addStoreProducts(addStoreProductForm, selectedProduct: any, storeId): Observable<any> {
     const obj: any = {};
-
-    obj.store_cost_price = addStoreProductForm.productCostPrice;
+    obj.store_cost_price =  0;
     obj.store_marked_price = addStoreProductForm.productMarkedPrice;
     obj.store_selling_price = addStoreProductForm.productSellingPrice;
-    obj.store_discount = +addStoreProductForm.storeDiscount;
+    obj.store_discount = ((addStoreProductForm.productMarkedPrice - addStoreProductForm.productSellingPrice) /
+                           addStoreProductForm.productMarkedPrice) * 100;
     obj.store_margin = +addStoreProductForm.storeMargin;
     obj.store_initial_quantity = 0;
     obj.store_updated_quantity = 0;

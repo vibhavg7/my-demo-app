@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { CategoryService } from '../../category/category.service';
 import { ProductService } from '../product.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -12,10 +12,11 @@ import * as _ from 'lodash';
 })
 export class ProductShellAddComponent implements OnInit {
 
+  productData: any;
   storeSubCategoryData: any;
   submitted: boolean;
   storeCategories: any;
-  addProductForm: any;
+  addProductForm: FormGroup;
   subCategories: any;
   errorMessage: any;
   subCategoryData: any;
@@ -26,51 +27,36 @@ export class ProductShellAddComponent implements OnInit {
     private _categoryService: CategoryService,
     private _productService: ProductService) {
     this.addProductForm = this.formBuilder.group({
-      productName: ['',Validators.required],
-      storeCategoryName:  ['',Validators.required],
-      storeSubCategoryName :  ['',Validators.required],
-      subCategoryName:  [''],
-      productWeightType:  ['',Validators.required],
-      productPrice:  ['',Validators.required],
-      productWeight:  ['',Validators.required],
-      productCode:  ['',Validators.required],
-      productDescription:  ['',Validators.required],
-      productRating:  ['',Validators.required],
-      status: ['',Validators.required]
+      productName: ['', Validators.required],
+      storeCategoryName: ['', Validators.required],
+      storeSubCategoryName: ['', Validators.required],
+      subCategoryName: [''],
+      productWeightType: ['', Validators.required],
+      productPrice: ['', Validators.required],
+      productWeight: ['', Validators.required],
+      productCode: ['', Validators.required],
+      productDescription: ['', Validators.required],
+      productRating: ['', Validators.required],
+      status: ['', Validators.required]
     });
   }
 
   get f() { return this.addProductForm.controls; }
 
   ngOnInit() {
-    this._categoryService.getAllStoreCategory("").subscribe(data => {
-      this.storeCategories = data['store_categories'];console.log(this.storeCategories);
+    this._categoryService.getAllStoreCategory('').subscribe((data: any) => {
+      this.storeCategories = data.store_categories;
       this.productId = this._activatedRoute.snapshot.paramMap.get('id');
-      if (this.productId != 0) {
-        const productData: any = this._activatedRoute.snapshot.data['productData']['product'];
-        this.storeCategoryChange(productData['store_category_id']);        
-        this.addProductForm.get('productName').setValue(productData['productName']);
-        this.addProductForm.get('storeCategoryName').setValue(productData['storeCategoryName']);
-        this.addProductForm.get('productWeightType').setValue(productData['productWeightType']);
-
-        this.addProductForm.get('storeCategoryName').setValue(productData['store_category_id']);
-        this.addProductForm.get('storeSubCategoryName').setValue(productData['store_sub_category_id']);
-        this.addProductForm.get('subCategoryName').setValue(productData['sub_category_id']);
-
-        this.addProductForm.get('productPrice').setValue(productData['price']);
-        this.addProductForm.get('productCode').setValue(productData['productCode']);
-        this.addProductForm.get('productWeight').setValue(productData['product_weight']);
-        this.addProductForm.get('productDescription').setValue(productData['description']);
-        this.addProductForm.get('productRating').setValue(productData['starRating']);
-        this.addProductForm.get('status').setValue(productData['available']);
+      if (this.productId !== 0) {
+        this.productData = this._activatedRoute.snapshot.data.productData.product;
+        console.log(this.productData);
+        this.storeCategoryChange(this.productData.store_category_id, +this.productData.store_sub_category_id);
       }
     });
 
   }
 
-  fetchSubCategories(store_category_id)
-  {
-
+  fetchSubCategories(store_category_id) {
   }
 
   deleteProduct() {
@@ -104,10 +90,8 @@ export class ProductShellAddComponent implements OnInit {
       },
         (error) => {
           console.log(error);
-        })
-    }
-    else {
-      // console.log('Hiiiiiiiiiiiiiiii');
+        });
+    } else {
       this._productService.updateProduct(this.addProductForm.value, this.productId).subscribe((data) => {
         console.log(data);
         if (data['status'] == 200) {
@@ -119,27 +103,48 @@ export class ProductShellAddComponent implements OnInit {
       },
         (error) => {
           this.errorMessage = error;
-        })
+        });
     }
   }
 
-  storeCategoryChange(store_category_id) {
-    this._categoryService.getStoreCategoryData(+store_category_id).subscribe(data => {
-      this.storeSubCategoryData = data['store_categories'][0]['store_sub_category_name'];
-      this.subCategoryData = this.storeSubCategoryData[0]['sub_category_data'];
-      this.addProductForm.get('storeSubCategoryName').setValue(this.storeSubCategoryData[0]['store_sub_category_id']);
+  storeCategoryChange(storecategoryid, storesubcategoryid) {
+    this._categoryService.getStoreCategoryData(+storecategoryid).subscribe((data: any) => {
+      this.storeSubCategoryData = data.store_categories[0].store_sub_category_name;
+      console.log(this.storeSubCategoryData);
+      // this.subCategoryData = this.storeSubCategoryData[0]['sub_category_data'];
+      if (storesubcategoryid === 0) {
+        this.subCategoryData = this.storeSubCategoryData[0].sub_category_data;
+      } else {
+        this.subCategoryData = this.storeSubCategoryData.filter((d: any) => {
+          return d.store_sub_category_id === storesubcategoryid;
+        })[0].sub_category_data;
+      }
+
+      this.addProductForm.get('productName').setValue(this.productData.productName);
+      this.addProductForm.get('storeCategoryName').setValue(this.productData.store_category_id);
+      this.addProductForm.get('storeSubCategoryName').setValue(this.productData.store_sub_category_id);
+      this.addProductForm.get('productPrice').setValue(this.productData.price);
+      this.addProductForm.get('productCode').setValue(this.productData.productCode);
+      this.addProductForm.get('productWeightType').setValue(this.productData.productWeightType);
+      this.addProductForm.get('productWeight').setValue(this.productData.product_weight);
+      this.addProductForm.get('productDescription').setValue(this.productData.description);
+      this.addProductForm.get('productRating').setValue(this.productData.starRating);
+      this.addProductForm.get('status').setValue(this.productData.available);
+      this.addProductForm.get('subCategoryName').setValue(this.productData.sub_category_id);
     });
   }
 
-  storeSubCategoryChange(store_sub_category_id)
-  {
-    console.log('storeSubCategoryChange');
-    this.storeSubCategoryData.filter(data=>{
-      if(data.store_sub_category_id == store_sub_category_id)
-      {
-        this.subCategoryData = data['sub_category_data'];
-        this.addProductForm.get('subCategoryName').setValue(this.subCategoryData[0]['sub_category_id']);
+  storeSubCategoryChange(storesubcategoryid) {
+    this.storeSubCategoryData.filter((data) => {
+      if (data.store_sub_category_id === +storesubcategoryid) {
+        this.subCategoryData = data.sub_category_data;
+        if (this.subCategoryData.length < 1) {
+          this.addProductForm.patchValue({
+            subCategoryName: ''
+          });
+          this.subCategoryData = [];
+        }
       }
-    })
+    });
   }
 }

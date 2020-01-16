@@ -8,15 +8,15 @@ export interface UserState
 
 export function reducer(state, action) {
 
-    console.log(state);
+    // console.log(state);
     switch (action.type) {
-  
+
       case 'MASK_USER_NAME':
         return {
           ...state,
           maskUserName: action.payload
         };
-  
+
       default:
         return state;
     }

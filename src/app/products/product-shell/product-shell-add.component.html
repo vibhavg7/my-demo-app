@@ -15,7 +15,7 @@
                     <div class="form-group">
                         <label>Store Category Name</label>
                         <div>
-                            <select class="form-control" (change)="storeCategoryChange($event.target.value)" formControlName="storeCategoryName">
+                            <select class="form-control" (change)="storeCategoryChange($event.target.value,0)" formControlName="storeCategoryName">
                                 <option *ngFor="let storeCategory of storeCategories" value="{{storeCategory?.store_category_id}}">
                                     {{storeCategory.store_category_name}}
                                 </option>
@@ -27,9 +27,10 @@
                             <div class="form-group">
                                     <label>Store Sub Category</label>
                                     <div>
-                                        <select class="form-control" (change)="storeSubCategoryChange($event.target.value)" 
+                                        <select class="form-control" (change)="storeSubCategoryChange($event.target.value)"
                                                 formControlName="storeSubCategoryName">
-                                            <option *ngFor="let subCategory of storeSubCategoryData" value="{{subCategory?.store_sub_category_id}}">
+                                            <option *ngFor="let subCategory of storeSubCategoryData"
+                                                  value="{{subCategory?.store_sub_category_id}}">
                                                 {{subCategory.store_sub_category | upperCaseName}}
                                             </option>
                                         </select>

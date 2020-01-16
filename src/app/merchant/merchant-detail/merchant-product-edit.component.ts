@@ -32,10 +32,10 @@ export class MerchantProductEditComponent implements OnInit {
     this.addStoreProductForm = this.formBuilder.group({
       storeproductName: ['', Validators.required],
       productMarkedPrice: ['', Validators.required],
-      productCostPrice: ['', Validators.required],
+      // productCostPrice: ['', Validators.required],
       productSellingPrice: ['', Validators.required],
       storeMargin: ['', Validators.required],
-      storeDiscount: ['', Validators.required],
+      // storeDiscount: ['', Validators.required],
       status: ['']
     });
   }
@@ -46,17 +46,15 @@ export class MerchantProductEditComponent implements OnInit {
     this.storeId = +this.activatedRoute.snapshot.params.storeId;
     this.storeProductId = +this.activatedRoute.snapshot.params.productId;
     if (this.storeProductId !== 0) {
-      // console.log(this.storeProductId);
       this.merchantService.fetchStoreProductById(this.storeProductId).subscribe((data: any) => {
-        // console.log(data);
         const productdata = data.products_info;
         console.log(productdata[0]);
         this.addStoreProductForm.get('storeproductName').setValue(productdata[0].product_name);
         this.addStoreProductForm.get('productMarkedPrice').setValue(productdata[0].product_marked_price);
-        this.addStoreProductForm.get('productCostPrice').setValue(productdata[0].store_cost_price);
+        // this.addStoreProductForm.get('productCostPrice').setValue(productdata[0].store_cost_price);
         this.addStoreProductForm.get('productSellingPrice').setValue(productdata[0].store_selling_price);
         this.addStoreProductForm.get('storeMargin').setValue(productdata[0].store_margin);
-        this.addStoreProductForm.get('storeDiscount').setValue(productdata[0].store_discount);
+        // this.addStoreProductForm.get('storeDiscount').setValue(productdata[0].store_discount);
         this.addStoreProductForm.get('status').setValue(productdata[0].status);
       });
     }
