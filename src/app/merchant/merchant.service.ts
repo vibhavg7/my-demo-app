@@ -136,10 +136,10 @@ export class MerchantService {
       );
   }
 
-  fetchAllStoreOrders(storeId: number, page_number: number, page_size: number, filterBy: any) {
-    let obj = {};
-    obj['page_number'] = page_number; obj['page_size'] = page_size; obj['storeId'] = storeId;
-    obj['filterBy'] = filterBy;
+  fetchAllStoreOrders(storeId: number, pagenumber: number, pagesize: number, filterBy: any) {
+    const obj: any = {};
+    obj.page_number = pagenumber; obj.page_size = pagesize; obj.storeId = storeId;
+    obj.filterBy = filterBy; obj.order_type = filterBy;
 
     // console.log(obj);
 
