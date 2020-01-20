@@ -48,7 +48,19 @@ export class ProductShellAddComponent implements OnInit {
       this.storeCategories = data.store_categories;
       this.productId = this._activatedRoute.snapshot.paramMap.get('id');
       if (this.productId !== 0) {
+        // console.log('dsdsdsds');
         this.productData = this._activatedRoute.snapshot.data.productData.product;
+        this.addProductForm.get('storeCategoryName').setValue(this.productData.store_category_id);
+        this.addProductForm.get('storeSubCategoryName').setValue(this.productData.store_sub_category_id);
+        this.addProductForm.get('subCategoryName').setValue(this.productData.sub_category_id);
+        this.addProductForm.get('productName').setValue(this.productData.productName);
+        this.addProductForm.get('productPrice').setValue(this.productData.price);
+        this.addProductForm.get('productCode').setValue(this.productData.productCode);
+        this.addProductForm.get('productWeightType').setValue(this.productData.productWeightType);
+        this.addProductForm.get('productWeight').setValue(this.productData.product_weight);
+        this.addProductForm.get('productDescription').setValue(this.productData.description);
+        this.addProductForm.get('productRating').setValue(this.productData.starRating);
+        this.addProductForm.get('status').setValue(this.productData.available);
         console.log(this.productData);
         this.storeCategoryChange(this.productData.store_category_id, +this.productData.store_sub_category_id);
       }
@@ -108,29 +120,15 @@ export class ProductShellAddComponent implements OnInit {
   }
 
   storeCategoryChange(storecategoryid, storesubcategoryid) {
-    // console.log(storecategoryid);
-    // console.log(storesubcategoryid);
+    this.storeSubCategoryData = []; this.subCategoryData = [];
     this._categoryService.getStoreCategoryData(+storecategoryid).subscribe((data: any) => {
       this.storeSubCategoryData = data.store_categories[0].store_sub_category_name;
-      // console.log(this.storeSubCategoryData);
-      // this.subCategoryData = this.storeSubCategoryData[0]['sub_category_data'];
       if (+storesubcategoryid === 0) {
-        this.subCategoryData = this.storeSubCategoryData[0].sub_category_data;
+        // this.subCategoryData = this.storeSubCategoryData[0].sub_category_data;
       } else {
         this.subCategoryData = this.storeSubCategoryData.filter((d: any) => {
           return d.store_sub_category_id === storesubcategoryid;
         })[0].sub_category_data;
-        this.addProductForm.get('storeCategoryName').setValue(this.productData.store_category_id);
-        this.addProductForm.get('storeSubCategoryName').setValue(this.productData.store_sub_category_id);
-        this.addProductForm.get('subCategoryName').setValue(this.productData.sub_category_id);
-        this.addProductForm.get('productName').setValue(this.productData.productName);
-        this.addProductForm.get('productPrice').setValue(this.productData.price);
-        this.addProductForm.get('productCode').setValue(this.productData.productCode);
-        this.addProductForm.get('productWeightType').setValue(this.productData.productWeightType);
-        this.addProductForm.get('productWeight').setValue(this.productData.product_weight);
-        this.addProductForm.get('productDescription').setValue(this.productData.description);
-        this.addProductForm.get('productRating').setValue(this.productData.starRating);
-        this.addProductForm.get('status').setValue(this.productData.available);
       }
     });
   }
