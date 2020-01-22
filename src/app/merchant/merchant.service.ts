@@ -11,8 +11,8 @@ export class MerchantService {
 
   constructor(private _http: HttpClient) { }
   stores: any;
-  private _storeServiceUrl = 'http://ec2-13-58-49-153.us-east-2.compute.amazonaws.com:3000/storesapi/';
-  private _categoryServiceUrl = 'http://ec2-13-58-49-153.us-east-2.compute.amazonaws.com:3000/categoryapi';
+  private _storeServiceUrl = 'http://ec2-13-233-10-240.ap-south-1.compute.amazonaws.com:3000/storesapi/';
+  private _categoryServiceUrl = 'http://ec2-13-233-10-240.ap-south-1.compute.amazonaws.com:3000/categoryapi';
 
   fetchAllStores(page_number: number, page_size: any, filterBy: any): Observable<any> {
     let obj = {};

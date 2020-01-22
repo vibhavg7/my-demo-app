@@ -10,7 +10,7 @@ import { ErrorTracker } from '../shared/errorTracker';
 export class BannerService {
 
   constructor(private http: HttpClient) { }
-  private bannerServiceUrl = 'http://ec2-13-58-49-153.us-east-2.compute.amazonaws.com:3000/bannerapi/';
+  private bannerServiceUrl = 'http://ec2-13-233-10-240.ap-south-1.compute.amazonaws.com:3000/bannerapi/';
 
   fetchAllBanners( pageNumber: number, pageSize: any, filterBy: any): Observable<any> {
     const obj: any = {};
