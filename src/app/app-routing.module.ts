@@ -61,6 +61,20 @@ const routes: any = [
       loadChildren: () =>
         import('./banner/banner.module').then(m => m.BannerModule)
     },
+    {
+      path: 'invoice',
+      canActivate: [AuthGuard],
+      data: { preload: true },
+      loadChildren: () =>
+        import('./invoice/invoice.module').then(m => m.InvoiceModule)
+    },
+    {
+      path: 'delivery',
+      canActivate: [AuthGuard],
+      data: { preload: true },
+      loadChildren: () =>
+        import('./delivery/delivery.module').then(m => m.DeliveryModule)
+    },
     {path: '', redirectTo: 'welcome', pathMatch: 'full'},
     {path: '**', redirectTo: 'welcome', pathMatch: 'full'}
   ];

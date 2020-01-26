@@ -1,0 +1,81 @@
+<div class='card'>
+    <div class='card-header'>
+        {{pageTitle}}
+    </div>
+    <div class='card-body'>
+        <div class="row">
+            <div class='col-md-2'>Filter by:</div>
+            <div class='col-md-4'>
+                <form [formGroup]="searchCriteriaForm">
+                    <input formControlName="searchCriteria" class="form-control" type="text" id="keyword" placeholder="Search Delivery Person By Name"
+                        autocomplete="off" autofocus/>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <button class="btn btn-outline-secondary" style="float:right" [routerLink]="['/delivery/',0,'edit']">
+                    Add New Delivery Person
+                </button>
+            </div>
+            <div class='table-responsive'>
+                <table style="width:1200px !important" class='table' *ngIf='deliverypersons.length'>
+                    <thead>
+                        <tr>
+                            <th>
+
+                            </th>
+                            <th style="width:90px !important">Id</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Registration Date</th>
+                            <th>Aadhar Number</th>
+                            <th>Pan Number</th>
+                            <th>Status</th>
+                            <th>Available</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor='let deliveryperson of deliverypersons'>
+                            <td>
+                                <img *ngIf="!deliveryperson?.image_url" src='assets/product_images/default_image.jpg'
+                                    [title]='deliveryperson.delivery_person_name' [style.width.px]='imageWidth'
+                                    [style.margin.px]='imageMargin'>
+                                <img *ngIf="deliveryperson?.image_url" src='{{deliveryperson.image_url}}'
+                                    [title]='deliveryperson.delivery_person_name' [style.width.px]='imageWidth'
+                                    [style.margin.px]='imageMargin'>
+                            </td>
+                            <td style="width:90px !important">
+                                <a [routerLink]="['/delivery', deliveryperson.delivery_person_id]">
+                                    {{ deliveryperson?.delivery_person_id }}
+                                </a>
+                            </td>
+                            <td>
+                                <a [routerLink]="['/delivery', deliveryperson.delivery_person_id]">
+                                    {{ deliveryperson?.delivery_person_name }}
+                                </a>
+                            </td>
+
+                            <td>{{ deliveryperson?.email }}</td>
+                            <td>{{ deliveryperson?.phone }}</td>
+                            <td>{{ deliveryperson?.registered_date | date:'medium' }}</td>
+                            <td>{{ deliveryperson?.aadhar_number}}</td>
+                            <td>{{ deliveryperson?.pan_number}}</td>
+                            <td style="font-weight:bold">{{ deliveryperson?.status ? 'Enabled' : 'Disabled' }}</td>
+                            <td style="font-weight:bold">{{ deliveryperson?.available ? 'Available' : 'Not Available' }}</td>
+                            <td>
+                                <button class="btn btn-outline-secondary mr-3"
+                                [routerLink]="[deliveryperson?.delivery_person_id,'edit']">
+                                  <i class='fa fa-edit'></i>
+                                </button>
+                              </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+    <div *ngIf='errorMessage' class='alert alert-danger'>
+        Error: {{ errorMessage }}
+    </div>

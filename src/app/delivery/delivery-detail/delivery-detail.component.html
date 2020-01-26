@@ -1,0 +1,21 @@
+<div class="card">
+    <div class="card-header">
+        <div class="wizard">
+            <a [routerLink]="['info']" routerLinkActive="active">
+                 Info
+            </a>
+            <a [routerLink]="['documents']" routerLinkActive="active">
+                Documents
+            </a>
+            <a [routerLink]="['realtimeorders']" routerLinkActive="active">
+                Running Orders
+            </a>
+            <a [routerLink]="['pastorders']" routerLinkActive="active">
+                Past Orders
+            </a>
+        </div>
+    </div>
+    <div class="card-body">
+        <router-outlet></router-outlet>
+    </div>
+</div>

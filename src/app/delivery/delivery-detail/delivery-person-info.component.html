@@ -1,0 +1,54 @@
+<div class="card card-primary" *ngIf="deliveryPersonData">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-4" class="table-key">Id:</div>
+                    <div class="col-md-8">{{deliveryPersonData?.delivery_person_id}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4" class="table-key">Name:</div>
+                    <div class="col-md-8">{{deliveryPersonData?.delivery_person_name}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4" class="table-key">Email:</div>
+                    <div class="col-md-8">{{deliveryPersonData?.email}}</div>
+                </div>
+                <!-- <div class="row">
+                    <div class="col-md-4" class="table-key">Customer DOB:</div>
+                    <div class="col-md-8">{{customerData?.customer_dob | date}}</div>
+                </div> -->
+                <div class="row">
+                    <div class="col-md-4" class="table-key">Phone Number:</div>
+                    <div class="col-md-8">{{deliveryPersonData?.phone}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4" class="table-key">Registration Date:</div>
+                    <div class="col-md-8">{{deliveryPersonData?.registration_date | date:'medium'}}</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4" class="table-key">Rating:</div>
+                    <div class="col-md-8">
+                        <app-star [rating]='deliveryPersonData?.rating'>
+                        </app-star>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4" class="table-key">Available:</div>
+                    <div class="col-md-8">{{deliveryPersonData?.status == 1 ? 'Available':'Not Available' }}</div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <img class='center-block img-responsive' *ngIf="!deliveryPersonData?.image_url" src='assets/product_images/default_image.jpg'
+                    [style.width.px]='250' [style.margin.px]='2'>
+                <img class='center-block img-responsive' *ngIf="deliveryPersonData?.image_url" src='{{deliveryPersonData?.image_url}}'
+                    [title]='deliveryPersonData?.delivery_person_name' [style.width.px]='250' [style.margin.px]='2'>
+            </div>
+        </div>
+    </div>
+
+    <div class='alert alert-danger' *ngIf='errorMessage'>{{errorMessage}}
+    </div>
+</div>
