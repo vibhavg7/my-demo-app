@@ -1,1 +1,32 @@
-<p>merchant-products-catalog-data works!</p>
+<td>
+    <img *ngIf="!storeProductsInfo.image_url" class='center-block img-responsive'
+      src='assets/product_images/default_image.jpg' [title]='storeProductsInfo?.product_name'
+        [style.width.px]='80' [style.margin.px]='0'>
+    <img *ngIf="storeProductsInfo.image_url" class='center-block img-responsive'
+        src='{{storeProductsInfo.image_url}}' [title]='storeProductsInfo?.product_name'
+        [style.width.px]='80' [style.margin.px]='0'>
+</td>
+<td>
+    <a>{{ storeProductsInfo?.product_name }}</a>
+</td>
+<td>
+    <i class="fas fa-rupee-sign"></i> &#8377;{{ storeProductsInfo?.product_marked_price }}</td>
+<td>
+    <i class="fas fa-rupee-sign"></i> &#8377;{{ storeProductsInfo?.store_selling_price }}</td>
+<td>
+    {{ storeProductsInfo?.store_discount }}%
+</td>
+<td>
+    {{ storeProductsInfo?.store_margin }}%
+</td>
+
+<td>
+    <input class="stockcheckbox" type='checkbox' [(ngModel)]='checkbox' (ngModelChange)='updateProductStock()'>
+</td>
+<td>
+    <button class="btn btn-outline-secondary" [routerLink]="[storeProductsInfo.store_product_mapping_id,'edit']">Edit</button>
+    <button class="btn btn-outline-secondary" style="margin-left:5px"
+    (click)="deleteStoreProduct(storeProductsInfo.store_product_mapping_id)">
+            Delete
+    </button>
+</td>

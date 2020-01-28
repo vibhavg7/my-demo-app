@@ -4,7 +4,8 @@
             <div class='col-md-2'>Filter by:</div>
             <div class='col-md-4'>
                 <form [formGroup]="searchCriteriaForm">
-                    <input formControlName="searchCriteria" class="form-control" type="text" id="keyword" placeholder="Search Merchant Product By Name"
+                    <input formControlName="searchCriteria" class="form-control" type="text" id="keyword"
+                        placeholder="Search Merchant Product By Name"
                         autocomplete="off" autofocus/>
                 </form>
             </div>
@@ -14,8 +15,8 @@
                 </button>
             </div>
         </div>
-        <div class='table-responsive' *ngIf='store_products_count'>
-            <table style="width:1000px !important" class='table' *ngIf='store_products_count'>
+        <div class='table-responsive' *ngIf='storeproductscount'>
+            <table style="width:1000px !important" class='table' *ngIf='storeproductscount'>
                 <thead>
                     <tr>
                         <th>
@@ -23,7 +24,6 @@
                         </th>
                         <th style="width:90px !important">Name</th>
                         <th>MP</th>
-                        <!-- <th>CP</th> -->
                         <th>SP</th>
                         <th>Discount</th>
                         <th>Grostep Margin</th>
@@ -32,48 +32,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor='let store_product of store_products_info'>
-                        <td>
-                            <img *ngIf="!store_product.image_url" class='center-block img-responsive' src='assets/product_images/default_image.jpg' [title]='store_product?.product_name'
-                                [style.width.px]='80' [style.margin.px]='0'>
-                            <img *ngIf="store_product.image_url" class='center-block img-responsive'
-                                src='{{store_product.image_url}}' [title]='store_product?.product_name'
-                                [style.width.px]='80' [style.margin.px]='0'>
-                        </td>
-                        <td>
-                            <a>{{ store_product?.product_name }}</a>
-                        </td>
-                        <td>
-                            <i class="fas fa-rupee-sign"></i> &#8377;{{ store_product?.product_marked_price }}</td>
-                        <!-- <td>
-                            <i class="fas fa-rupee-sign"></i> Rs{{ store_product?.store_cost_price }}</td> -->
-                        <td>
-                            <i class="fas fa-rupee-sign"></i> &#8377;{{ store_product?.store_selling_price }}</td>
-                        <td>
-                            {{ store_product?.store_discount }}%
-                        </td>
-                        <td>
-                            {{ store_product?.store_margin }}%
-                        </td>
-
-                        <td>
-                            <input class="stockcheckbox" type="checkbox" value="{{store_product.stock}}"
-                                  name="{{store_product.store_product_mapping_id}}"
-                                  [checked]="(store_product?.stock ?  true: false)"
-                                (change)="updateProductStock($event,store_product.store_product_mapping_id)">
-                        </td>
-                        <td>
-                            <button class="btn btn-outline-secondary" [routerLink]="[store_product.store_product_mapping_id,'edit']">Edit</button>
-                            <button class="btn btn-outline-secondary" style="margin-left:5px" (click)="deleteStoreProduct(store_product.store_product_mapping_id)">
-                                    Delete
-                            </button>
-                        </td>
+                    <tr *ngFor='let store_product of storeproductsinfo' app-merchant-products-catalog-data
+                      (deletestoreproduct) = deletestoreproduct($event)
+                      [storeProductsInfo]="store_product">
                     </tr>
                 </tbody>
             </table>
-            <app-pagination *ngIf='store_products_count' [totalItemCount]="store_products_count" (currentPage)="currentPageFn($event)"></app-pagination>
+            <app-pagination *ngIf='storeproductscount' [totalItemCount]="storeproductscount" (currentPage)="currentPageFn($event)"></app-pagination>
         </div>
-        <div *ngIf='store_products_count == 0'>
+        <div *ngIf='storeproductscount == 0'>
             No Products in store catelog
         </div>
 

@@ -77,21 +77,23 @@ export class MerchantProductEditComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.addStoreProductForm.value);
+    // console.log(this.addStoreProductForm.value);
+    // console.log(this.selectedProduct);
+    // console.log(this.storeId);
     this.submitted = true;
     if (this.addStoreProductForm.invalid) {
       return;
     }
 
-    if (this.storeProductId == 0) {
+    if (this.storeProductId === 0) {
       this.merchantService.addStoreProducts(this.addStoreProductForm.value, this.selectedProduct, this.storeId)
         .subscribe((data) => {
           console.log(data);
-          if (data.status == 200) {
+          if (data.status === 200) {
             this.router.navigate([`merchant/${this.storeId}/merchantproducts`]);
             // this._router.navigate(['merchant/',this.storeId,'/merchantproducts']);
           }
-          if (data.status == "400") {
+          if (data.status === 400) {
             alert('Category Not Added . Internal Server Error');
           }
         },
@@ -99,13 +101,12 @@ export class MerchantProductEditComponent implements OnInit {
             this.errorMessage = error;
           }
         );
-    }
-    else {
+    } else {
       this.merchantService.editStoreProduct(this.addStoreProductForm.value, this.storeProductId).subscribe((data: any) => {
-        if (data.status == 200) {
+        if (data.status === 200) {
           this.router.navigate([`merchant/${this.storeId}/merchantproducts`]);
         }
-        if (data.status == 400) {
+        if (data.status === 400) {
           alert('Category Not Added . Internal Server Error');
         }
       });

@@ -50,6 +50,7 @@ export class ProductShellAddComponent implements OnInit {
       if (this.productId !== 0) {
         // console.log('dsdsdsds');
         this.productData = this._activatedRoute.snapshot.data.productData.product;
+        // console.log(this.productData);
         this.addProductForm.get('storeCategoryName').setValue(this.productData.store_category_id);
         this.addProductForm.get('storeSubCategoryName').setValue(this.productData.store_sub_category_id);
         this.addProductForm.get('subCategoryName').setValue(this.productData.sub_category_id);

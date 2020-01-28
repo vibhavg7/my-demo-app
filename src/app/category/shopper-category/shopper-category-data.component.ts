@@ -39,7 +39,7 @@ export class ShopperCategoryDataComponent implements OnInit {
       this._categoryService.deleteStoreCategory(store_category_id).subscribe((data) => {
         console.log(data);
         this.deletestorecategory.emit(data);
-      })
+      });
     }
   }
 
