@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class OrderInvoiceInfoComponent implements OnInit {
 
-  constructor(private activatedRoute: ActivatedRoute) { }
+  constructor(private activatedRoute: ActivatedRoute, private orderService: OrderService) { }
   invoiceData: any = [];
   errorMessage: any;
   orderid: any;
@@ -20,4 +20,16 @@ export class OrderInvoiceInfoComponent implements OnInit {
     this.errorMessage = this.activatedRoute.snapshot.data.resolvedInvoice.error;
   }
 
-}
+  downloadBillImage(downloadLink, orderid) {
+    // console.log(downloadLink);
+    // this.orderService.getImage(downloadLink).subscribe(
+    //   (res) => {
+    //         // const a = document.createElement('a');
+    //         // a.href = URL.createObjectURL(res);
+    //         // a.download = orderid + 'billimage';
+    //         // document.body.appendChild(a);
+    //         // a.click();
+    //   });
+    }
+  }
+

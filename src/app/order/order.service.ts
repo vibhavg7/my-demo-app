@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { tap, map, catchError } from 'rxjs/operators';
 import { Observable, throwError, of } from 'rxjs';
 import { ErrorTracker } from '../shared/errorTracker';
@@ -12,7 +12,6 @@ export class OrderService {
   constructor(private http: HttpClient) { }
   private orderService: any = 'http://ec2-13-233-10-240.ap-south-1.compute.amazonaws.com:3000/ordersapi/';
   public orderDetails: any = '';
-
 
   fetchOrderDetails(orderId): Observable<any> {
     return this.http.get<any>(`${this.orderService}${orderId}`).pipe(

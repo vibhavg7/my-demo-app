@@ -56,7 +56,7 @@
                         src='assets/product_images/default_image.jpg'
                         [style.width.px]='250' [style.margin.px]='2'>
 
-                    <img class='center-block img-responsive' *ngIf="invoiceData?.bill_image"
+                    <img (click)="downloadBillImage(invoiceData?.bill_image,invoiceData?.order_id)" class='center-block img-responsive' *ngIf="invoiceData?.bill_image"
                         src='{{invoiceData?.bill_image}}'
                         [title]='invoiceData?.customer_name' [style.width.px]='250' [style.margin.px]='2'>
 

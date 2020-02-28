@@ -25,7 +25,7 @@ export class CustomerDashboardComponent implements OnInit {
   imageMargin = 2;
 
   constructor(private _customerService: CustomerService,
-              private _activatedRoute:ActivatedRoute,
+              private activatedRoute: ActivatedRoute,
               private formBuilder: FormBuilder) {
     this.searchCriteriaForm = this.formBuilder.group({
       searchCriteria: ['']
@@ -33,10 +33,8 @@ export class CustomerDashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.customers = this._activatedRoute.snapshot.data['customers']["customers"];
-    console.log(this.customers);
-    this.total_customer_count = this._activatedRoute.snapshot.data["customers"]['customer_total_count'];
-    this.onChanges();
+    this.customers = this.activatedRoute.snapshot.data['customers']["customers"];
+    this.total_customer_count = this.activatedRoute.snapshot.data["customers"]['customer_total_count'];
   }
 
   onChanges() {
@@ -45,7 +43,7 @@ export class CustomerDashboardComponent implements OnInit {
       switchMap(query => (this.filterBy = query, this._customerService.fetchAllCustomers(this.currentPage, this.pageSize, query)))
     )
       .subscribe(res => { this.total_customer_count = res['customer_total_count']['customer_count'];
-            this.customers = res['customers']; })
+            this.customers = res['customers']; });
   }
 
   currentPageFn(page) {
@@ -53,7 +51,7 @@ export class CustomerDashboardComponent implements OnInit {
       .subscribe((data) => {
         this.total_customer_count = data['customer_total_count']['customer_count'];
         this.customers = data['customers'];
-      })
+      });
   }
 
 }
