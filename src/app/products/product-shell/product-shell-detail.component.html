@@ -4,48 +4,48 @@
   </div>
   <div class="card-body">
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-8">
         <div class="row">
-          <div class="col-md-4">Name:</div>
+          <div class="col-md-4 product-detail-label">Name:</div>
           <div class="col-md-8">{{productData?.productName | upperCaseName}}</div>
         </div>
         <div class="row">
-          <div class="col-md-4">Code:</div>
+          <div class="col-md-4 product-detail-label">Code:</div>
           <div class="col-md-8">{{productData?.productCode | upperCaseName}}</div>
         </div>
         <div class="row">
-          <div class="col-md-4">Weight:</div>
+          <div class="col-md-4 product-detail-label">Weight:</div>
           <div class="col-md-8">{{productData?.product_weight}} {{productData?.weight_text}}</div>
         </div>
         <div class="row">
-          <div class="col-md-4">Release Date:</div>
+          <div class="col-md-4 product-detail-label">Release Date:</div>
           <div class="col-md-8">{{productData?.releaseDate |date:'short' }}</div>
         </div>
         <div class="row">
-          <div class="col-md-4">Last Updated:</div>
+          <div class="col-md-4 product-detail-label">Last Updated:</div>
           <div class="col-md-8">{{productData?.lastUpdated | date:'short'}}</div>
         </div>
         <div class="row">
-          <div class="col-md-4">Description:</div>
+          <div class="col-md-4 product-detail-label">Description:</div>
           <div class="col-md-8">{{productData?.description}}</div>
         </div>
         <div class="row">
-          <div class="col-md-4">Price:</div>
+          <div class="col-md-4 product-detail-label">Price:</div>
           <div class="col-md-8">{{productData?.price}}</div>
         </div>
         <div class="row">
-          <div class="col-md-4">Star Rating:</div>
+          <div class="col-md-4 product-detail-label">Star Rating:</div>
           <div class="col-md-8">
             <app-star [rating]='productData?.starRating' (ratingClicked)='onRatingClicked($event)'>
             </app-star>
           </div>
         </div>
         <div class="row">
-          <div class="col-md-4">Category Name:</div>
+          <div class="col-md-4 product-detail-label">Category Name:</div>
           <div class="col-md-8">{{productData?.categoryName | upperCaseName}}</div>
         </div>
         <div class="row">
-          <div class="col-md-4">Available:</div>
+          <div class="col-md-4 product-detail-label">Available:</div>
           <div class="col-md-8">{{productData?.available ? 'Available':'Not Available' }}</div>
         </div>
 

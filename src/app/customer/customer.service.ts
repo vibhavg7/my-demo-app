@@ -39,7 +39,7 @@ export class CustomerService {
     return this.http.post<any[]>(`${this.customerServiceUrl}/customerinfo/customerorders`, obj)
       .pipe(
         tap(data => {
-          console.log(data);
+          // console.log(data);
         })
         , map((data) => {
           return data;

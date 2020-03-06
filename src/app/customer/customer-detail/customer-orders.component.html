@@ -47,7 +47,7 @@
                             </td>
                             <td>{{customerOrder?.voucher_code}}</td>
                             <td>&#8377; {{customerOrder?.discount_amount}}</td>
-                            <td>&#8377; {{customerOrder?.order_delivery_fee}}</td>
+                            <td>&#8377; {{customerOrder?.delivery_amount}}</td>
                             <td>&#8377;  {{ customerOrder?.final_amount }}</td>
                             <td>{{ customerOrder?.payment_mode == 1 ? 'Online':'Cash' }}</td>
                             <td>{{ customerOrder?.order_placing_date |date:'medium' }}</td>

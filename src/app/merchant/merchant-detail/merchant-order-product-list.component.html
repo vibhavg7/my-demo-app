@@ -36,17 +36,18 @@
                                 {{ orderProduct?.product_name }}
                             </td>
                             <td>
-                                <i class="fas fa-rupee-sign"></i> {{orderProduct?.price}}
+                              &#8377; {{orderProduct?.store_selling_price}}
                             </td>
 
                             <td>{{ orderProduct?.quantity }}</td>
-                            <td><i class="fas fa-rupee-sign"></i> {{ orderProduct?.total_amount }}</td>
+                            <td>
+                                &#8377; {{ orderProduct?.store_selling_price * orderProduct?.quantity  }}</td>
                             <td>{{ orderProduct?.buying_date |date:'short' }}</td>
                             <!-- <td style="font-weight:bold">{{ storeOrder?.status.data[0] ? 'Available' : 'Not Available' }}</td> -->
 
                         </tr>
                     </tbody>
-                </table>                
+                </table>
                 <div *ngIf='orderProducts?.length == 0'>
                     No Products Data Found
                 </div>

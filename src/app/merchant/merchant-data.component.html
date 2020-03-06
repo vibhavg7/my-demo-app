@@ -16,7 +16,7 @@
             {{ store?.store_id }}
         </a>
     </td>
-    <td>
+    <td style="width: 50px;">
         <a [routerLink]="['/merchant', store.store_id]">
             {{ store?.store_name }}
         </a>
@@ -30,10 +30,13 @@
         {{ store?.phone_number }}
     </td>
     <td>
-        {{ store?.latitude | number:'2.1-2' }} - {{ store?.longitude | number:'2.1-2'}}
+        {{ store?.latitude }}/ {{ store?.longitude}}
     </td>
-    <td>{{ store?.gst_number }}</td>
-    <td>{{ store?.pan_number }}</td>
+    <td>
+      {{ store?.store_category_name }}
+    </td>
+    <!-- <td>{{ store?.gst_number }}</td>
+    <td>{{ store?.pan_number }}</td> -->
 
     <!-- <td>
         <div class="row">
