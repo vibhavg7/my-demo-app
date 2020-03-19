@@ -46,8 +46,6 @@ export class MerchantDashboardComponent implements OnInit {
       this.storetotalcount = resolvedData.store_total_count.stores_count;
       this.stores = resolvedData.store;
     }
-    console.log(this.stores);
-
     this.onChanges();
   }
 

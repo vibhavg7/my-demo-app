@@ -77,9 +77,6 @@ export class MerchantProductEditComponent implements OnInit {
   }
 
   onSubmit() {
-    // console.log(this.addStoreProductForm.value);
-    // console.log(this.selectedProduct);
-    // console.log(this.storeId);
     this.submitted = true;
     if (this.addStoreProductForm.invalid) {
       return;

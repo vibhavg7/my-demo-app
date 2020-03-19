@@ -1,0 +1,55 @@
+<div class="jumbotron">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <h2>Add New Category</h2>
+        <form [formGroup]="addAreaWiseCategoryForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <div class="autocomplete" style="width:490px;">
+              <input formControlName="categoryName" (keyup)="onChanges()" class="form-control" type="text" id="keyword" placeholder="Search Category"
+                autocomplete="off" autofocus/>
+              <div class="autocomplete-items">
+                <div *ngFor="let result of results">
+                  <p (click)="categorySelected(result)">{{result?.store_category_name}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Category Text</label>
+            <input type="text" formControlName="categoryText" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.categoryText.errors }"
+            />
+            <div *ngIf="submitted && f.categoryText.errors" class="invalid-feedback">
+              <div *ngIf="f.categoryText.errors.required">Category Text is required</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Category Ranking</label>
+            <input type="text" formControlName="categoryRanking" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.categoryRanking.errors }"
+            />
+            <div *ngIf="submitted && f.categoryRanking.errors" class="invalid-feedback">
+              <div *ngIf="f.categoryRanking.errors.required">Category Ranking is required</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="">Status</label>
+            <div>
+              <select class="form-control" formControlName="status">
+                <option value="1">Enabled</option>
+                <option value="0">Disabled</option>
+              </select>
+            </div>
+
+          </div>
+
+          <div class="form-group">
+            <button class="btn btn-primary">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

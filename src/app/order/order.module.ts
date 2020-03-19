@@ -9,7 +9,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { OrderDeliveryInfoComponent } from './order-management/order-delivery-info.component';
 import { OrderInvoiceInfoComponent } from './order-management/order-invoice-info.component';
-import { OrderDashboardComponent } from './order-management/order-dashboard.component';
+import { OrderDetailComponent } from './order-management/order-detail.component';
+import { OrderDashboardComponent } from './order-dashboard.component';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { OrderDashboardComponent } from './order-management/order-dashboard.comp
     OrderInvoiceInfoComponent,
     OrderMerchantInfoComponent,
     OrderProductInfoComponent,
+    OrderDetailComponent,
     OrderDashboardComponent
   ],
   imports: [

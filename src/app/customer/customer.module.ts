@@ -14,7 +14,15 @@ import { CustomerCartInfoComponent } from './customer-detail/customer-cart-info.
 
 
 @NgModule({
-  declarations: [CustomerDashboardComponent, CustomerEditComponent, CustomerDetailComponent, CustomerDetailInfoComponent, CustomerAddressesComponent, CustomerOrdersComponent, CustomerCartInfoComponent],
+  declarations: [
+                 CustomerDashboardComponent,
+                 CustomerEditComponent,
+                 CustomerDetailComponent,
+                 CustomerDetailInfoComponent,
+                 CustomerAddressesComponent,
+                 CustomerOrdersComponent,
+                 CustomerCartInfoComponent
+                ],
   imports: [
     CommonModule,
     ReactiveFormsModule,

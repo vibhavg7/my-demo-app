@@ -69,6 +69,13 @@ const routes: any = [
         import('./invoice/invoice.module').then(m => m.InvoiceModule)
     },
     {
+      path: 'servicableareas',
+      canActivate: [AuthGuard],
+      data: { preload: true },
+      loadChildren: () =>
+        import('./servicable-areas/servicable-areas.module').then(m => m.ServicableAreasModule)
+    },
+    {
       path: 'delivery',
       canActivate: [AuthGuard],
       data: { preload: true },

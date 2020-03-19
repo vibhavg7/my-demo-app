@@ -1,0 +1,39 @@
+<div class="card card-primary" *ngIf="deliveryAreaData">
+  <div class="card-body">
+      <div class="row">
+          <div class="col-md-8">
+              <div class="row">
+                  <div class="col-md-4" class="table-key">Id:</div>
+                  <div class="col-md-8">{{deliveryAreaData?.serviceable_area_id}}</div>
+              </div>
+              <div class="row">
+                  <div class="col-md-4" class="table-key">City:</div>
+                  <div class="col-md-8">{{deliveryAreaData?.city}}</div>
+              </div>
+              <div class="row">
+                  <div class="col-md-4" class="table-key">Statel:</div>
+                  <div class="col-md-8">{{deliveryAreaData?.state}}</div>
+              </div>
+              <div class="row">
+                  <div class="col-md-4" class="table-key">Country:</div>
+                  <div class="col-md-8">{{deliveryAreaData?.country}}</div>
+              </div>
+              <div class="row">
+                  <div class="col-md-4" class="table-key">Alternate City Name:</div>
+                  <div class="col-md-8">{{deliveryAreaData?.city_alternate_name}}</div>
+              </div>
+              <!-- <div class="row">
+                  <div class="col-md-4" class="table-key">Last Updated</div>
+                  <div class="col-md-8">{{customerData?.last_updated | date:'medium'}}</div>
+              </div> -->
+
+              <div class="row">
+                  <div class="col-md-4" class="table-key">Available:</div>
+                  <div class="col-md-8">{{deliveryAreaData?.status == 1 ? 'Available':'Not Available' }}</div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class='alert alert-danger' *ngIf='errorMessage'>{{errorMessage}}
+  </div>
+</div>

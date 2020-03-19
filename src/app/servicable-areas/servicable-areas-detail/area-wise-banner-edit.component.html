@@ -1,0 +1,46 @@
+<div class="jumbotron">
+  <div class="container">
+      <div class="row">
+          <div class="col-md-6 offset-md-3">
+              <h2>Add New Banner</h2>
+              <form [formGroup]="addAreaWiseBannerForm" (ngSubmit)="onSubmit()">
+                  <div class="form-group">
+                      <div class="autocomplete" style="width:490px;">
+                          <input formControlName="bannerName" (keyup)="onChanges()" class="form-control" type="text" id="keyword"
+                              placeholder="Search Banner" autocomplete="off"  autofocus/>
+                          <div class="autocomplete-items">
+                              <div *ngFor="let result of results">
+                                  <p (click)="bannerSelected(result)">{{result?.banner_name}}</p>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                      <label>Banner Text</label>
+                      <input type="text" formControlName="bannerText" class="form-control"
+                          [ngClass]="{ 'is-invalid': submitted && f.bannerText.errors }"
+                      />
+                      <div *ngIf="submitted && f.bannerText.errors" class="invalid-feedback">
+                          <div *ngIf="f.bannerText.errors.required">Banner Text is required</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <label for="">Status</label>
+                      <div>
+                          <select class="form-control" formControlName="status">
+                              <option value="1">Enabled</option>
+                              <option value="0">Disabled</option>
+                          </select>
+                      </div>
+
+                  </div>
+
+                  <div class="form-group">
+                      <button class="btn btn-primary">Save</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>

@@ -5,16 +5,23 @@ import { OrderCustomerInfoComponent } from './order-management/order-customer-in
 import { OrderMerchantInfoComponent } from './order-management/order-merchant-info.component';
 import { OrderDeliveryInfoComponent } from './order-management/order-delivery-info.component';
 import { OrderInvoiceInfoComponent } from './order-management/order-invoice-info.component';
-import { OrderDashboardComponent } from './order-management/order-dashboard.component';
 import { OrderProductsResolver } from './order-products.resolver';
 import { OrderCustomerInfoResolver } from './order-customerinfo.resolver';
 import { OrderMerchantInfoResolver } from './order-merchantinfo.resolver';
 import { OrderInvoiceInfoResolver } from './order-invoiceinfo.resolver';
+import { OrderDetailComponent } from './order-management/order-detail.component';
+import { OrderDashboardComponent } from './order-dashboard.component';
+import { OrderResolverService } from './order-resolver.service';
 
 const routes: Routes = [
   {
-    path: ':orderId',
+    path: '',
     component: OrderDashboardComponent,
+    resolve: { resolvedOrders: OrderResolverService }
+  },
+  {
+    path: ':orderId',
+    component: OrderDetailComponent,
     children: [
       {
         path: 'productsinfo',

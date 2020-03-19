@@ -1,0 +1,46 @@
+<div class='card'>
+  <div class='card-header'>
+    {{pageTitle}}
+  </div>
+  <div class='card-body'>
+    <div class="row">
+      <div class='col-md-2'>Filter by:</div>
+      <div class='col-md-4'>
+      </div>
+      <div class="col-md-6">
+        <button class="btn btn-outline-secondary" style="float:right" [routerLink]="[0,'edit']">
+          Add New Category
+        </button>
+      </div>
+    </div>
+    <div class='table-responsive'>
+      <table style="width:1000px !important" class='table' *ngIf='deliveryAreaCategoriesData?.length'>
+        <thead>
+          <tr>
+            <th>
+
+            </th>
+            <th style="width:90px !important">Id</th>
+            <th>Ranking</th>
+            <th>Category Name</th>
+            <th>Last Updated</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor='let category of deliveryAreaCategoriesData' app-area-wise-category-data [categoryInfo]="category">
+          </tr>
+        </tbody>
+      </table>
+      <app-pagination *ngIf='deliveryAreaCategoriesData?.length' [totalItemCount]="deliveryAreaCategoriesData?.length"
+            (currentPage)="currentPageFn($event)"></app-pagination>
+      <div *ngIf='deliveryAreaCategoriesData?.length == 0'>
+        No Category Data Found
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf='errorMessage' class='alert alert-danger'>
+  Error: {{ errorMessage }}
+</div>

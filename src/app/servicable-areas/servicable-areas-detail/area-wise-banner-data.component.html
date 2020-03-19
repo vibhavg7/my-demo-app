@@ -1,0 +1,46 @@
+<td>
+  <img *ngIf="!banner?.image_url" src='assets/product_images/default_image.jpg' [style.width.px]='imageWidth'
+      [style.height.px]='imageHeight'
+      [style.margin.px]='imageMargin'>
+  <!-- <span *ngIf="!banner?.image_url" (click)="uploadImage(banner.banner_id)" style="display:block;font-size:14px;cursor:pointer;color:blue">
+      Upload Image
+  </span> -->
+  <img *ngIf="banner?.image_url" src='{{banner?.image_url}}' [title]='banner?.banner_name' [style.height.px]='imageHeight'
+      [style.width.px]='imageWidth'
+      [style.margin.px]='imageMargin'>
+
+  <!-- <span *ngIf="banner?.image_url" (click)="uploadImage(banner.banner_id)" style="display:block;font-size:14px;cursor:pointer;color:blue">
+      Change Image
+  </span> -->
+</td>
+<td>
+  <a [routerLink]="['/servicableareas', banner.id]">
+      {{ banner?.id }}
+  </a>
+</td>
+<td>
+  {{ banner?.banner_text }}
+</td>
+
+<td>
+  {{ banner?.city }}
+</td>
+
+<td>
+  {{ banner?.state }}
+</td>
+
+<td>
+  {{ banner?.country }}
+</td>
+<td>
+  {{banner?.banner_name}}
+</td>
+
+<td style="font-weight:bold">{{ banner?.status ? 'Available' : 'Not Available' }}</td>
+<td>
+  <button class="btn btn-outline-secondary" [routerLink]="[banner?.id,'edit']">Edit</button>
+  <button class="btn btn-outline-secondary" style="margin-left:5px" (click)="deleteBanner(banner?.banner_id)">
+          Delete
+  </button>
+</td>

@@ -9,7 +9,7 @@
             <div class='col-md-4'>
                 <form [formGroup]="searchCriteriaForm">
                     <input formControlName="searchCriteria" class="form-control" type="text" id="keyword" placeholder="Search Merchant Order By Id"
-                        autocomplete="off" autofocus/>
+                        autocomplete="off" (keyup)="onChanges()" autofocus/>
                 </form>
             </div>
         </div>
@@ -58,7 +58,7 @@
             </table>
 
             <!-- {{store_order_total_count}} -->
-            <app-pagination *ngIf='storeOrders?.length' [totalItemCount]="store_order_total_count" (currentPage)="currentPageFn($event)"></app-pagination>
+            <app-pagination *ngIf='storeOrders?.length' [totalItemCount]="storeordertotalcount" (currentPage)="currentPageFn($event)"></app-pagination>
             <div *ngIf='storeOrders?.length == 0'>
                 No Merchant Order Exists
             </div>

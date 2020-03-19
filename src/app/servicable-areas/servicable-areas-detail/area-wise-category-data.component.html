@@ -1,0 +1,35 @@
+<td>
+  <img *ngIf="!category?.image_url" src='assets/product_images/default_image.jpg'
+      [style.width.px]='imageWidth'
+      [style.height.px]='imageHeight'
+      [style.margin.px]='imageMargin'>
+
+  <img *ngIf="category?.image_url" src='{{category?.image_url}}'
+      [title]='category?.store_category_name' [style.height.px]='imageHeight'
+      [style.width.px]='imageWidth'
+      [style.margin.px]='imageMargin'>
+</td>
+<td>
+  <a [routerLink]="['/categories', category.serviceable_area_id]">
+      {{ category?.id }}
+  </a>
+</td>
+<td>
+  {{ category?.category_ranking }}
+</td>
+
+<td>
+  {{ category?.store_category_name }}
+</td>
+
+<td>
+  {{category?.last_updated | date:'short'}}
+</td>
+
+<td style="font-weight:bold">{{ category?.status ? 'Available' : 'Not Available' }}</td>
+<td>
+  <button class="btn btn-outline-secondary" [routerLink]="[category?.id,'edit']">Edit</button>
+  <button class="btn btn-outline-secondary" style="margin-left:5px" (click)="deleteCategory(category?.id)">
+          Delete
+  </button>
+</td>
