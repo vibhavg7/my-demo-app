@@ -28,8 +28,8 @@ export class AuthService {
     {
         return this._http.post(`${this._authURL}employeeapi/validate`, employee).pipe(
             tap(),
-            map((employeeData)=>{
-                if (employeeData['status'] == 200 && employeeData['employeeData'][0] != undefined) {
+            map((employeeData) => {
+                if (employeeData['status'] === 200 && employeeData['employeeData'][0] != undefined) {
                     console.log('not a valid user' + employeeData['employeeData'][0]);
                     localStorage.setItem('currentUser', JSON.stringify(employeeData['employeeData'][0]));
                 }

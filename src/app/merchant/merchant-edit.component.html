@@ -39,7 +39,7 @@
           </div>
           <div class="form-group">
             <label>Phone Number</label>
-            <input type="text" formControlName="storePhoneNumber" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.storePhoneNumber.errors }"
+            <input type="text" maxlength="10" minlength="10" formControlName="storePhoneNumber" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.storePhoneNumber.errors }"
             />
             <div *ngIf="submitted && f.storePhoneNumber.errors" class="invalid-feedback">
               <div *ngIf="f.storePhoneNumber.errors.required">Store Phone Number is required</div>
@@ -128,6 +128,7 @@
                 <option selected value="Noida">Noida</option>
                 <option selected value="Gurgaon">Gurgaon</option>
                 <option selected value="Ghaziabad">Ghaziabad</option>
+                <option selected value="Agra">Agra</option>
               </select>
             </div>
           </div>
