@@ -35,6 +35,7 @@ export class CustomerDashboardComponent implements OnInit {
   ngOnInit() {
     this.customers = this.activatedRoute.snapshot.data['customers']["customers"];
     this.total_customer_count = this.activatedRoute.snapshot.data["customers"]['customer_total_count'];
+    this.onChanges();
   }
 
   onChanges() {
