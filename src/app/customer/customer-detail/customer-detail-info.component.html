@@ -38,16 +38,16 @@
                     <div class="col-md-8">{{customerData?.last_updated | date:'medium'}}</div>
                 </div>
 
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-md-4" class="table-key">Customer Rating:</div>
                     <div class="col-md-8">
                         <app-star [rating]='customerData?.rating'>
                         </app-star>
                     </div>
-                </div>
+                </div> -->
                 <div class="row">
-                    <div class="col-md-4" class="table-key">Available:</div>
-                    <div class="col-md-8">{{customerData?.status == 1 ? 'Available':'Not Available' }}</div>
+                    <div class="col-md-4" class="table-key">User Status:</div>
+                    <div class="col-md-8">{{customerData?.status == 1 ? 'VERIFIED' : 'NOT VERIFIED' }}</div>
                 </div>
             </div>
 

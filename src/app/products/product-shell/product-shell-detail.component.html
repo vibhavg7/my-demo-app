@@ -15,7 +15,10 @@
         </div>
         <div class="row">
           <div class="col-md-4 product-detail-label">Weight:</div>
-          <div class="col-md-8">{{productData?.product_weight}} {{productData?.weight_text}}</div>
+          <div class="col-md-8">
+              {{productData?.product_weight ? productData?.product_weight + ' ' + productData?.weight_text :'Not Available' }}
+            <!-- {{productData?.product_weight}} {{productData?.weight_text}} -->
+          </div>
         </div>
         <div class="row">
           <div class="col-md-4 product-detail-label">Release Date:</div>

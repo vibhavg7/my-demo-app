@@ -12,12 +12,12 @@
         </span>
     </td>
     <td>
-        <a [routerLink]="['/merchant', store.store_id]">
+        <a target="_blank" [routerLink]="['/merchant', store.store_id]">
             {{ store?.store_id }}
         </a>
     </td>
     <td style="width: 50px;">
-        <a [routerLink]="['/merchant', store.store_id]">
+        <a target="_blank" [routerLink]="['/merchant', store.store_id]">
             {{ store?.store_name }}
         </a>
     </td>
@@ -52,7 +52,9 @@
       {{ store?.status ? 'Available' : 'Not Available' }}
     </td>
     <td>
-        <button class="btn btn-outline-secondary" [routerLink]="['/merchant',store?.store_id,'edit']">Edit</button>
+      <a type="button" target="_blank"  class="btn btn-outline-secondary" [routerLink]="['/merchant',store?.store_id,'edit']">
+        Edit
+      </a>
         <button class="btn btn-outline-secondary" style="margin-left:5px" (click)="deleteStore(store?.store_id)">
                 Delete
         </button>

@@ -23,7 +23,7 @@ export class CustomerOrdersComponent implements OnInit {
   currentPage: number = 1;
   pageSize: number = 20;
   constructor(private _activatedRoute:ActivatedRoute, private formBuilder: FormBuilder,
-              private _customerService:CustomerService,private modalService:NgbModal) { 
+              private _customerService:CustomerService,private modalService:NgbModal) {
     this.searchCriteriaForm = this.formBuilder.group({
       searchCriteria: ['']
     });
@@ -35,19 +35,20 @@ export class CustomerOrdersComponent implements OnInit {
     modalRef.componentInstance['title']= 'View Products';
     modalRef.componentInstance['order_id']= order_id;
   }
- 
+
   ngOnInit() {
     this.customerId = +this._activatedRoute.parent.params['_value']['customerId'];
-    this._customerService.fetchAllCustomerOrders(this.customerId, this.currentPage, this.pageSize, "").subscribe((data) => {     
+    this._customerService.fetchAllCustomerOrders(this.customerId, this.currentPage, this.pageSize, "").subscribe((data) => {
       this.order_total_count = data['customer_order_count'][0]['customer_orders_count'];
       this.customerOrders = data['customer_orders_info'];
       console.log(this.customerOrders);
       console.log(this.order_total_count);
-    })
-    this.onChanges();
+    });
+    // this.onChanges();
   }
 
   onChanges() {
+    // console.log('Hey');
     this.searchCriteriaForm.get('searchCriteria').valueChanges.pipe(tap(data => {
     }), distinctUntilChanged(), debounceTime(200),
       switchMap(query => (this.filterBy = query, this._customerService.fetchAllCustomerOrders(this.customerId, this.currentPage,
@@ -56,13 +57,13 @@ export class CustomerOrdersComponent implements OnInit {
       .subscribe(data => {
         this.order_total_count = data['customer_order_count'][0]['customer_orders_count'];
         this.customerOrders = data['customer_orders_info'];
-      })
+      });
   }
 
   currentPageFn(page) {
     console.log(page);
     this._customerService.fetchAllCustomerOrders(this.customerId, page, this.pageSize, this.filterBy)
-      .subscribe((data) => {        
+      .subscribe((data) => {
         this.customerOrders = data['customer_orders_info'];
       })
   }

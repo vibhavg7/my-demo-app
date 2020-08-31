@@ -21,28 +21,34 @@
         <table style="width:1000px !important" class='table' *ngIf='customers.length'>
           <thead>
             <tr>
-              <th>
+              <!-- <th>
 
-              </th>
+              </th> -->
               <th style="width:90px !important">Customer Id</th>
               <th>Customer Name</th>
               <!-- <th>Customer DOB</th> -->
-              <th>Email</th>
+              <!-- <th>Email</th> -->
               <th>Phone</th>
-              <th>Registration Date</th>
-              <th>Last Seen</th>
+              <th>
+                <span style="display:block">Registration Date</span>
+                (MM/DD/YY)
+              </th>
+              <th>
+                <span style="display:block">Last Seen</span>
+                (MM/DD/YY)
+              </th>
               <th>Status</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor='let customer of customers'>
-              <td>
+              <!-- <td>
                 <img *ngIf="!customer?.image_url" src='assets/product_images/default_image.jpg' [title]='customer.customer_name' [style.width.px]='imageWidth'
                   [style.margin.px]='imageMargin'>
                 <img *ngIf="customer?.image_url" src='{{customer.image_url}}' [title]='customer.customer_name' [style.width.px]='imageWidth'
                   [style.margin.px]='imageMargin'>
-              </td>
+              </td> -->
               <td style="width:90px !important">
                 <a [routerLink]="['/customer', customer.customer_id]">
                   {{ customer?.customer_id }}
@@ -57,11 +63,11 @@
                                 {{ customer?.customer_dob | date:'medium' }}
                             </td> -->
 
-              <td>{{ customer?.email }}</td>
+              <!-- <td>{{ customer?.email }}</td> -->
               <td>{{ customer?.phone }}</td>
-              <td>{{ customer?.registered_date | date:'medium' }}</td>
-              <td>{{ customer?.last_updated | date:'medium' }}</td>
-              <td style="font-weight:bold">{{ customer?.status ? 'Available' : 'Not Available' }}</td>
+              <td>{{ customer?.registered_date | date:'shortDate' }}</td>
+              <td>{{ customer?.last_updated | date:'shortDate' }}</td>
+              <td style="font-weight:bold">{{ customer?.status ? 'VERIFIED' : 'NOT VERIFIED' }}</td>
               <!-- <td>
                 <button class="btn btn-outline-secondary mr-3" [routerLink]="[customer?.customer_id,'edit']">
                   <i class='fa fa-edit'></i>Edit

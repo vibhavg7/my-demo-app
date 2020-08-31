@@ -28,7 +28,7 @@ import { reducer } from './state/product.reducer';
     ProductShellListComponent,
     ProductShellDetailComponent,
     ProductShellComponent,
-    ProductShellSearchComponent,    
+    ProductShellSearchComponent,
     ProductShellAddComponent, ProductShellListItemComponent,
     // ImageUploadComponent
   ],

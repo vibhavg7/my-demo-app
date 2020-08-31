@@ -135,7 +135,11 @@ export class ProductService implements OnDestroy {
     let obj = {};
     obj['product_name'] = product['productName'];
     obj['product_price'] = +product['productPrice'];
-    obj['weight_type'] = +product['productWeightType'];
+    if (!!product['productWeightType']) {
+      obj['weight_type'] = +product['productWeightType'];
+    } else {
+      obj['weight_type'] = 0;
+    }
     obj['product_code'] = product['productCode'];
     obj['product_description'] = product['productDescription'];
     obj['product_rating'] = +product['productRating'];
@@ -148,13 +152,13 @@ export class ProductService implements OnDestroy {
       obj['category_id'] = product['storeSubCategoryName'];
     }
 
-    // console.log(obj);
+    console.log(obj);
 
     const url = `${this._productServiceUrl}`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this._http.post(url, obj, { headers }).pipe(
       tap(data => {
-        // console.log(JSON.stringify(data))
+        console.log(JSON.stringify(data))
       }),
       map((data) => {
         return data;

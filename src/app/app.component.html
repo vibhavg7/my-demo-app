@@ -31,7 +31,7 @@
           <a class="nav-link" [routerLink]="['/customer']">Customer</a>
       </li>
       <li class="nav-item" *ngIf="isLoggedIn">
-        <a class="nav-link">Order Invoice</a>
+        <a class="nav-link" [routerLink]="['/order']">Orders</a>
       </li>
       <li class="nav-item" *ngIf="!isLoggedIn">
         <a class="nav-link" [routerLink]="['/login']">Log In</a>
@@ -44,7 +44,7 @@
       </li>
     </ul>
   </div>
- 
+
 </nav>
 
 <div class="container">

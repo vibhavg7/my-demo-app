@@ -60,9 +60,10 @@
         <button class="btn btn-outline-secondary" style="width:80px" (click)="onBack()">
             <i class='fa fa-chevron-left'></i> Back
         </button>
-        <button class="btn btn-outline-secondary" style="width:80px" (click)="onEdit()">
+        <a type="button" target="_blank" class="btn btn-outline-secondary" style="width:80px"
+        [routerLink]="['/products/',0,'edit']">
             <i class='fa fa-chevron-left'></i> Edit
-        </button>
+        </a>
     </div>
 </div>
 

@@ -35,11 +35,12 @@ export class CustomerService {
     const obj: any = {};
     obj.page_number = pagenumber; obj.page_size = pagesize; obj.customerId = customerId;
     obj.filterBy = filterBy;
+    console.log(obj);
 
     return this.http.post<any[]>(`${this.customerServiceUrl}/customerinfo/customerorders`, obj)
       .pipe(
         tap(data => {
-          // console.log(data);
+          console.log(data);
         })
         , map((data) => {
           return data;
