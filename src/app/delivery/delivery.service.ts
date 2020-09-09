@@ -10,7 +10,7 @@ export class DeliveryService {
 
   constructor(private http: HttpClient) { }
 
-  private deliveryServiceUrl = 'http://ec2-13-233-10-240.ap-south-1.compute.amazonaws.com:3000/deliveryapi/';
+  private deliveryServiceUrl = 'https://api.grostep.com/deliveryapi/';
   customerData: any;
   customerDeliveryAddresses: any;
 

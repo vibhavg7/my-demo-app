@@ -10,7 +10,7 @@ import { ErrorTracker } from '../shared/errorTracker';
 export class CouponService {
 
   constructor(private http: HttpClient) { }
-  private couponServiceUrl = 'http://ec2-13-233-10-240.ap-south-1.compute.amazonaws.com:3000/vouchersapi/';
+  private couponServiceUrl = 'https://api.grostep.com/vouchersapi/';
 
   fetchAllCoupons(pageNumber: number, pageSize: any, filterBy: any): Observable<any> {
     const obj: any = {};

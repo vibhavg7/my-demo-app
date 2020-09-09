@@ -34,7 +34,7 @@ export class ImageUploadComponent implements OnInit {
       formData.append('image', files[i], files[i].name);
     }
     // tslint:disable-next-line:max-line-length
-    this.http.post(`http://ec2-13-233-10-240.ap-south-1.compute.amazonaws.com:3000/imageuploadapi/${this.image_type}/${this.id}`, formData).pipe(
+    this.http.post(`https://api.grostep.com/imageuploadapi/${this.image_type}/${this.id}`, formData).pipe(
       tap(data => {
       }),
       map((fileData: any) => {

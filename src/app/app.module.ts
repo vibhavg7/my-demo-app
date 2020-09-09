@@ -12,6 +12,7 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { MerchantOrderProductListComponent } from './merchant/merchant-detail/merchant-order-product-list.component';
 import { environment } from '../environments/environment';
+import { ServiceWorkerModule } from '@angular/service-worker';
 // import { ProductService } from './products/product.service';
 
 @NgModule({
@@ -33,7 +34,8 @@ import { environment } from '../environments/environment';
       name: 'Grostep app dev tools',
       maxAge: 25,
       logOnly: environment.production
-    })
+    }),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent],

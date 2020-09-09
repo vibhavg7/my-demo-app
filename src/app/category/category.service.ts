@@ -12,7 +12,7 @@ export class CategoryService {
   constructor(private http: HttpClient) { }
   public storecategories: any;
   public categoryData: any = [];
-  private categoryServiceUrl = 'http://ec2-13-233-10-240.ap-south-1.compute.amazonaws.com:3000/categoryapi';
+  private categoryServiceUrl = 'https://api.grostep.com/categoryapi';
 
 
 
