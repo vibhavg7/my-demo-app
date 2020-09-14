@@ -1,0 +1,38 @@
+<td>
+  <!-- <a target="_blank" [routerLink]="['/merchant', feedBackInfo?.customer_feedback_id]">
+    {{ feedBackInfo?.customer_feedback_id }}
+  </a> -->
+  {{ feedBackInfo?.customer_feedback_id }}
+</td>
+<td style="width: 50px;">
+    {{ feedBackInfo?.customer_phone }}
+  <!-- <a target="_blank" [routerLink]="['/merchant', feedBackInfo?.customer_feedback_id]">
+    {{ feedBackInfo?.customer_phone }}
+  </a> -->
+</td>
+<td>
+  {{ feedBackInfo?.customer_name }}
+</td>
+<td>
+  <textarea rows="2" cols="40">
+      {{ feedBackInfo?.customer_feedback }}
+  </textarea>
+</td>
+<td>
+  {{ feedBackInfo?.city }}
+</td>
+<td>
+  {{ feedBackInfo?.mode }}
+</td>
+<td>
+  {{ feedBackInfo?.action_by }}
+</td>
+<td style="font-weight:bold">
+  {{ feedBackInfo?.status === 1 ? 'Created' : 'Completed' }}
+</td>
+<td>
+    <!-- <a type="button" target="_blank" class="btn btn-outline-secondary"
+     [routerLink]="['/feedbacks',feedBackInfo?.customer_feedback_id,'edit']">
+      Edit
+    </a> -->
+</td>

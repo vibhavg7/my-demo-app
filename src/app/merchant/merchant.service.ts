@@ -309,10 +309,10 @@ export class MerchantService {
 
   private handleError(err: HttpErrorResponse): Observable<ErrorTracker> {
 
-    let dataError = new ErrorTracker();
+    const dataError = new ErrorTracker();
     dataError.errorNumber = 100;
     dataError.errorMessage = `Server returned code: ${err.status}, error message is: ${err.message}`;
-    dataError.friendlyMessage = "An error retriving data";
+    dataError.friendlyMessage = 'An error retriving data';
     return throwError(dataError);
     // let errorMessage = '';
     // if (err.error instanceof ErrorEvent) {

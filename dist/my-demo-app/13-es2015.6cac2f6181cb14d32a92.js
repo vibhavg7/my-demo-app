@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[13],{hdHI:function(n,e,o){"use strict";o.r(e);var t=o("fXoL"),r=o("ofXK");o.d(e,"InvoiceModule",(function(){return c}));let c=(()=>{class n{}return n.ngModuleDef=t.Qb({type:n}),n.ngInjectorDef=t.Pb({factory:function(e){return new(e||n)},imports:[[r.b]]}),n})()}}]);

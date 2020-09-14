@@ -15,7 +15,7 @@ export class PaginationComponent implements OnInit,OnChanges {
   constructor(private pagerService:PagerService) { }
 
 
-  ngOnInit() {    
+  ngOnInit() {
     // this.setPage(1);
   }
 
@@ -35,7 +35,7 @@ export class PaginationComponent implements OnInit,OnChanges {
     // get pager object from service
     this.pager = this.pagerService.getPager(this.totalItemCount, page);
     // console.log(this.pager);
-     this.currentPage.emit(page);    
+     this.currentPage.emit(page);
     // get current page of items
     // this.pagedItems = this.allItems.slice(this.pager.startIndex, this.pager.endIndex + 1);
   }

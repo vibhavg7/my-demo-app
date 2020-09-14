@@ -82,6 +82,13 @@ const routes: any = [
       loadChildren: () =>
         import('./delivery/delivery.module').then(m => m.DeliveryModule)
     },
+    {
+      path: 'feedbacks',
+      canActivate: [AuthGuard],
+      data: { preload: true },
+      loadChildren: () =>
+        import('./feedbacks/feedbacks.module').then(m => m.FeedbacksModule)
+    },
     {path: '', redirectTo: 'welcome', pathMatch: 'full'},
     {path: '**', redirectTo: 'welcome', pathMatch: 'full'}
   ];

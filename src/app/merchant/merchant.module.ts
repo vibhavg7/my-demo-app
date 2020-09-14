@@ -20,9 +20,11 @@ import { MerchantProductsCatalogDataComponent } from './merchant-detail/merchant
 
 
 @NgModule({
-  declarations: [MerchantDashboardComponent, MerchantDetailComponent, 
+  declarations: [MerchantDashboardComponent, MerchantDetailComponent,
     MerchantEditComponent, MerchantProductsCatalogComponent, MerchantOrdersComponent,
-     MerchantDetailInfoComponent, MerchantProductEditComponent, MerchantProductComponent, MerchantOrderDetailComponent, MerchantDataComponent, MerchantProductsCatalogDataComponent   
+     MerchantDetailInfoComponent, MerchantProductEditComponent,
+     MerchantProductComponent, MerchantOrderDetailComponent,
+     MerchantDataComponent, MerchantProductsCatalogDataComponent
       ],
   imports: [
     CommonModule,
