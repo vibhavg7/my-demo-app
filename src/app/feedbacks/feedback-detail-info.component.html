@@ -1,0 +1,33 @@
+<div class='card'>
+  <div class='card-header'>
+    <div class="row">
+        <div class="col-md-6">
+            {{pageTitle}}
+          </div>
+          <div class="col-md-6">
+            <a type="button" class="btn btn-outline-secondary" style="float:right" [routerLink]="['/feedbacks/',feedbackId,'edit']">
+              Add New FeedBack
+            </a>
+          </div>
+    </div>
+  </div>
+  <div class='card-body'>
+    <div *ngIf="feedBackMessagestotalcount > 0">
+      <div class="row" *ngFor="let message of customerFeedbackMessages">
+        <div class="card">
+          <div class="card-header">
+            <span>
+              Message Id: {{message?.message_id}}
+              <span style="float:right;margin-left:10px">
+                {{message?.last_updated | date:'medium'}}
+              </span>
+            </span>
+          </div>
+          <div class="card-body">
+            {{message?.feedback_text}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

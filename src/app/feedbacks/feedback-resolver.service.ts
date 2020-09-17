@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, Resolve } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { FeedbackService } from './feedback.service';
 import { catchError } from 'rxjs/operators';
@@ -7,7 +7,7 @@ import { catchError } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class FeedbackResolverService {
+export class FeedbackResolverService implements Resolve<any> {
 
   constructor(private feedBackService: FeedbackService) { }
   pagenumber = 1;

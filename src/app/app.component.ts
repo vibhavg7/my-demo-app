@@ -13,6 +13,7 @@ export class AppComponent {
   navbarOpen = false;
   constructor(private authService: AuthService, private router: Router) {
     router.events.subscribe((routerevent: Event) => {
+      // console.log(routerevent);
       this.checkRouterEvent(routerevent);
     });
   }
@@ -24,11 +25,13 @@ export class AppComponent {
   checkRouterEvent(navigatorEvent: Event) {
     if (navigatorEvent instanceof NavigationStart) {
       this.loading = true;
+      // console.log(this.loading);
     }
     if (navigatorEvent instanceof NavigationEnd ||
       navigatorEvent instanceof NavigationError ||
       navigatorEvent instanceof NavigationCancel) {
       this.loading = false;
+      // console.log(this.loading);
     }
   }
 

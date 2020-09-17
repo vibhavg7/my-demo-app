@@ -1,4 +1,4 @@
-    <td>
+    <!-- <td>
         <img *ngIf="!store?.image_url" src='assets/product_images/default_image.jpg' [style.width.px]='imageWidth' [style.height.px]='imageHeight'
             [style.margin.px]='imageMargin'>
         <span *ngIf="!store?.image_url" (click)="uploadImage(store.store_id)" style="display:block;font-size:14px;cursor:pointer;color:blue">
@@ -10,7 +10,7 @@
         <span *ngIf="store?.image_url" (click)="uploadImage(store.store_id)" style="display:block;font-size:14px;cursor:pointer;color:blue">
             Change Image
         </span>
-    </td>
+    </td> -->
     <td>
         <a target="_blank" [routerLink]="['/merchant', store.store_id]">
             {{ store?.store_id }}

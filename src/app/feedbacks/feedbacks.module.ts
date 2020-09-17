@@ -7,10 +7,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FeedbackDashboardComponent } from './feedback-dashboard.component';
 import { FeedbackEditComponent } from './feedback-edit.component';
 import { FeedbackDataComponent } from './feedback-data.component';
+import { FeedbackDetailInfoComponent } from './feedback-detail-info.component';
 
 
 @NgModule({
-  declarations: [FeedbackDashboardComponent, FeedbackEditComponent, FeedbackDataComponent],
+  declarations: [FeedbackDashboardComponent, FeedbackEditComponent, FeedbackDataComponent, FeedbackDetailInfoComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

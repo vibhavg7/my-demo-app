@@ -12,8 +12,8 @@ import { reducer } from './state/user.reducer';
   imports: [
     CommonModule,
     UserRoutingModule,
-    SharedModule,        
-    StoreModule.forFeature('users',reducer)
+    SharedModule,
+    StoreModule.forFeature('users', reducer)
   ]
 })
 export class UserModule { }

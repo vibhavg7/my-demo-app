@@ -22,7 +22,7 @@ export class FeedbackEditComponent implements OnInit {
   ) {
     this.addFeedBackForm = this.formBuilder.group({
       customer_id: [''],
-      name: ['', Validators.required],
+      name: [''],
       email: [''],
       phone: ['', Validators.required],
       message: ['', Validators.required],

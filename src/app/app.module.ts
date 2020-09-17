@@ -27,7 +27,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     BrowserAnimationsModule,
     StoreModule.forRoot({}),
     NgbModule,
-    UserModule,
+    // UserModule,
     HttpClientModule,
     AppRoutingModule,
     StoreDevtoolsModule.instrument({

@@ -26,7 +26,22 @@ export class FeedbackService {
         })
         , catchError(this.handleError)
       );
+  }
 
+  fetchFeedBackDetailById(pageNumber: number, pageSize: any, filterBy: any, feedbackId: any): Observable<any> {
+    const obj: any = {};
+    obj.page_number = pageNumber; obj.page_size = pageSize; obj.filterBy = filterBy; obj.feedbackId = feedbackId;
+    // console.log(obj);
+    return this.httpClient.post<any[]>(`${this.customerServiceUrl}customerFeedbackInfo/${feedbackId}`, obj)
+      .pipe(
+        tap(data => {
+          // console.log(JSON.stringify(data));
+        })
+        , map((data) => {
+          return data;
+        })
+        , catchError(this.handleError)
+      );
   }
 
   addNewFeedBack(feedBack): Observable<any> {

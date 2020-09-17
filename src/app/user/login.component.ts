@@ -12,17 +12,24 @@ export class LoginComponent implements OnInit {
 
   errorMessage: string;
   constructor(private authService: AuthService,
-    private store: Store<any>,
-    private router: Router) { }
-  pageTitle: string = "Login";
-  employee: any = { "user_name": "", "password": "" };
-  maskUserName: boolean;
+              private store: Store<any>,
+              private router: Router) {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    if (currentUser) {
+      this.router.navigate(['welcome']);
+    }
+  }
+  pageTitle: any = 'Login';
+  employee: any = { user_name: '', password: '' };
+  // maskUserName: boolean;
   ngOnInit() {
-    this.store.pipe(select('users')).subscribe((data) => {
-      if (data) {
-        this.maskUserName = data['maskUserName'];
-      }
-    })
+    // return (currentUser) ? currentUser.username : '';
+    // console.log('Hi');
+    // this.store.pipe(select('users')).subscribe((data) => {
+    //   if (data) {
+    //     this.maskUserName = data['maskUserName'];
+    //   }
+    // });
   }
 
   login(loginForm: NgForm) {
