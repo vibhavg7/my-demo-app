@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FeedbackService } from './feedback.service';
 
@@ -24,8 +24,8 @@ export class FeedbackEditComponent implements OnInit {
       customer_id: [''],
       name: [''],
       email: [''],
-      phone: ['', Validators.required],
-      message: ['', Validators.required],
+      phone: [''],
+      message: [''],
       customerCity: ['']
       // status: ['']
     });
