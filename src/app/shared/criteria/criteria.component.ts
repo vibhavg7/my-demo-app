@@ -18,7 +18,7 @@ export class CriteriaComponent implements OnInit, OnChanges, AfterViewInit {
   hitMessage: string;
 
   @Output() valueChange: EventEmitter<string> = new EventEmitter<string>();
-  @ViewChild('filterElement', { static: false }) filterElementRef: ElementRef;
+  @ViewChild('filterElement') filterElementRef: ElementRef;
 
   ngOnInit() {
     // console.log(this.type);
