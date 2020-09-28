@@ -15,7 +15,7 @@ export class FeedbackResolverService implements Resolve<any> {
   filterBy = '';
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
-    return this.feedBackService.fetchAllFeedBacks(this.pagenumber, this.pagesize, this.filterBy).pipe(
+    return this.feedBackService.fetchAllFeedBacks(this.pagenumber, this.pagesize, this.filterBy, '').pipe(
       catchError(err => of(err))
     );
   }

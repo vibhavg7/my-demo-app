@@ -9,6 +9,9 @@ import { CustomerAddressesComponent } from './customer-detail/customer-addresses
 import { CustomerOrdersComponent } from './customer-detail/customer-orders.component';
 import { CustomerCartInfoComponent } from './customer-detail/customer-cart-info.component';
 import { CustomerResolverService } from './customer-resolver.service';
+import { CustomerFeedbackComponent } from './customer-detail/customer-feedback.component';
+import { CustomerAddFeedbackComponent } from './customer-detail/customer-add-feedback.component';
+import { FeedbackEditComponent } from '../feedbacks/feedback-edit.component';
 
 const routes: Routes = [
   {
@@ -24,13 +27,18 @@ const routes: Routes = [
       { path: 'info', component: CustomerDetailInfoComponent },
       { path: 'customeraddresses', component: CustomerAddressesComponent },
       { path: 'customerorders', component: CustomerOrdersComponent },
-      { path: 'customercart', component: CustomerCartInfoComponent }
+      { path: 'customercart', component: CustomerCartInfoComponent },
+      { path: 'customerfeedbacks', component: CustomerFeedbackComponent }
       //   { path: 'merchantproducts/edit', component: MerchantProductEditComponent },
     ]
   },
   {
     path: ':customerId/edit',
     component: CustomerEditComponent
+  },
+  {
+    path: ':customerId/customerfeedbacks/:feedbackId/edit',
+    component: FeedbackEditComponent
   }
 ];
 

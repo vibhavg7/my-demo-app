@@ -12,10 +12,10 @@ export class FeedbackService {
   private customerServiceUrl = 'https://api.grostep.com/customerapi/';
   constructor(private httpClient: HttpClient) { }
 
-  fetchAllFeedBacks(pageNumber: number, pageSize: any, filterBy: any): Observable<any> {
+  fetchAllFeedBacks(pageNumber: number, pageSize: any, filterBy: any, customerId: any): Observable<any> {
     const obj: any = {};
-    obj.page_number = pageNumber; obj.page_size = pageSize; obj.filterBy = filterBy;
-    // console.log(obj);
+    obj.page_number = pageNumber; obj.page_size = pageSize; obj.filterBy = filterBy; obj.customerId = customerId;
+    console.log(obj);
     return this.httpClient.post<any[]>(`${this.customerServiceUrl}customerFeedback`, obj)
       .pipe(
         tap(data => {
@@ -28,9 +28,8 @@ export class FeedbackService {
       );
   }
 
-  fetchFeedBackDetailById(pageNumber: number, pageSize: any, filterBy: any, feedbackId: any): Observable<any> {
-    const obj: any = {};
-    obj.page_number = pageNumber; obj.page_size = pageSize; obj.filterBy = filterBy; obj.feedbackId = feedbackId;
+  fetchFeedBackDetailById(feedbackId: any): Observable<any> {
+    const obj: any = {}; obj.feedbackId = feedbackId;
     // console.log(obj);
     return this.httpClient.post<any[]>(`${this.customerServiceUrl}customerFeedbackInfo/${feedbackId}`, obj)
       .pipe(
@@ -44,7 +43,7 @@ export class FeedbackService {
       );
   }
 
-  addNewFeedBack(feedBack): Observable<any> {
+  addNewFeedBack(feedBack, feedbackId): Observable<any> {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     const obj: any = {};
     obj.customer_id = feedBack.customer_id;
@@ -52,10 +51,12 @@ export class FeedbackService {
     obj.email = feedBack.email;
     obj.phone = feedBack.phone;
     obj.message = feedBack.message;
-    obj.parentId = 0; // feedBack.parentId;
+    obj.feedbackId = feedbackId;
     obj.actionBy = currentUser.employee_id;
     obj.customerCity = feedBack.customerCity;
     obj.ticketMode = 2; // admin panel;
+    obj.status = feedBack.status;
+    console.log(obj);
     const url = `${this.customerServiceUrl}addCustomerFeedback`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.httpClient.post(url, obj, { headers }).pipe(
@@ -66,11 +67,6 @@ export class FeedbackService {
       }),
       catchError(err => this.handleError(err))
     );
-  }
-
-
-  editFeedBack(feedBack, feedbackId) {
-
   }
 
   private handleError(err: HttpErrorResponse): Observable<ErrorTracker> {

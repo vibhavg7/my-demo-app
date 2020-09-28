@@ -45,7 +45,7 @@ export class FeedbackDashboardComponent implements OnInit {
     this.searchCriteriaForm.get('searchCriteria').valueChanges.pipe(tap(data => {
     }), distinctUntilChanged(), debounceTime(200),
       switchMap(query => (this.filterBy = query, this.feedBackService.fetchAllFeedBacks(this.currentPage,
-        this.pageSize, query)))
+        this.pageSize, query, '')))
     )
       .subscribe((data: any) => {
         console.log(data);
@@ -55,7 +55,7 @@ export class FeedbackDashboardComponent implements OnInit {
   }
 
   currentPageFn(page) {
-    this.feedBackService.fetchAllFeedBacks(page, this.pageSize, this.filterBy)
+    this.feedBackService.fetchAllFeedBacks(page, this.pageSize, this.filterBy, '')
       .subscribe((data) => {
         this.feedBacktotalcount = data.customer_feedback_count.customer_feedback_count;
         this.feedBacks = data.customer_feedback_info;

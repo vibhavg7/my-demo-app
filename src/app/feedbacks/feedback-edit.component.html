@@ -2,16 +2,10 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6 offset-md-3">
-        <h2>Add New FeedBack</h2>
+        <h2>{{pageTitle}}</h2>
         <form [formGroup]="addFeedBackForm" (ngSubmit)="onSubmit()">
           <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label>Customer Id</label>
-                <input type="text" formControlName="customer_id" class="form-control" />
-              </div>
-            </div>
-            <div class="col-md-6">
+            <div class="col-md-12">
               <div class="form-group">
                 <label>Customer Name</label>
                 <input type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
@@ -54,6 +48,15 @@
                 <option selected value="Agra">Agra</option>
               </select>
             </div>
+          </div>
+          <div class="form-group">
+              <label for="">Status</label>
+              <div>
+                <select class="form-control" formControlName="status">
+                  <option value="1">Active</option>
+                  <option value="0">Closed</option>
+                </select>
+              </div>
           </div>
           <!-- <div class="form-group">
             <label>Pin Code</label>

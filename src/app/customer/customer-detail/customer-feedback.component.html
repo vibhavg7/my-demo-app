@@ -1,0 +1,65 @@
+<div class='card'>
+  <div class='card-header'>
+    {{pageTitle}}
+    <button class="btn btn-outline-secondary" style="float:right" [routerLink]="[0,'edit']">
+      Add New Feedback
+    </button>
+  </div>
+  <div class='card-body'>
+    <div class="row">
+      <div class='table-responsive'>
+        <table style="width:1100px !important" class='table' *ngIf='customerfeedbackscount'>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Last Updated</th>
+              <th>Created By</th>
+              <th>City</th>
+              <th>Status</th>
+              <th>Message</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor='let customerfeedback of customerfeedbacks'>
+              <td>
+                {{customerfeedback?.customer_name}}
+              </td>
+              <td>
+                {{customerfeedback?.customer_phone}}
+              </td>
+              <td>
+                {{customerfeedback?.last_updated | date:'mediumDate'}}
+              </td>
+              <td>
+                {{customerfeedback?.action_by}}
+              </td>
+              <td>
+                {{customerfeedback?.city}}
+              </td>
+              <td>
+                {{customerfeedback?.status ? 'Active' : 'Closed'}}
+              </td>
+              <td>
+                {{customerfeedback?.feedback_text}}
+              </td>
+              <td>
+                <button class="btn btn-outline-secondary mr-3" [routerLink]="[customerfeedback?.customer_feedback_id,'edit']">
+                  Edit
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <app-pagination *ngIf='customerfeedbackscount' [totalItemCount]="customerfeedbackscount" (currentPage)="currentPageFn($event)"></app-pagination>
+        <div *ngIf='customerfeedbackscount == 0'>
+          No Feedback Data Found
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div *ngIf='errorMessage' class='alert alert-danger'>
+    Error: {{ errorMessage }}
+  </div>

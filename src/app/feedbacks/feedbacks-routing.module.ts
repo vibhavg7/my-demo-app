@@ -18,7 +18,7 @@ const routes: Routes = [
     component: FeedbackEditComponent
   },
   {
-    path: 'feedbackinfo/:feedbackId',
+    path: 'feedbackinfo/:feedbackId/message/:messageId',
     component: FeedbackDetailInfoComponent,
     resolve: { resolvedFeedBackDetail: FeedbackDetailResolverService }
   }

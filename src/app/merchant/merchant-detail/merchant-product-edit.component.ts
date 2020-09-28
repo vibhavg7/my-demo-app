@@ -63,9 +63,9 @@ export class MerchantProductEditComponent implements OnInit {
   onChanges() {
     this.productValueSet = false;
     this.addStoreProductForm.get('storeproductName').valueChanges.pipe(tap(data => {
-      console.log(data);
-    }), distinctUntilChanged(), debounceTime(200),
+    }), distinctUntilChanged(), debounceTime(1000),
       switchMap((query) => {
+        console.log(query);
         if (!this.productValueSet) {
           return this.productService.searchProducts(query);
         } else {
@@ -117,6 +117,7 @@ export class MerchantProductEditComponent implements OnInit {
     this.productValueSet = true;
     this.selectedProduct = product;
     this.addStoreProductForm.get('storeproductName').setValue(this.selectedProduct.product_name);
+    this.addStoreProductForm.get('productMarkedPrice').setValue(this.selectedProduct.product_price);
   }
 
 }

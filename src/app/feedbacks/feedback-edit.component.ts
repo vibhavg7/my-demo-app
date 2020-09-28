@@ -12,8 +12,10 @@ export class FeedbackEditComponent implements OnInit {
 
   errorMessage: any;
   feedbackId: number;
+  customerId: number;
   submitted: boolean;
   addFeedBackForm: FormGroup;
+  pageTitle: any;
   constructor(
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
@@ -26,8 +28,8 @@ export class FeedbackEditComponent implements OnInit {
       email: [''],
       phone: [''],
       message: [''],
-      customerCity: ['']
-      // status: ['']
+      customerCity: [''],
+      status: ['']
     });
 
   }
@@ -35,8 +37,23 @@ export class FeedbackEditComponent implements OnInit {
   get f() { return this.addFeedBackForm.controls; }
   ngOnInit() {
     this.feedbackId = +this.activatedRoute.snapshot.params.feedbackId;
+    this.customerId = +this.activatedRoute.snapshot.params.customerId;
     if (this.feedbackId !== 0) {
-
+      this.pageTitle = 'Edit Feedback';
+      this.feedBackService.fetchFeedBackDetailById(this.feedbackId).subscribe((data) => {
+        console.log(data);
+        const feedbackData: any = data.customer_feedback_info;
+        this.addFeedBackForm.get('customer_id').setValue(feedbackData[0].customer_id);
+        this.addFeedBackForm.get('name').setValue(feedbackData[0].customer_name);
+        this.addFeedBackForm.get('email').setValue(feedbackData[0].customer_email);
+        this.addFeedBackForm.get('phone').setValue(feedbackData[0].customer_phone);
+        this.addFeedBackForm.get('message').setValue(feedbackData[0].feedback_text);
+        this.addFeedBackForm.get('customerCity').setValue(feedbackData[0].city);
+        this.addFeedBackForm.get('status').setValue(feedbackData[0].status);
+      });
+    } else {
+      this.pageTitle = 'Add New Feedback';
+      this.addFeedBackForm.get('customer_id').setValue(this.customerId);
     }
   }
 
@@ -46,41 +63,21 @@ export class FeedbackEditComponent implements OnInit {
     if (this.addFeedBackForm.invalid) {
       return;
     }
-    // console.log(this.addFeedBackForm.value);
-    // console.log(this.feedbackId);
 
-    if (this.feedbackId === 0) {
-      this.feedBackService.addNewFeedBack(this.addFeedBackForm.value).subscribe((data) => {
-        console.log(data);
-        // tslint:disable-next-line:triple-equals
-        if (data.status == '200') {
-          this.router.navigate(['feedbacks']);
-        }
-        // tslint:disable-next-line:triple-equals
-        if (data.status == '400') {
-          alert('FeedBack Not Added . Internal Server Error');
-        }
-      },
-        (error) => {
-          this.errorMessage = error;
-        });
-    } else {
-      // console.log('Hiiiiiiiiiiiiiiii');
-      // this.feedBackService.editFeedBack(this.addFeedBackForm.value, this.feedbackId).subscribe((data) => {
-      //   console.log(data);
-      //   // tslint:disable-next-line:triple-equals
-      //   if (data.status == '200') {
-      //     this.router.navigate(['merchant']);
-      //   }
-      //   // tslint:disable-next-line:triple-equals
-      //   if (data.status == '400') {
-      //     alert('Merchant Not Added . Internal Server Error');
-      //   }
-      // },
-      //   (error) => {
-      //     this.errorMessage = error;
-      //   });
-    }
+    this.feedBackService.addNewFeedBack(this.addFeedBackForm.value, this.feedbackId).subscribe((data) => {
+      console.log(data);
+      // tslint:disable-next-line:triple-equals
+      if (data.status == '200') {
+        this.router.navigate(['customer']);
+      }
+      // tslint:disable-next-line:triple-equals
+      if (data.status == '400') {
+        alert('Merchant Not Added . Internal Server Error');
+      }
+    },
+      (error) => {
+        this.errorMessage = error;
+      });
 
   }
 
