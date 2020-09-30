@@ -34,7 +34,7 @@ export class CouponDataComponent implements OnInit {
     // });
   }
 
-  deleteCoupons(voucherid) {
+  disableCoupon(voucherid) {
     if (confirm('Are you sure to delete')) {
       this.couponService.deleteCoupon(voucherid).subscribe((data) => {
         console.log(data);

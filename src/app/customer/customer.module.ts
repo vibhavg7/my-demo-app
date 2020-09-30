@@ -12,6 +12,7 @@ import { CustomerOrdersComponent } from './customer-detail/customer-orders.compo
 import { CustomerCartInfoComponent } from './customer-detail/customer-cart-info.component';
 import { CustomerFeedbackComponent } from './customer-detail/customer-feedback.component';
 import { CustomerAddFeedbackComponent } from './customer-detail/customer-add-feedback.component';
+import { CustomerNotificationComponent } from './customer-detail/customer-notification.component';
 
 
 
@@ -25,7 +26,8 @@ import { CustomerAddFeedbackComponent } from './customer-detail/customer-add-fee
                  CustomerOrdersComponent,
                  CustomerCartInfoComponent,
                  CustomerFeedbackComponent,
-                 CustomerAddFeedbackComponent
+                 CustomerAddFeedbackComponent,
+                 CustomerNotificationComponent
                 ],
   imports: [
     CommonModule,

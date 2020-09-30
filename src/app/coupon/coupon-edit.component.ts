@@ -22,11 +22,14 @@ export class CouponEditComponent implements OnInit {
   ) {
     this.addCouponForm = this.formBuilder.group({
       voucherCode: ['', Validators.required],
-      voucherAmount: ['', Validators.required],
+      calculationType: ['', Validators.required],
+      voucherValue: ['', Validators.required],
+      voucherMaxLimit: ['', Validators.required],
+      voucherMinCartAmount: ['', Validators.required],
       expirydatetime: [''],
-      voucherCartAmount: ['', Validators.required],
-      voucherType: ['', Validators.required],
-      description: ['', Validators.required],
+      voucherMaxUsageCount: ['', Validators.required],
+      voucherDescription: ['', Validators.required],
+      voucherMaxLimitUser: ['', Validators.required],
       status: ['']
     });
   }
@@ -35,16 +38,20 @@ export class CouponEditComponent implements OnInit {
 
   ngOnInit() {
     this.couponId = +this.activatedRoute.snapshot.params.couponId;
+    console.log(this.couponId);
     if (this.couponId !== 0) {
       this.couponService.fetchCouponDetails(this.couponId).subscribe((data: any) => {
         const couponData: any = data.coupon;
         console.log(couponData);
         this.addCouponForm.get('voucherCode').setValue(couponData.voucher_code);
-        this.addCouponForm.get('voucherAmount').setValue(couponData.voucher_amount);
-        this.addCouponForm.get('expirydatetime').setValue(couponData.expiry_datetime);
-        this.addCouponForm.get('voucherCartAmount').setValue(couponData.voucher_cart_amount);
-        this.addCouponForm.get('voucherType').setValue(couponData.voucher_type);
-        this.addCouponForm.get('description').setValue(couponData.description);
+        this.addCouponForm.get('voucherValue').setValue(couponData.voucher_value);
+        this.addCouponForm.get('calculationType').setValue(couponData.calculation_type);
+        this.addCouponForm.get('voucherMaxLimit').setValue(couponData.voucher_max_value);
+        this.addCouponForm.get('voucherMinCartAmount').setValue(couponData.voucher_min_cart_value);
+        this.addCouponForm.get('voucherDescription').setValue(couponData.voucher_description);
+        this.addCouponForm.get('expirydatetime').setValue(couponData.voucher_expiry_date);
+        this.addCouponForm.get('voucherMaxUsageCount').setValue(couponData.voucher_max_usage_count);
+        this.addCouponForm.get('voucherMaxLimitUser').setValue(couponData.voucher_max_limit_user);
         this.addCouponForm.get('status').setValue(couponData.status);
       });
     }

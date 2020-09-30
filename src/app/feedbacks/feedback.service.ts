@@ -19,9 +19,10 @@ export class FeedbackService {
     return this.httpClient.post<any[]>(`${this.customerServiceUrl}customerFeedback`, obj)
       .pipe(
         tap(data => {
-          // console.log(JSON.stringify(data))
+          // console.log(JSON.stringify(data));
         })
         , map((data) => {
+          console.log(data);
           return data;
         })
         , catchError(this.handleError)

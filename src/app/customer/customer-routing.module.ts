@@ -12,6 +12,7 @@ import { CustomerResolverService } from './customer-resolver.service';
 import { CustomerFeedbackComponent } from './customer-detail/customer-feedback.component';
 import { CustomerAddFeedbackComponent } from './customer-detail/customer-add-feedback.component';
 import { FeedbackEditComponent } from '../feedbacks/feedback-edit.component';
+import { CustomerNotificationComponent } from './customer-detail/customer-notification.component';
 
 const routes: Routes = [
   {
@@ -28,7 +29,8 @@ const routes: Routes = [
       { path: 'customeraddresses', component: CustomerAddressesComponent },
       { path: 'customerorders', component: CustomerOrdersComponent },
       { path: 'customercart', component: CustomerCartInfoComponent },
-      { path: 'customerfeedbacks', component: CustomerFeedbackComponent }
+      { path: 'customerfeedbacks', component: CustomerFeedbackComponent },
+      { path: 'customernotify', component: CustomerNotificationComponent }
       //   { path: 'merchantproducts/edit', component: MerchantProductEditComponent },
     ]
   },

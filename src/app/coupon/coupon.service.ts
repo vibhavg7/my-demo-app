@@ -39,14 +39,23 @@ export class CouponService {
   }
 
   addNewCoupon(coupon: any): Observable<any> {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     const obj: any = {};
-    obj.voucherCode = coupon.voucherCode;
-    obj.voucherAmount = coupon.voucherAmount;
+    obj.calculationType = coupon.calculationType;
     obj.expirydatetime = coupon.expirydatetime;
-    obj.voucherCartAmount = coupon.voucherCartAmount;
-    obj.voucherType = coupon.voucherType;
-    obj.description = coupon.description;
+    obj.voucherMaxUsageCount = coupon.voucherMaxUsageCount;
+    obj.voucherCode = coupon.voucherCode;
+    obj.voucherDescription = coupon.voucherDescription;
+    obj.voucherMaxLimit = coupon.voucherMaxLimit;
+    obj.voucherMaxLimitUser = coupon.voucherMaxLimitUser;
+    obj.voucherMinCartAmount = coupon.voucherMinCartAmount;
+    obj.voucherValue = coupon.voucherValue;
+    obj.createdBy = currentUser.employee_id;
+    obj.customerId = '';
+    obj.city = '';
+    obj.voucherType = '';
     obj.status = +coupon.status;
+    console.log(obj);
     const url = `${this.couponServiceUrl}addnewcoupon`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post(url, obj, { headers }).pipe(
@@ -60,15 +69,22 @@ export class CouponService {
   }
 
   editCoupon(coupon: any, couponId): Observable<any> {
-    // console.log(store);
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     const obj: any = {};
 
+    obj.calculation_type = coupon.calculationType;
+    obj.voucher_expiry_date = coupon.expirydatetime;
+    obj.voucher_max_usage_count = coupon.voucherMaxUsageCount;
     obj.voucher_code = coupon.voucherCode;
-    obj.voucher_amount = coupon.voucherAmount;
-    obj.expiry_datetime = coupon.expirydatetime;
-    obj.voucher_cart_amount = coupon.voucherCartAmount;
-    obj.voucher_type = coupon.voucherType;
-    obj.description = coupon.description;
+    obj.voucher_description = coupon.voucherDescription;
+    obj.voucher_max_value = coupon.voucherMaxLimit;
+    obj.voucher_max_limit_user = coupon.voucherMaxLimitUser;
+    obj.voucher_min_cart_value = coupon.voucherMinCartAmount;
+    obj.voucher_value = coupon.voucherValue;
+    obj.voucher_created_by = currentUser.employee_id;
+    // obj.customerId = '';
+    obj.voucher_city = 4;
+    obj.voucher_type = '';
     obj.status = +coupon.status;
 
     const url = `${this.couponServiceUrl}couponinfo/${couponId}`;

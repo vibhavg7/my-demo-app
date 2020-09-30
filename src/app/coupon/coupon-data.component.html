@@ -1,46 +1,40 @@
 <td>
-  <img *ngIf="!voucher?.image_url" src='assets/product_images/default_image.jpg' [style.width.px]='imageWidth'
-      [style.height.px]='imageHeight'
-      [style.margin.px]='imageMargin'>
-  <span *ngIf="!voucher?.image_url" (click)="uploadImage(voucher.voucher_id)" style="display:block;font-size:14px;cursor:pointer;color:blue">
-      Upload Image
-  </span>
-  <img *ngIf="voucher?.image_url" src='{{voucher?.image_url}}' [title]='voucher?.voucher_code' [style.height.px]='imageHeight'
-      [style.width.px]='imageWidth'
-      [style.margin.px]='imageMargin'>
-
-  <span *ngIf="voucher?.image_url" (click)="uploadImage(voucher.voucher_id)" style="display:block;font-size:14px;
-              cursor:pointer;color:blue">
-      Change Image
-  </span>
-</td>
-<td>
   <a [routerLink]="['/coupon', voucher.voucher_id]">
-      {{ voucher?.voucher_id }}
+    {{ voucher?.voucher_code }}
   </a>
 </td>
 <td>
-  <a [routerLink]="['/coupon', voucher.voucher_id]">
-      {{ voucher?.voucher_code }}
-  </a>
+  {{ voucher?.voucher_value }} {{voucher?.calculation_type == 1? '%': ' Rs'}}
 </td>
 <td>
-  {{ voucher?.voucher_amount }}
+  &#8377;{{ voucher?.voucher_min_cart_value }}
 </td>
 <td>
-  {{ voucher?.expiry_datetime }}
+  &#8377;{{ voucher?.voucher_max_value }}
 </td>
 <td>
-  {{ voucher?.voucher_cart_amount }}
+  {{ voucher?.voucher_description }}
 </td>
 <td>
-  {{ voucher?.voucher_type }}
+  {{ voucher?.voucher_created_by }}
+</td>
+<td>
+  {{ voucher?.voucher_max_usage_count }}
+</td>
+<td>
+  {{ voucher?.voucher_max_limit_user }}
 </td>
 
-<td style="font-weight:bold">{{ voucher?.status ? 'Available' : 'Not Available' }}</td>
+<td style="font-weight:bold"
+[ngClass]="{
+  'text-success':voucher?.status === 1,
+  'text-danger':voucher?.status === 0
+}">
+  {{ voucher?.status ? 'Active' : 'Not Active' }}
+</td>
 <td>
   <button class="btn btn-outline-secondary" [routerLink]="['/coupon',voucher?.voucher_id,'edit']">Edit</button>
-  <button class="btn btn-outline-secondary" style="margin-left:5px" (click)="deleteCoupons(voucher?.voucher_id)">
-          Delete
-  </button>
+  <!-- <button class="btn btn-outline-secondary" style="margin-left:5px" (click)="disableCoupon(voucher?.voucher_id)">
+    Disable
+  </button> -->
 </td>
