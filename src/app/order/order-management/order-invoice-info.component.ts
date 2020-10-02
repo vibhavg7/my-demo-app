@@ -16,7 +16,7 @@ export class OrderInvoiceInfoComponent implements OnInit {
   ngOnInit() {
     this.orderid = this.activatedRoute.parent.snapshot.params.orderid;
     this.invoiceData = this.activatedRoute.snapshot.data.resolvedInvoice.orderInvoice[0];
-    // console.log(this.invoiceData);
+    console.log(this.invoiceData);
     this.errorMessage = this.activatedRoute.snapshot.data.resolvedInvoice.error;
   }
 

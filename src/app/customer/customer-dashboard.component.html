@@ -13,44 +13,32 @@
         </form>
       </div>
       <div class="col-md-6">
-        <!-- <button class="btn btn-outline-secondary" style="float:right" [routerLink]="['/customer/',0,'edit']">
+        <button class="btn btn-outline-secondary" style="float:right" [routerLink]="['/customer/',0,'edit']">
           Add New Customer
-        </button> -->
+        </button>
       </div>
       <div class='table-responsive'>
-        <table style="width:1100px !important" class='table' *ngIf='customers.length'>
+        <table style="width:1200px !important" class='table' *ngIf='customers.length'>
           <thead>
             <tr>
-              <!-- <th>
-
-              </th> -->
               <th style="width:90px !important">Id</th>
               <th>Name</th>
-              <!-- <th>Customer DOB</th> -->
-              <!-- <th>Email</th> -->
+              <th>Customer DOB</th>
               <th>Phone</th>
               <th>
                 <span style="display:block">Registration Date</span>
-                <!-- (MM/DD/YY) -->
               </th>
               <th>
                 <span style="display:block">Last Seen</span>
-                <!-- (MM/DD/YY) -->
               </th>
               <th>Status</th>
               <th>Orders</th>
               <th>Feedback</th>
-              <!-- <th></th> -->
+              <th></th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor='let customer of customers'>
-              <!-- <td>
-                <img *ngIf="!customer?.image_url" src='assets/product_images/default_image.jpg' [title]='customer.customer_name' [style.width.px]='imageWidth'
-                  [style.margin.px]='imageMargin'>
-                <img *ngIf="customer?.image_url" src='{{customer.image_url}}' [title]='customer.customer_name' [style.width.px]='imageWidth'
-                  [style.margin.px]='imageMargin'>
-              </td> -->
               <td style="width:90px !important">
                 <a [routerLink]="['/customer', customer.customer_id]">
                   {{ customer?.customer_id }}
@@ -61,40 +49,35 @@
                   {{ customer?.customer_name }}
                 </a>
               </td>
-              <!-- <td>
-                                {{ customer?.customer_dob | date:'medium' }}
-                            </td> -->
+              <td>
+                {{ customer?.customer_dob | date:'mediumDate' }}
+              </td>
 
-              <!-- <td>{{ customer?.email }}</td> -->
               <td><a target="_blank" [routerLink]="['/customer', customer.customer_id]">{{ customer?.phone }}</a></td>
               <td>{{ customer?.registered_date | date:'mediumDate' }},{{ customer?.registered_date | date:'shortTime' }} </td>
               <td>{{ customer?.last_updated | date:'mediumDate' }},{{ customer?.last_updated | date:'shortTime' }}</td>
-              <td style="font-weight:bold">{{ customer?.status ? 'VERIFIED' : 'NOT VERIFIED' }}</td>
-              <!-- <td>
-                <button class="btn btn-outline-secondary mr-3" [routerLink]="[customer?.customer_id,'edit']">
-                  <i class='fa fa-edit'></i>Edit
-                </button>
-              </td> -->
+              <td style="font-weight:bold;">{{ customer?.status ? 'VERIFIED' : 'NOT VERIFIED' }}</td>
               <td>
-                <span>
+                <a [routerLink]="[customer?.customer_id,'customerorders']">
                   {{customer?.orders_count}}
-                </span>
+                </a>
               </td>
               <td>
-                <button style="    font-size: 15px;" class="btn btn-outline-secondary mr-3" [routerLink]="[customer?.customer_id,'customerfeedbacks']">
+                <button style="font-size: 10px;width: 90px;" class="btn btn-outline-secondary mr-3" [routerLink]="[customer?.customer_id,'customerfeedbacks']">
                   Feedbacks
-                  <span style="border: 1px solid green;
+                  <span
+                  style="border: 1px solid green;
                   border-radius: 50%;
                   font-weight: 700;
-                  padding: 2px;
-                  color: #000;">{{customer?.feedbacks_count}}</span>
+                  padding: 2px;color: #000;"
+                  >{{customer?.feedbacks_count}}</span>
                 </button>
               </td>
-              <!-- <td>
-                <button class="btn btn-outline-secondary mr-3" [routerLink]="[customer?.customer_id,'notification']">
-                  Send Notification
+              <td>
+                <button style="font-size: 10px;" class="btn btn-outline-secondary mr-3" [routerLink]="[customer?.customer_id,'edit']">
+                  Edit
                 </button>
-              </td> -->
+              </td>
             </tr>
           </tbody>
         </table>

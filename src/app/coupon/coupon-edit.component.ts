@@ -14,6 +14,7 @@ export class CouponEditComponent implements OnInit {
   submitted: boolean;
   addCouponForm: FormGroup;
   couponId: any;
+  disableForm = false;
   constructor(
     private formBuilder: FormBuilder,
     private couponService: CouponService,
@@ -58,43 +59,43 @@ export class CouponEditComponent implements OnInit {
   }
 
   onSubmit() {
-    this.submitted = true;
-
-    if (this.addCouponForm.invalid) {
-      return;
-    }
-    // tslint:disable-next-line:triple-equals
-    if (this.couponId == '') {
-      this.couponService.addNewCoupon(this.addCouponForm.value).subscribe((data) => {
-        console.log(data);
-        // tslint:disable-next-line:triple-equals
-        if (data.status == '200') {
-          this.router.navigate(['coupon']);
-        }
-        // tslint:disable-next-line:triple-equals
-        if (data.status == '400') {
-          alert('Banner Not Added . Internal Server Error');
-        }
-      },
-        (error) => {
-          this.errorMessage = error;
-        });
-    } else {
-      this.couponService.editCoupon(this.addCouponForm.value, this.couponId).subscribe((data) => {
-        console.log(data);
-        // tslint:disable-next-line:triple-equals
-        if (data.status == '200') {
-          this.router.navigate(['coupon']);
-        }
-        // tslint:disable-next-line:triple-equals
-        if (data.status == '400') {
-          alert('Banner Not Added . Internal Server Error');
-        }
-      },
-        (error) => {
-          this.errorMessage = error;
-        }
-      );
+    if (!this.disableForm) {
+      this.submitted = true;
+      this.disableForm = true;
+      if (this.addCouponForm.invalid) {
+        this.disableForm = false;
+        return;
+      }
+      if (this.couponId === '') {
+        this.couponService.addNewCoupon(this.addCouponForm.value).subscribe((data: any) => {
+          if (data.status === 200) {
+            this.router.navigate(['coupon']);
+          }
+          if (data.status === 400) {
+            alert('Coupon Not Added . Internal Server Error');
+            this.disableForm = false;
+          }
+        },
+          (error) => {
+            this.errorMessage = error;
+            this.disableForm = false;
+          });
+      } else {
+        this.couponService.editCoupon(this.addCouponForm.value, this.couponId).subscribe((data: any) => {
+          if (data.status === 200) {
+            this.router.navigate(['coupon']);
+          }
+          // tslint:disable-next-line:triple-equals
+          if (data.status == 400) {
+            alert('Coupon Not Added . Internal Server Error');
+            this.disableForm = false;
+          }
+        },
+          (error) => {
+            this.errorMessage = error;
+          }
+        );
+      }
     }
   }
 }

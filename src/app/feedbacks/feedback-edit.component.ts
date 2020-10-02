@@ -15,6 +15,7 @@ export class FeedbackEditComponent implements OnInit {
   customerId: number;
   submitted: boolean;
   addFeedBackForm: FormGroup;
+  disableForm = false;
   pageTitle: any;
   constructor(
     private formBuilder: FormBuilder,
@@ -58,26 +59,28 @@ export class FeedbackEditComponent implements OnInit {
   }
 
   onSubmit() {
-    this.submitted = true;
-
-    if (this.addFeedBackForm.invalid) {
-      return;
+    if (!this.disableForm) {
+      this.submitted = true;
+      this.disableForm = true;
+      if (this.addFeedBackForm.invalid) {
+        return;
+      }
+      console.log('heyyyyy');
+      this.feedBackService.addNewFeedBack(this.addFeedBackForm.value, this.feedbackId).subscribe((data: any) => {
+        if (data.status === 200) {
+          // [routerLink]="[customer?.customer_id,'customerfeedbacks']"
+          this.router.navigate([ 'customer', `${this.customerId}`, 'customerfeedbacks' ]);
+        }
+        if (data.status === 400) {
+          alert('Merchant Not Added . Internal Server Error');
+          this.disableForm = true;
+        }
+      },
+        (error) => {
+          this.errorMessage = error;
+          this.disableForm = true;
+        });
     }
-
-    this.feedBackService.addNewFeedBack(this.addFeedBackForm.value, this.feedbackId).subscribe((data) => {
-      console.log(data);
-      // tslint:disable-next-line:triple-equals
-      if (data.status == '200') {
-        this.router.navigate(['customer']);
-      }
-      // tslint:disable-next-line:triple-equals
-      if (data.status == '400') {
-        alert('Merchant Not Added . Internal Server Error');
-      }
-    },
-      (error) => {
-        this.errorMessage = error;
-      });
 
   }
 

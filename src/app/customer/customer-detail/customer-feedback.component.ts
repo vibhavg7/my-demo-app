@@ -21,9 +21,9 @@ export class CustomerFeedbackComponent implements OnInit {
 
   ngOnInit(): void {
     this.customerId = +this.activatedRoute.parent.params['_value']['customerId'];
-    console.log(this.customerId);
+    // console.log(this.customerId);
     this.feedBackService.fetchAllFeedBacks(this.currentPage, this.pageSize, this.filterBy, this.customerId).subscribe((data: any) => {
-      console.log(data);
+      // console.log(data);
       this.customerfeedbackscount = data.customer_feedback_count[0].customer_feedback_count;
       this.customerfeedbacks = data.customer_feedback_info;
     });

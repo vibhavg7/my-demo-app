@@ -12,6 +12,7 @@ export class AddSubCategoryComponent implements OnInit {
 
   categoryId: number;
   errorMessage: any;
+  disableForm = false;
   submitted: boolean;
   addSubCategoryForm: FormGroup;
   subcategoryId: any;
@@ -26,7 +27,7 @@ export class AddSubCategoryComponent implements OnInit {
     this.addSubCategoryForm = this.formBuilder.group({
       subcategoryName: ['', Validators.required],
       subcategoryId :[''],
-      storeCategoryName: ['', Validators.required],      
+      storeCategoryName: ['', Validators.required],
     });
   }
 
@@ -37,10 +38,10 @@ export class AddSubCategoryComponent implements OnInit {
     this.subcategoryId = +this._activatedRoute.snapshot.params['subcategory'];
     this.storesubcategoryId = +this._activatedRoute.snapshot.params['storesubcat'];console.log(this.storesubcategoryId)
 
-    if (this.subcategoryId != 0) {
+    if (this.subcategoryId !== 0) {
       this._categoryService.getSubCategoryData(this.subcategoryId).subscribe((data) => {
         this.addSubCategoryForm.get('subcategoryName').setValue(data[0]['name']);
-        this.addSubCategoryForm.get('subcategoryId').setValue(data[0]['category_id']);        
+        this.addSubCategoryForm.get('subcategoryId').setValue(data[0]['category_id']);
       });
     }
     this._categoryService.getStoreSubCategoryData(this.categoryId,"").subscribe((data) => {
@@ -50,38 +51,43 @@ export class AddSubCategoryComponent implements OnInit {
   }
 
   onSubmit() {
-    this.submitted = true;
-    if (this.addSubCategoryForm.invalid) {
-      return;
-    }
-    if (this.subcategoryId == 0) {
-      this._categoryService.addNewSubCategory(this.addSubCategoryForm.value).subscribe((data) => {
-        if (data.status == "200") {
-          this._router.navigate(['category/storesubcategories',this.categoryId]);
-        }
-        if (data.status == "400") {
-          alert('Category Not Added . Internal Server Error');
-        }
-      },
-        (error) => {
-          this.errorMessage = error;
-        })
-    }
-    else {
-      this._categoryService.editSubCategory(this.addSubCategoryForm.value)
-      .subscribe((data) => {
-        console.log(data);
-        if (data.status == "200") {
-          this._router.navigate(['category/storesubcategories',this.categoryId]);
-        }
-        if (data.status == "400") {
-          alert('Category Not Added . Internal Server Error');
-        }
-      },
-        (error) => {
-          this.errorMessage = error;
-        })
+    if (!this.disableForm) {
+      this.submitted = true;
+      this.disableForm = true;
+      if (this.addSubCategoryForm.invalid) {
+        this.disableForm = false;
+        return;
+      }
+      if (+this.subcategoryId === 0) {
+        this._categoryService.addNewSubCategory(this.addSubCategoryForm.value).subscribe((data: any) => {
+          if (+data.status === 200) {
+            this._router.navigate(['category/storesubcategories', this.categoryId]);
+          }
+          if (+data.status === 400) {
+            alert('Category Not Added . Internal Server Error');
+            this.disableForm = false;
+          }
+        },
+          (error) => {
+            this.errorMessage = error;
+            this.disableForm = false;
+          });
+      } else {
+        this._categoryService.editSubCategory(this.addSubCategoryForm.value)
+        .subscribe((data: any) => {
+          if (data.status === 200) {
+            this._router.navigate(['category/storesubcategories', this.categoryId]);
+          }
+          if (data.status === 400) {
+            alert('Category Not Added . Internal Server Error');
+            this.disableForm = false;
+          }
+        },
+          (error) => {
+            this.errorMessage = error;
+            this.disableForm = false;
+          });
+      }
     }
   }
-
 }

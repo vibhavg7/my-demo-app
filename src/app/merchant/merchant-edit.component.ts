@@ -20,6 +20,7 @@ export class MerchantEditComponent implements OnInit {
   ];
   addStoreForm: any;
   storeId: any;
+  disableForm = false;
   constructor(
     private merchantService: MerchantService,
     private locationService: LocationServiceService,
@@ -99,47 +100,43 @@ export class MerchantEditComponent implements OnInit {
   }
 
   onSubmit() {
-    this.submitted = true;
-
-    if (this.addStoreForm.invalid) {
-      return;
+    if (!this.disableForm) {
+      this.submitted = true;
+      this.disableForm = true;
+      if (this.addStoreForm.invalid) {
+        this.disableForm = false;
+        return;
+      }
+      if (this.storeId === 0) {
+        this.merchantService.addNewStore(this.addStoreForm.value).subscribe((data: any) => {
+          if (+data.status === 200) {
+            this.router.navigate(['merchant']);
+          }
+          if (data.status === 400) {
+            alert('Merchant Not Added . Internal Server Error');
+            this.disableForm = false;
+          }
+        },
+          (error) => {
+            this.errorMessage = error;
+            this.disableForm = false;
+          });
+      } else {
+        this.merchantService.editStore(this.addStoreForm.value, this.storeId).subscribe((data: any) => {
+          if (+data.status === 200) {
+            this.router.navigate(['merchant']);
+          }
+          if (+data.status === 400) {
+            alert('Merchant Not Added . Internal Server Error');
+            this.disableForm = false;
+          }
+        },
+          (error) => {
+            this.errorMessage = error;
+            this.disableForm = false;
+          });
+      }
     }
-    // console.log(this.addStoreForm.value);
-    // console.log(this.storeId);
-
-    if (this.storeId === 0) {
-      this.merchantService.addNewStore(this.addStoreForm.value).subscribe((data) => {
-        console.log(data);
-        // tslint:disable-next-line:triple-equals
-        if (data.status == '200') {
-          this.router.navigate(['merchant']);
-        }
-        // tslint:disable-next-line:triple-equals
-        if (data.status == '400') {
-          alert('Merchant Not Added . Internal Server Error');
-        }
-      },
-        (error) => {
-          this.errorMessage = error;
-        });
-    } else {
-      // console.log('Hiiiiiiiiiiiiiiii');
-      this.merchantService.editStore(this.addStoreForm.value, this.storeId).subscribe((data) => {
-        console.log(data);
-        // tslint:disable-next-line:triple-equals
-        if (data.status == '200') {
-          this.router.navigate(['merchant']);
-        }
-        // tslint:disable-next-line:triple-equals
-        if (data.status == '400') {
-          alert('Merchant Not Added . Internal Server Error');
-        }
-      },
-        (error) => {
-          this.errorMessage = error;
-        });
-    }
-
   }
 
 }

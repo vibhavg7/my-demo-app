@@ -15,7 +15,7 @@ export class FeedbackService {
   fetchAllFeedBacks(pageNumber: number, pageSize: any, filterBy: any, customerId: any): Observable<any> {
     const obj: any = {};
     obj.page_number = pageNumber; obj.page_size = pageSize; obj.filterBy = filterBy; obj.customerId = customerId;
-    console.log(obj);
+    // console.log(obj);
     return this.httpClient.post<any[]>(`${this.customerServiceUrl}customerFeedback`, obj)
       .pipe(
         tap(data => {

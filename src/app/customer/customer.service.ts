@@ -22,7 +22,7 @@ export class CustomerService {
     return this.http.post<any[]>(`${this.customerServiceUrl}customerinfo`, obj)
       .pipe(
         tap(data => {
-          console.log(JSON.stringify(data));
+          // console.log(JSON.stringify(data));
         })
         , map((data) => {
           return data;
@@ -61,6 +61,45 @@ export class CustomerService {
         return customerData;
       })
       , catchError(this.handleError)
+    );
+  }
+
+  registerCustomer(addCustomerForm) {
+    const obj: any = {};
+    obj.customerName = addCustomerForm.customerName;
+    obj.customerPhone = addCustomerForm.customerPhone;
+    obj.customerDOB = addCustomerForm.customerDOB;
+    obj.status = addCustomerForm.status;
+
+    const url = `${this.customerServiceUrl}registerCustomerFromAdminPanel`;
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post(url, obj, { headers }).pipe(
+      tap(data => {
+      }),
+      map((data) => {
+        return data;
+      }),
+      catchError(err => this.handleError(err))
+    );
+  }
+
+  editCustomer(addCustomerForm, customerId) {
+    const obj: any = {};
+    obj.customer_name = addCustomerForm.customerName;
+    obj.customer_dob = addCustomerForm.customerDOB;
+    obj.phone = addCustomerForm.customerPhone;
+    obj.status = addCustomerForm.status;
+    obj.email = addCustomerForm.customerEmail;
+    console.log(obj);
+
+    return this.http.put(`${this.customerServiceUrl}/updateCustomerFromAdminPanel/${customerId}`, obj).pipe(
+      tap(data => {
+        // console.log(JSON.stringify(data));
+      }),
+      map((data) => {
+        return data;
+      }),
+      catchError(this.handleError)
     );
   }
 

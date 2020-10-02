@@ -12,6 +12,7 @@ export class AddStoreCategoryComponent implements OnInit {
   storeCategoryId: any;
   addStoreCategoryForm: FormGroup;
   submitted: any;
+  disableForm = false;
   errorMessage: any;
   constructor(private activatedRoute: ActivatedRoute,
               private categoryService: CategoryService,
@@ -40,37 +41,42 @@ export class AddStoreCategoryComponent implements OnInit {
   }
 
   onSubmit() {
-    this.submitted = true;
-    if (this.addStoreCategoryForm.invalid) {
-      return;
-    }
-    if (this.storeCategoryId == '') {
-      console.log(this.addStoreCategoryForm.value);
-      this.categoryService.addNewStoreCategory(this.addStoreCategoryForm.value).subscribe((data) => {
-        console.log(data);
-        if (data.status == "200") {
-          this.router.navigate(['category/storecategories']);
-        }
-        if (data.status == "400") {
-          alert('Category Not Added . Internal Server Error');
-        }
-      },
-        (error) => {
-          this.errorMessage = error;
-        });
-    } else {
-      this.categoryService.editStoreCategory(this.addStoreCategoryForm.value, this.storeCategoryId).subscribe((data) => {
-        // console.log(data);
-        if (data.status == "200") {
-          this.router.navigate(['category/storecategories']);
-        }
-        if (data.status == "400") {
-          alert('Category Not Added . Internal Server Error');
-        }
-      },
-        (error) => {
-          this.errorMessage = error;
-        });
+    if (!this.disableForm) {
+      this.submitted = true;
+      this.disableForm = true;
+      if (this.addStoreCategoryForm.invalid) {
+        this.disableForm = false;
+        return;
+      }
+      if (this.storeCategoryId === '') {
+        this.categoryService.addNewStoreCategory(this.addStoreCategoryForm.value).subscribe((data: any) => {
+          if (+data.status === 200) {
+            this.router.navigate(['category/storecategories']);
+          }
+          if (+data.status === 400) {
+            alert('Category Not Added . Internal Server Error');
+            this.disableForm = false;
+          }
+        },
+          (error) => {
+            this.errorMessage = error;
+            this.disableForm = false;
+          });
+      } else {
+        this.categoryService.editStoreCategory(this.addStoreCategoryForm.value, this.storeCategoryId).subscribe((data: any) => {
+          if (+data.status === 200) {
+            this.router.navigate(['category/storecategories']);
+          }
+          if (+data.status === 400) {
+            alert('Category Not Added . Internal Server Error');
+            this.disableForm = false;
+          }
+        },
+          (error) => {
+            this.errorMessage = error;
+            this.disableForm = false;
+          });
+      }
     }
 
 

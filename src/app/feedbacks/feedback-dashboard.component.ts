@@ -55,9 +55,10 @@ export class FeedbackDashboardComponent implements OnInit {
   }
 
   currentPageFn(page) {
+    console.log(page);
     this.feedBackService.fetchAllFeedBacks(page, this.pageSize, this.filterBy, '')
       .subscribe((data) => {
-        this.feedBacktotalcount = data.customer_feedback_count.customer_feedback_count;
+        this.feedBacktotalcount = data.customer_feedback_count[0].customer_feedback_count;
         this.feedBacks = data.customer_feedback_info;
       });
   }

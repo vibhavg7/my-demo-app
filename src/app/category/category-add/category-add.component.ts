@@ -15,27 +15,28 @@ export class CategoryAddComponent implements OnInit {
   errorMessage: string;
   url: string;
   addCategoryForm: any;
+  disableForm = false;
   storeCategories: any;
-  pageTitle: string = "Add Category";
+  pageTitle = 'Add Category';
   constructor(
-    private _categoryService: CategoryService,
-    private _router: Router,
-    private _activatedRoute: ActivatedRoute,
+    private categoryService: CategoryService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder
   ) {
     this.addCategoryForm = this.formBuilder.group({
       categoryName: ['', Validators.required],
       storeCategoryName: ['', Validators.required],
-      categoryRanking: ['', Validators.required],
+      categoryRanking: [''],
       status: ['']
     });
   }
 
   get f() { return this.addCategoryForm.controls; }
   ngOnInit() {
-    this.categoryId = +this._activatedRoute.snapshot.params['categoryId'];
-    if (this.categoryId != 0) {
-      this._categoryService.getSubCategoryData(this.categoryId).subscribe((data) => {
+    this.categoryId = +this.activatedRoute.snapshot.params.categoryId;
+    if (this.categoryId !== 0) {
+      this.categoryService.getSubCategoryData(this.categoryId).subscribe((data) => {
         console.log(data);
         this.addCategoryForm.get('categoryName').setValue(data[0]['name']);
         this.addCategoryForm.get('storeCategoryName').setValue(data[0]['store_category_id']);
@@ -43,55 +44,51 @@ export class CategoryAddComponent implements OnInit {
         this.addCategoryForm.get('status').setValue(data[0]['status']);
       });
     }
-    this._categoryService.storeCategories.subscribe((data)=>{
-      this.storeCategories = data['store_categories'];
+    this.categoryService.storeCategories.subscribe((data: any) => {
+      this.storeCategories = data.store_categories;
     });
   }
 
   onSubmit() {
-    this.submitted = true;
-    // console.log(this.addCategoryForm.value);
-    if (this.addCategoryForm.invalid) {
-      return;
+    if (!this.disableForm) {
+      if (this.disableForm) {
+        this.submitted = true;
+        this.disableForm = true;
+        if (this.addCategoryForm.invalid) {
+          this.disableForm = false;
+          return;
+        }
+        if (this.categoryId === 0) {
+          this.categoryService.addNewStoreSubCategory(this.addCategoryForm.value).subscribe((data: any) => {
+            if (+data.status === 200) {
+              this.router.navigate(['category/storesubcategories', this.addCategoryForm.value['storeCategoryName']]);
+            }
+            if (data.status === 400) {
+              alert('Category Not Added . Internal Server Error');
+              this.disableForm = false;
+            }
+          },
+            (error) => {
+              this.errorMessage = error;
+              this.disableForm = false;
+            });
+        } else {
+          this.categoryService.editStoreSubCategory(this.addCategoryForm.value, this.categoryId)
+          .subscribe((data) => {
+            if (data.status === 200) {
+              this.router.navigate(['category/storecategories']);
+            }
+            if (data.status === 400) {
+              alert('Category Not Added . Internal Server Error');
+              this.disableForm = false;
+            }
+          },
+            (error) => {
+              this.errorMessage = error;
+              this.disableForm = false;
+            });
+        }
+      }
     }
-    if (this.categoryId == 0) {      
-      this._categoryService.addNewStoreSubCategory(this.addCategoryForm.value).subscribe((data) => {
-        if (data.status == "200") {
-          this._router.navigate(['category/storesubcategories',this.addCategoryForm.value['storeCategoryName']]);
-        }
-        if (data.status == "400") {
-          alert('Category Not Added . Internal Server Error');
-        }
-      },
-        (error) => {
-          this.errorMessage = error;
-        })
-    }
-    else {
-      this._categoryService.editStoreSubCategory(this.addCategoryForm.value, this.categoryId)
-      .subscribe((data) => {
-        if (data.status == "200") {
-          this._router.navigate(['category/storecategories']);
-        }
-        if (data.status == "400") {
-          alert('Category Not Added . Internal Server Error');
-        }
-      },
-        (error) => {
-          this.errorMessage = error;
-        })
-    }
-
-    // login(addCategoryForm: NgForm) {
-    //   if (addCategoryForm && addCategoryForm.valid) {
-    //     // const userName = addCategoryForm.form.value.userName;
-    //     // const password = addCategoryForm.form.value.password;
-    //     // this.authService.login(userName, password);
-    //     this.router.navigate(['/category']);
-    //     // Navigate to the Product List page after log in.
-    //   } else {
-    //     this.errorMessage = 'Please enter all the details.';
-    //   }
-    // }
   }
 }

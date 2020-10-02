@@ -78,7 +78,7 @@ export class MerchantService {
     );
   }
 
-  updateStoreProductStock(storeProductId,stock)
+  updateStoreProductStock(storeProductId, stock)
   {
     let obj = {};
     obj["stock"] = stock;

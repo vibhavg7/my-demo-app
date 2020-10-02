@@ -6,6 +6,10 @@ td {
   overflow: hidden;
 } */
 
+td,th{
+  font-size: 14px;
+}
+
 .switch {
   position: relative;
   display: inline-block;

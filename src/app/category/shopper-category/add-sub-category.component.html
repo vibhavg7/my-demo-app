@@ -6,7 +6,7 @@
                     <form [formGroup]="addSubCategoryForm" (ngSubmit)="onSubmit()">
                         <div class="form-group">
                             <label>Sub Category Name</label>
-                            <input type="text" formControlName="subcategoryName" class="form-control" 
+                            <input type="text" formControlName="subcategoryName" class="form-control"
                                     [ngClass]="{ 'is-invalid': submitted && f.subcategoryName.errors }"
                             />
                             <div *ngIf="submitted && f.subcategoryName.errors" class="invalid-feedback">
@@ -40,9 +40,9 @@
                                 </select>
                             </div>
                         </div> -->
-    
+
                         <div class="form-group">
-                            <button class="btn btn-primary">Save</button>
+                            <button [disabled]="!addSubCategoryForm.valid || disableForm" class="btn btn-primary">Save</button>
                         </div>
                     </form>
                 </div>

@@ -20,6 +20,7 @@ export class MerchantProductEditComponent implements OnInit {
   addStoreProductForm: any;
   selectedProduct: any = '';
   productValueSet = false;
+  disableForm = false;
   storeProductId: any;
   sub: any;
   constructor(
@@ -32,10 +33,8 @@ export class MerchantProductEditComponent implements OnInit {
     this.addStoreProductForm = this.formBuilder.group({
       storeproductName: ['', Validators.required],
       productMarkedPrice: ['', Validators.required],
-      // productCostPrice: ['', Validators.required],
       productSellingPrice: ['', Validators.required],
       storeMargin: ['', Validators.required],
-      // storeDiscount: ['', Validators.required],
       status: ['']
     });
   }
@@ -51,10 +50,8 @@ export class MerchantProductEditComponent implements OnInit {
         console.log(productdata[0]);
         this.addStoreProductForm.get('storeproductName').setValue(productdata[0].product_name);
         this.addStoreProductForm.get('productMarkedPrice').setValue(productdata[0].product_marked_price);
-        // this.addStoreProductForm.get('productCostPrice').setValue(productdata[0].store_cost_price);
         this.addStoreProductForm.get('productSellingPrice').setValue(productdata[0].store_selling_price);
         this.addStoreProductForm.get('storeMargin').setValue(productdata[0].store_margin);
-        // this.addStoreProductForm.get('storeDiscount').setValue(productdata[0].store_discount);
         this.addStoreProductForm.get('status').setValue(productdata[0].status);
       });
     }
@@ -78,7 +75,9 @@ export class MerchantProductEditComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+    this.disableForm = true;
     if (this.addStoreProductForm.invalid) {
+      this.disableForm = false;
       return;
     }
 
@@ -88,24 +87,31 @@ export class MerchantProductEditComponent implements OnInit {
           console.log(data);
           if (data.status === 200) {
             this.router.navigate([`merchant/${this.storeId}/merchantproducts`]);
-            // this._router.navigate(['merchant/',this.storeId,'/merchantproducts']);
+            this.disableForm = false;
           }
           if (data.status === 400) {
             alert('Category Not Added . Internal Server Error');
+            this.disableForm = false;
           }
         },
           (error) => {
             this.errorMessage = error;
+            this.disableForm = false;
           }
         );
     } else {
       this.merchantService.editStoreProduct(this.addStoreProductForm.value, this.storeProductId).subscribe((data: any) => {
         if (data.status === 200) {
           this.router.navigate([`merchant/${this.storeId}/merchantproducts`]);
+          this.disableForm = false;
         }
         if (data.status === 400) {
           alert('Category Not Added . Internal Server Error');
+          this.disableForm = false;
         }
+      }, (error) => {
+        this.errorMessage = error;
+        this.disableForm = false;
       });
     }
 

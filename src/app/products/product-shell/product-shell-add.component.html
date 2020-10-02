@@ -50,6 +50,14 @@
                                 </div>
                        </div>
                    </div>
+                   <div class="form-group">
+                      <label>Orignal Price(M.R.P)</label>
+                      <input type="text" formControlName="productPrice" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.productPrice.errors }"
+                      />
+                      <div *ngIf="submitted && f.productPrice.errors" class="invalid-feedback">
+                          <div *ngIf="f.productPrice.errors.required">Product Price is required</div>
+                      </div>
+                  </div>
                     <div class="form-group">
                         <label>Weight Type</label>
                         <div>
@@ -61,14 +69,6 @@
                                 <option value="4">packet</option>
                                 <option value="6">pieces</option>
                             </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Orignal Price(M.R.P)</label>
-                        <input type="text" formControlName="productPrice" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.productPrice.errors }"
-                        />
-                        <div *ngIf="submitted && f.productPrice.errors" class="invalid-feedback">
-                            <div *ngIf="f.productPrice.errors.required">Product Price is required</div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -113,7 +113,7 @@
                     </div>
 
                     <div class="form-group">
-                        <button class="btn btn-primary mr-3"><i class='fa fa-save'></i> Save</button>
+                        <button [disabled]="disableForm"  class="btn btn-primary mr-3"><i class='fa fa-save'></i> Save</button>
                         <button *ngIf="productId !=0" class="btn btn-primary mr-3" (click)="deleteProduct()">
                             <i class='fa fa-trash'></i> Delete
                         </button>

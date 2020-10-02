@@ -15,7 +15,6 @@ export class CustomerResolverService implements Resolve<any> {
     return this.customerService.fetchAllCustomers(1, 20, '')
       .pipe(
         map(customerResolver => (
-          //   console.log(customerResolver),
           { customers: customerResolver.customers,
           customer_total_count: customerResolver.customer_total_count.customer_count, error: '' })
         ),
