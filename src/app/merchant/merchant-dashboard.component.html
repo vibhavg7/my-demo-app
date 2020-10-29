@@ -1,62 +1,114 @@
 <div class='card'>
-    <div class='card-header'>
+  <div class='card-header'>
+    <div class="row">
+      <div class="col-md-6">
         {{pageTitle}}
+      </div>
+      <div class="col-md-6">
+        <a type="button" class="btn btn-outline-secondary" style="float:right;font-size:14px" [routerLink]="['/merchant/',0,'edit']">
+          Add New Store
+        </a>
+      </div>
     </div>
-    <div class='card-body'>
-        <div class="row">
-            <!-- <div class='row'> -->
-            <div class='col-md-2'>Filter by:</div>
-            <div class='col-md-4'>
-                <form [formGroup]="searchCriteriaForm">
-                    <input formControlName="searchCriteria" class="form-control" type="text" id="keyword"
-                    placeholder="Search Merchant By Name"
-                        autocomplete="off" autofocus/>
-                </form>
-            </div>
-            <div class="col-md-6">
-                <!-- target="_blank" -->
-                <a type="button" class="btn btn-outline-secondary" style="float:right;font-size:14px" [routerLink]="['/merchant/',0,'edit']">
-                    Add New Store
-                </a>
-            </div>
-        </div>
-        <div class='table-responsive'>
-            <table style="width:1200px !important" class='table' *ngIf='stores.length'>
-                <thead>
-                    <tr>
-                        <!-- <th>
-                            <button style="width:113px" class='btn btn-primary' (click)='toggleImage()'>
-                                {{showImage ? 'Hide' : 'Show'}} Image
-                            </button>
-                        </th> -->
-                        <th style="width:90px !important">Id</th>
-                        <th>Store Name</th>
-                        <th>Timings</th>
-                        <th>Phone</th>
-                        <th>Lat & Long</th>
-                        <th>Category</th>
-                        <!-- <th>GST Number</th>
-                        <th>Pan Number</th> -->
-                        <th>Status</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor='let store of stores' app-merchant-data [storeInfo]="store">
+  </div>
+  <div class='card-body'>
+    <div class="row">
+      <div class='col-md-2'>Filter by:</div>
+      <div class='col-md-4'>
+        <form [formGroup]="searchCriteriaForm">
+          <input formControlName="searchCriteria" class="form-control" type="text" id="keyword" placeholder="Search Merchant By Name"
+            autocomplete="off" autofocus/>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-group col-md-3">
+        <input class="form-control py-2" placeholder="yyyy-mm-dd" type="search" name="dp" [(ngModel)]="fromDate"
+         ngbDatepicker #d="ngbDatepicker"
+          id="example-search-input">
+        <span class="input-group-append" style="width:50px">
+          <button class="btn btn-outline-secondary" type="button" (click)="d.toggle()">
+            <i class="fa fa-calendar" aria-hidden="true"></i>
+          </button>
+        </span>
+      </div>
 
-                    </tr>
-                    <!-- <div *ngFor='let store of stores'>
-                        <app-merchant-data [storeInfo]="store"></app-merchant-data>
-                    </div> -->
-                </tbody>
-            </table>
-            <app-pagination *ngIf='stores.length' [totalItemCount]="storetotalcount" (currentPage)="currentPageFn($event)"></app-pagination>
-            <div *ngIf='stores?.length == 0'>
-                No Stores Data Found
-            </div>
-        </div>
+      <div class="input-group col-md-3">
+        <input class="form-control py-2" placeholder="yyyy-mm-dd" type="search" name="dp1" [(ngModel)]="toDate"
+        ngbDatepicker #d1="ngbDatepicker"
+          id="example-search-input">
+        <span class="input-group-append" style="width:50px">
+          <button class="btn btn-outline-secondary" type="button" (click)="d1.toggle()">
+            <i class="fa fa-calendar" aria-hidden="true"></i>
+          </button>
+        </span>
+      </div>
+      <div class="input-group col-md-3">
+        <a type="button" class="btn btn-outline-secondary" style="margin-left:5px" (click)="applyFilter()">
+          Apply
+        </a>
+      </div>
     </div>
+    <div class='table-responsive'>
+      <table style="width:1200px !important" class='table' *ngIf='stores.length'>
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Store Name</th>
+            <th>Timings</th>
+            <th>Phone</th>
+            <th>Category</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor='let store of stores'>
+            <td>
+              <a [routerLink]="['/merchant', store.store_id]">
+                {{ store?.store_id }}
+              </a>
+            </td>
+            <td>
+              <a [routerLink]="['/merchant', store.store_id]">
+                {{ store?.store_name }}
+              </a>
+            </td>
+            <td>
+              {{store?.store_opening_time % 12 }} {{store?.store_opening_time_clock }} - {{store?.store_closing_time % 12}} {{store?.store_closing_time_clock
+              }}
+
+            </td>
+            <td>
+              {{ store?.phone_number }}
+            </td>
+            <td>
+              {{ store?.store_category_name }}
+            </td>
+            <td style="font-weight:bold">
+              {{ store?.status ? 'Available' : 'Not Available' }}
+            </td>
+            <td style="  width: 180px !important;">
+              <a type="button" class="btn btn-outline-secondary" [routerLink]="['/merchant',store?.store_id,'edit']">
+                Edit
+              </a>
+              <a type="button" class="btn btn-outline-secondary" style="margin-left:5px" (click)="deleteStore(store?.store_id)">
+                Delete
+              </a>
+            </td>
+
+
+          </tr>
+
+        </tbody>
+      </table>
+      <app-pagination *ngIf='stores.length' [totalItemCount]="storetotalcount" (currentPage)="currentPageFn($event)"></app-pagination>
+      <div *ngIf='stores?.length == 0'>
+        No Stores Data Found
+      </div>
+    </div>
+  </div>
 </div>
 <div *ngIf='errorMessage' class='alert alert-danger'>
-    Error: {{ errorMessage }}
+  Error: {{ errorMessage }}
 </div>

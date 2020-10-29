@@ -15,6 +15,8 @@ import { MerchantOrderDetailComponent } from './merchant-detail/merchant-order-d
 import { MerchantDataComponent } from './merchant-data.component';
 import { MerchantProductsCatalogDataComponent } from './merchant-detail/merchant-products-catalog-data.component';
 
+import { NgbDate, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 // import { HTTP_INTERCEPTORS } from '@angular/common/http';
 // import { AddHeaderInterceptor } from './add-header.interceptor';
 
@@ -27,6 +29,7 @@ import { MerchantProductsCatalogDataComponent } from './merchant-detail/merchant
      MerchantDataComponent, MerchantProductsCatalogDataComponent
       ],
   imports: [
+    NgbModule,
     CommonModule,
     ReactiveFormsModule,
     MerchantRoutingModule,

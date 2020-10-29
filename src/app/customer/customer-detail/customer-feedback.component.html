@@ -31,6 +31,7 @@
               </td>
               <td>
                 {{customerfeedback?.last_updated | date:'mediumDate'}}
+                {{customerfeedback?.last_updated | date:'shortTime'}}
               </td>
               <td>
                 {{customerfeedback?.action_by}}
@@ -38,9 +39,15 @@
               <td>
                 {{customerfeedback?.city}}
               </td>
-              <td>
-                {{customerfeedback?.status ? 'Active' : 'Closed'}}
+              <td [ngClass]="{
+                'text-success':customerfeedback?.status === 1,
+                'text-danger':customerfeedback?.status === 0
+              }" style="font-weight:bold">
+                {{ customerfeedback?.status === 0 ? 'Active' : 'Closed' }}
               </td>
+              <!-- <td>
+                {{customerfeedback?.status ? 'Active' : 'Closed'}}
+              </td> -->
               <td>
                 {{customerfeedback?.feedback_text}}
               </td>

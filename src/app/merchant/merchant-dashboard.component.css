@@ -1,3 +1,43 @@
 td, th, button {
-  font-size: 14px;
+  /* font-size: 14px; */
+  width: 150px !important;
+  /* white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; */
+  display: inline-block;
+}
+
+
+.form-group.hidden {
+  width: 0;
+  margin: 0;
+  border: none;
+  padding: 0;
+}
+.custom-day {
+  text-align: center;
+  padding: 0.185rem 0.25rem;
+  display: inline-block;
+  height: 2rem;
+  width: 2rem;
+}
+.custom-day.focused {
+  background-color: #e6e6e6;
+}
+.custom-day.range, .custom-day:hover {
+  background-color: rgb(2, 117, 216);
+  color: white;
+}
+.custom-day.faded {
+  background-color: rgba(2, 117, 216, 0.5);
+}
+
+.glyphicon-calendar
+{
+    font-size: 15pt;
+}
+.input-group
+{
+    width: 180px;
+    margin-top:30px;
 }

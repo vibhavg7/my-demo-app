@@ -19,6 +19,7 @@ export class DashboardComponent implements OnInit {
   }
 
   dashboardClick(category) {
+    console.log(category);
     this.route.navigate([category]);
   }
 

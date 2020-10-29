@@ -1,5 +1,5 @@
 <td>
-  <a target="_blank" [routerLink]="['/feedbacks/feedbackinfo', feedBackInfo?.customer_feedback_id]">
+  <a [routerLink]="['/feedbacks/feedbackinfo', feedBackInfo?.customer_feedback_id]">
     {{ feedBackInfo?.customer_feedback_id }}
   </a>
 </td>
@@ -28,11 +28,15 @@
 <td>
   {{ feedBackInfo?.action_by }}
 </td>
+<td>
+  {{ feedBackInfo?.last_updated |date:'mediumDate' }}
+  {{ feedBackInfo?.last_updated |date:'shortTime' }}
+</td>
 <td [ngClass]="{
   'text-success':feedBackInfo?.status === 1,
   'text-danger':feedBackInfo?.status === 0
 }" style="font-weight:bold">
-  {{ feedBackInfo?.status === 0 ? 'Active' : 'Completed' }}
+  {{ feedBackInfo?.status === 0 ? 'Active' : 'Closed' }}
 </td>
 <td>
   <a type="button" target="_blank" class="btn btn-outline-secondary" [routerLink]="['/feedbacks',feedBackInfo?.customer_feedback_id,'edit']">

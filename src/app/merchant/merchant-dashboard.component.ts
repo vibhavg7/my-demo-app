@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ErrorTracker } from '../shared/errorTracker';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ImageUploadComponent } from 'src/app/products/image-upload/image-upload.component';
-
+import {NgbDate, NgbCalendar, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-merchant-dashboard',
   templateUrl: './merchant-dashboard.component.html',
@@ -15,14 +15,23 @@ import { ImageUploadComponent } from 'src/app/products/image-upload/image-upload
 export class MerchantDashboardComponent implements OnInit {
 
   searchCriteriaForm: FormGroup;
+  hoveredDate: NgbDate | null = null;
+
+  fromDate: NgbDate | null;
+  toDate: NgbDate | null;
+  // model1: NgbDate;
+  // model: NgbDate;
   constructor(
-          private merchantService: MerchantService,
-          private activatedRoute: ActivatedRoute,
-          private formBuilder: FormBuilder,
-          private modalService: NgbModal) {
+    private calendar: NgbCalendar, public formatter: NgbDateParserFormatter,
+    private merchantService: MerchantService,
+    private activatedRoute: ActivatedRoute,
+    private formBuilder: FormBuilder,
+    private modalService: NgbModal) {
     this.searchCriteriaForm = this.formBuilder.group({
       searchCriteria: ['']
     });
+    this.fromDate = calendar.getNext(calendar.getToday(), 'd', -30);
+    this.toDate = calendar.getToday();
   }
 
   pageTitle: any = 'Stores Dashboard';
@@ -58,17 +67,17 @@ export class MerchantDashboardComponent implements OnInit {
       .subscribe((res: any) => { this.storetotalcount = res.store_total_count.stores_count; this.stores = res.store; });
   }
 
-  uploadImage(storeid: any) {
-    const modalRef: any = this.modalService.open(ImageUploadComponent);
-    modalRef.componentInstance.title = 'Image Upload';
-    modalRef.componentInstance.id = storeid;
-    modalRef.componentInstance.image_type = 'merchants';
-    modalRef.componentInstance.productImage.subscribe((data) => {
-      console.log(data);
-      // this.stores.filter((cat) => cat['store_category_id'] == data['store_category_id'])['store_image_url'] = data['image_url'];
-      // console.log(this.storeCategories);
-    });
-  }
+  // uploadImage(storeid: any) {
+  //   const modalRef: any = this.modalService.open(ImageUploadComponent);
+  //   modalRef.componentInstance.title = 'Image Upload';
+  //   modalRef.componentInstance.id = storeid;
+  //   modalRef.componentInstance.image_type = 'merchants';
+  //   modalRef.componentInstance.productImage.subscribe((data) => {
+  //     console.log(data);
+  //     // this.stores.filter((cat) => cat['store_category_id'] == data['store_category_id'])['store_image_url'] = data['image_url'];
+  //     // console.log(this.storeCategories);
+  //   });
+  // }
 
   currentPageFn(page) {
     // console.log(page + "-" + this.filterBy+ "-"+this.pageSize);
@@ -88,6 +97,65 @@ export class MerchantDashboardComponent implements OnInit {
     // .subscribe((data)=>{
     //   console.log(data);
     // })
+  }
+
+  uploadImage(store_id: any) {
+    const modalRef = this.modalService.open(ImageUploadComponent);
+    modalRef.componentInstance['title'] = 'Image Upload';
+    modalRef.componentInstance['id'] = store_id;
+    modalRef.componentInstance['image_type'] = 'merchants';
+    modalRef.componentInstance['productImage'].subscribe((data) => {
+      console.log(data);
+      // this.store = data;
+      // this.stores.filter((cat) => cat['store_category_id'] == data['store_category_id'])['store_image_url'] = data['image_url'];
+      // console.log(this.storeCategories);
+    });
+  }
+
+  deleteStore(storeId) {
+    if (confirm('Are you sure to delete ')) {
+      this.merchantService.deleteStore(storeId).subscribe((data) => {
+        console.log(data);
+      });
+    }
+  }
+
+  onDateSelection(date: NgbDate) {
+    if (!this.fromDate && !this.toDate) {
+      this.fromDate = date;
+    } else if (this.fromDate && !this.toDate && date && date.after(this.fromDate)) {
+      this.toDate = date;
+    } else {
+      this.toDate = null;
+      this.fromDate = date;
+    }
+  }
+
+  isHovered(date: NgbDate) {
+    return this.fromDate && !this.toDate && this.hoveredDate && date.after(this.fromDate) && date.before(this.hoveredDate);
+  }
+
+  isInside(date: NgbDate) {
+    return this.toDate && date.after(this.fromDate) && date.before(this.toDate);
+  }
+
+  isRange(date: NgbDate) {
+    return date.equals(this.fromDate) || (this.toDate && date.equals(this.toDate)) || this.isInside(date) || this.isHovered(date);
+  }
+
+  validateInput(currentValue: NgbDate | null, input: string): NgbDate | null {
+    const parsed = this.formatter.parse(input);
+    return parsed && this.calendar.isValid(NgbDate.from(parsed)) ? NgbDate.from(parsed) : currentValue;
+  }
+
+  applyFilter() {
+    // const jsDate = new Date(this.fromDate.year, this.fromDate.month - 1, this.fromDate.day).toUTCString();
+    const jsDateIso = new Date(this.fromDate.year, this.fromDate.month - 1, this.fromDate.day).toISOString();
+    const jsDate1 = new Date(this.toDate.year, this.toDate.month - 1, this.toDate.day).toISOString();
+    console.log(this.fromDate);
+    console.log('jsDateIso' + jsDateIso);
+    console.log(this.toDate);
+    console.log(jsDate1);
   }
 
 }

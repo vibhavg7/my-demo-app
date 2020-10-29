@@ -11,43 +11,43 @@
                   <input formControlName="searchCriteria" class="form-control"
                   (keyup)="onChanges()"
                   type="text" id="keyword"
-                  placeholder="Search FeedBack By Phone Number"
+                  placeholder="Search By Phone Number"
                       autocomplete="off" autofocus/>
               </form>
           </div>
-          <!-- <div class="col-md-6">
+          <div class="col-md-6">
+              <!-- target="_blank"  -->
               <a type="button" class="btn btn-outline-secondary"
-              style="float:right;font-size:14px" [routerLink]="['/feedbacks/',0,'edit']">
-                  Add New FeedBack
+              style="float:right;font-size:14px" [routerLink]="['/subscriptions/',0,'edit']">
+                  Add New Subscriber
               </a>
-          </div> -->
+          </div>
       </div>
       <div class='table-responsive'>
-          <table style="width:1200px !important" class='table' *ngIf='feedBacktotalcount'>
+          <table style="width:1200px !important" class='table' *ngIf='subscriptiontotalcount'>
               <thead>
                   <tr>
                       <th style="width:90px !important">Id</th>
                       <th>Customer Id</th>
                       <th>Phone</th>
                       <th>Name</th>
-                      <th>Feedback</th>
-                      <!-- <th>City</th> -->
-                      <th>Created By</th>
-                      <th>Last Updated</th>
-                      <th>Status</th>
-                      <th></th>
+                      <th>Subscribed</th>
+                      <th>Channel</th>
+                      <th>Added Date</th>
+                      <th>Registration Date</th>
+                      <!-- <th></th> -->
                   </tr>
               </thead>
               <tbody>
-                  <tr *ngFor='let feedBack of feedBacks' app-feedback-data [feedBackInfo]="feedBack">
+                  <tr *ngFor='let subscription of subscriptions' app-subscription-data [subscriptionInfo]="subscription">
 
                   </tr>
               </tbody>
           </table>
-          <app-pagination *ngIf='feedBacktotalcount' [totalItemCount]="feedBacktotalcount"
+          <app-pagination *ngIf='subscriptiontotalcount' [totalItemCount]="subscriptiontotalcount"
                 (currentPage)="currentPageFn($event)"></app-pagination>
-          <div *ngIf='feedBacktotalcount == 0'>
-              No FeedBack Data Found
+          <div *ngIf='subscriptiontotalcount == 0'>
+              No Subscription Data Found
           </div>
       </div>
   </div>

@@ -36,6 +36,13 @@ const routes: any = [
         import('./merchant/merchant.module').then(m => m.MerchantModule)
     },
     {
+      path: 'subscriptions',
+      canActivate: [AuthGuard],
+      data: { preload: true },
+      loadChildren: () =>
+        import('./subscriptions/subscriptions.module').then(m => m.SubscriptionsModule)
+    },
+    {
       path: 'customer',
       canActivate: [AuthGuard],
       data: { preload: true },

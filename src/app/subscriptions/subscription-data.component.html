@@ -1,0 +1,37 @@
+<td>
+    {{ subscriptionInfo?.user_subscribed_id }}
+</td>
+<td>
+  <a *ngIf="subscriptionInfo?.customer_id" target="_blank" [routerLink]="['/customer', subscriptionInfo?.customer_id]">
+    {{subscriptionInfo?.customer_id}}
+  </a>
+</td>
+<td style="width: 50px;">
+    {{ subscriptionInfo?.customer_phone }}
+  <!-- <a target="_blank" [routerLink]="['/feedbacks/feedbackinfo', feedBackInfo?.customer_feedback_id]">
+    {{ subscriptionInfo?.customer_phone }}
+  </a> -->
+</td>
+<td>
+  {{ subscriptionInfo?.customer_name }}
+</td>
+<td [ngClass]="{
+  'text-success':subscriptionInfo?.subscribed === 1,
+  'text-danger':subscriptionInfo?.subscribed === 0
+}" style="font-weight:bold">
+  {{ subscriptionInfo?.subscribed === 1 ? 'Subscribed' : 'Not Subscribed' }}
+</td>
+<td>
+  {{ subscriptionInfo?.channel === 1 ? 'Web' : 'Others' }}
+</td>
+<td>
+  {{ subscriptionInfo?.added_date |date:'medium' }}
+</td>
+<td>
+  {{ subscriptionInfo?.registered_date |date:'medium' }}
+</td>
+<!-- <td>
+  <a type="button" target="_blank" class="btn btn-outline-secondary" [routerLink]="['/feedbacks',feedBackInfo?.customer_feedback_id,'edit']">
+    Edit
+  </a>
+</td> -->
