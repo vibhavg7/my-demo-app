@@ -16,6 +16,7 @@ export class CustomerDashboardComponent implements OnInit {
   total_customer_count: any;
   displaytype: any = 'AM';
   customers: any = [];
+  disableButton = true;
   filterBy: any = '';
   currentPage = 1;
   errorMessage = '';
@@ -23,10 +24,10 @@ export class CustomerDashboardComponent implements OnInit {
   imageWidth = 80;
   imageHeight = 80;
   imageMargin = 2;
-
+  selectedAll: any;
   constructor(private _customerService: CustomerService,
-              private activatedRoute: ActivatedRoute,
-              private formBuilder: FormBuilder) {
+    private activatedRoute: ActivatedRoute,
+    private formBuilder: FormBuilder) {
     this.searchCriteriaForm = this.formBuilder.group({
       searchCriteria: ['']
     });
@@ -43,8 +44,10 @@ export class CustomerDashboardComponent implements OnInit {
     }), distinctUntilChanged(), debounceTime(200),
       switchMap(query => (this.filterBy = query, this._customerService.fetchAllCustomers(this.currentPage, this.pageSize, query)))
     )
-      .subscribe(res => { this.total_customer_count = res['customer_total_count']['customer_count'];
-            this.customers = res['customers']; });
+      .subscribe(res => {
+      this.total_customer_count = res['customer_total_count']['customer_count'];
+        this.customers = res['customers'];
+      });
   }
 
   currentPageFn(page) {
@@ -53,6 +56,50 @@ export class CustomerDashboardComponent implements OnInit {
         this.total_customer_count = data['customer_total_count']['customer_count'];
         this.customers = data['customers'];
       });
+  }
+
+  checkIfAllSelected(customerId: any) {
+    let totalSelected = 0;
+    // tslint:disable-next-line:prefer-for-of
+    for (let i = 0; i < this.customers.length; i++) {
+      // if (this.customers[i].customer_id === +customerId) {
+      //   this.customers[i].selected = !this.customers[i].selected;
+      // }
+      if (this.customers[i].selected) {
+        totalSelected++;
+      }
+    }
+    this.selectedAll = totalSelected === this.customers.length;
+    this.disableButton = (totalSelected > 0 ? false : true);
+    // console.log(this.customers);
+    // console.log(totalSelected);
+    return true;
+  }
+
+  selectAll() {
+    this.selectedAll = !this.selectedAll;
+    let totalSelected = 0;
+    // tslint:disable-next-line:prefer-for-of
+    for (let i = 0; i < this.customers.length; i++) {
+        this.customers[i].selected = this.selectedAll;
+        if (this.customers[i].selected) {
+          totalSelected++;
+        }
+    }
+    this.disableButton = (totalSelected > 0 ? false : true);
+    // console.log(totalSelected);
+    // console.log(this.customers);
+  }
+
+  sendNotification(notificationType) {
+    const customerIds = [];
+    this.customers.forEach(customer => {
+      if (customer.selected === true) {
+        customerIds.push(customer.customer_id);
+      }
+    });
+    console.log(customerIds);
+    alert ('Work under progress');
   }
 
 }

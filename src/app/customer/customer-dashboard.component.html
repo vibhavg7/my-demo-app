@@ -13,14 +13,23 @@
         </form>
       </div>
       <div class="col-md-6">
-        <button class="btn btn-outline-secondary" style="float:right" [routerLink]="['/customer/',0,'edit']">
-          Add New Customer
-        </button>
+          <button class="btn btn-outline-secondary" style="float:right" [routerLink]="['/customer/',0,'edit']">
+            Add New Customer
+          </button>
+          <button [disabled]="disableButton" class="btn btn-outline-secondary" style="float:right" (click) = "sendNotification(1)">
+            Send Push Notification
+          </button>
+          <button [disabled]="disableButton" class="btn btn-outline-secondary" style="float:right" (click) = "sendNotification(2)">
+            Send SMS
+          </button>
       </div>
       <div class='table-responsive'>
         <table style="width:1200px !important" class='table' *ngIf='customers.length'>
           <thead>
             <tr>
+              <th>
+                  <input type="checkbox" (change)="selectAll()" [checked]="selectedAll">
+              </th>
               <th style="width:90px !important">Id</th>
               <th>Name</th>
               <th>Customer DOB</th>
@@ -39,6 +48,10 @@
           </thead>
           <tbody>
             <tr *ngFor='let customer of customers'>
+              <td>
+                  <input  type="checkbox" value="{{customer?.customer_id}}"
+                  [(ngModel)]="customer.selected" (change)="checkIfAllSelected(customer?.customer_id)">
+              </td>
               <td style="width:90px !important">
                 <a [routerLink]="['/customer', customer.customer_id]">
                   {{ customer?.customer_id }}

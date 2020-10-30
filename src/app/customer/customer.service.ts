@@ -103,6 +103,24 @@ export class CustomerService {
     );
   }
 
+  sendNotification(notificationType: any, customerIds: any, messageTitle: any, messageBody: any) {
+    // const obj: any = {};
+    // obj.notificationType = notificationType; obj.customerIds = customerIds;
+    // obj.messageTitle = messageTitle; obj.messageBody = messageBody;
+    // console.log(obj);
+
+    // return this.http.post<any[]>(`${this.customerServiceUrl}/sendUserNotificationFromAdminPanel`, obj)
+    //   .pipe(
+    //     tap(data => {
+    //       console.log(data);
+    //     })
+    //     , map((data) => {
+    //       return data;
+    //     })
+    //     , catchError(this.handleError)
+    //   );
+  }
+
   private handleError(err: HttpErrorResponse) {
     // in a real world app, we may send the server to some remote logging infrastructure
     // instead of just logging it to the console

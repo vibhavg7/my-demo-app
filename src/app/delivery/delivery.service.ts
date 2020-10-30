@@ -87,6 +87,43 @@ export class DeliveryService {
     );
   }
 
+  fetchAllDeliveryPersonRunningOrders(deliveryPersonId: number, pagenumber: number, pagesize: number, filterBy: any) {
+    const obj: any = {};
+    obj.page_number = pagenumber; obj.page_size = pagesize;
+    obj.filterBy = filterBy;
+    console.log(obj);
+
+    return this.http.post<any[]>(`${this.deliveryServiceUrl}fetchAllRunningOrders/${deliveryPersonId}`, obj)
+      .pipe(
+        tap(data => {
+          console.log(data);
+        })
+        , map((data) => {
+          return data;
+        })
+        , catchError(this.handleError)
+      );
+  }
+
+  fetchAllDeliveryPersonPastOrders(deliveryPersonId: number, pagenumber: number, pagesize: number, filterBy: any) {
+    const obj: any = {};
+    obj.page_number = pagenumber; obj.page_size = pagesize;
+    obj.deliveryPersonId = deliveryPersonId;
+    obj.filterBy = filterBy;
+    console.log(obj);
+
+    return this.http.post<any[]>(`${this.deliveryServiceUrl}deliveryinfo/deliverypersonpastorders`, obj)
+      .pipe(
+        tap(data => {
+          console.log(data);
+        })
+        , map((data) => {
+          return data;
+        })
+        , catchError(this.handleError)
+      );
+  }
+
   private handleError(err: HttpErrorResponse) {
     // in a real world app, we may send the server to some remote logging infrastructure
     // instead of just logging it to the console

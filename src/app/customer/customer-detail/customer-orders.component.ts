@@ -65,6 +65,6 @@ export class CustomerOrdersComponent implements OnInit {
     this._customerService.fetchAllCustomerOrders(this.customerId, page, this.pageSize, this.filterBy)
       .subscribe((data) => {
         this.customerOrders = data['customer_orders_info'];
-      })
+      });
   }
 }

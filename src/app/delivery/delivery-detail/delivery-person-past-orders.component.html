@@ -1,1 +1,70 @@
-<p>delivery-person-past-orders works!</p>
+<div class='card'>
+    <div class='card-header'>
+      {{pageTitle}}
+    </div>
+    <div class='card-body'>
+      <div class="row">
+        <!-- <div class='row'> -->
+        <div class='col-md-2'>Filter by:</div>
+        <div class='col-md-4'>
+          <form [formGroup]="searchCriteriaForm">
+            <input formControlName="searchCriteria" (keyup)="onChanges()" class="form-control" type="text" id="keyword" placeholder="Search Order By Id"
+              autocomplete="off" autofocus/>
+          </form>
+        </div>
+      </div>
+      <div class='table-responsive'>
+        <table style="width:1000px !important" class='table' *ngIf='past_order_count'>
+          <thead>
+            <tr>
+              <th style="width:90px !important">Transaction Id</th>
+              <th>Product Details</th>
+              <th>Store Name</th>
+              <!-- <th>Order Amount</th> -->
+              <th>Delivery Fee</th>
+              <th>Payable Amount</th>
+              <th>Payment Mode</th>
+              <th>Order Date</th>
+              <th>Delivery Status</th>
+              <th>Order Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor='let pastOrder of pastOrders'>
+              <td style="width:90px !important">
+                <a target="_blank" [routerLink]="['/order/',pastOrder?.order_id,'invoiceinfo']">
+                  {{ pastOrder?.order_id }}
+                </a>
+              </td>
+              <td>
+                <span (click)="ViewOrderedProducts(pastOrder?.order_id)" style="display:block;font-size:14px;cursor:pointer;color:blue">
+                  Ordered Products
+                </span>
+              </td>
+              <td>
+                <a target="_blank" [routerLink]="['/merchant/',pastOrder?.store_id,'info']">
+                  {{ pastOrder?.store_name }}
+                </a>
+              </td>
+              <!-- <td>&#8377; {{ongoingOrder?.order_items_amount}}</td> -->
+              <td>&#8377; {{pastOrder?.order_delivery_fee}}</td>
+              <td>&#8377; {{ pastOrder?.payable_amount }}</td>
+              <td>{{ pastOrder?.payment_method_name | upperCaseName}}</td>
+              <td>{{ pastOrder?.order_placing_date |date:'medium' }}</td>
+              <td style="font-weight:bold">{{ pastOrder?.order_delivery_person_status_type | upperCaseName}}</td>
+              <td style="font-weight:bold">{{ pastOrder?.order_current_status_type | upperCaseName}}</td>
+
+            </tr>
+          </tbody>
+        </table>
+
+        <app-pagination *ngIf='past_order_count' [totalItemCount]="past_order_count" (currentPage)="currentPageFn($event)"></app-pagination>
+        <div *ngIf='past_order_count == 0'>
+          No Orders Found
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf='errorMessage' class='alert alert-danger'>
+    Error: {{ errorMessage }}
+  </div>
