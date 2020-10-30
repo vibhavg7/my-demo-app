@@ -23,32 +23,45 @@
                     </div> -->
 
         <div class="row">
-          <div class="col-md-4" class="table-key">Total Order Amount:</div>
-          <div class="col-md-8">&#8377; {{invoiceData?.total_amount}}</div>
-        </div>
-        <div class="row">
           <div class="col-md-4" class="table-key">Total Items:</div>
-          <div class="col-md-8">&#8377; {{invoiceData?.total_item_count}}</div>
-        </div>
-        <div class="row">
-          <div class="col-md-4" class="table-key">Delivery Fee:</div>
-          <div class="col-md-8">&#8377; {{invoiceData?.delivery_fee}}</div>
-        </div>
-        <div class="row">
-          <div class="col-md-4" class="table-key">Voucher Amount:</div>
-          <div class="col-md-8">&#8377; {{invoiceData?.discount_amount}}</div>
-        </div>
-        <div class="row">
-          <div class="col-md-4" class="table-key">Payable Amount:</div>
-          <div class="col-md-8">&#8377; {{invoiceData?.payable_amount}}</div>
+          <div class="col-md-8 order-detail">&#8377; {{invoiceData?.total_item_count}}</div>
         </div>
         <div class="row">
             <div class="col-md-4" class="table-key">Voucher Code Used :</div>
-            <div class="col-md-8">{{invoiceData?.voucher_code}}</div>
+            <div class="col-md-8 order-detail">{{invoiceData?.voucher_code}}</div>
           </div>
         <div class="row">
-          <div class="col-md-4" class="table-key">Delivery Slot:</div>
+            <div class="col-md-4" class="table-key">Total Order Amount:</div>
+            <div class="col-md-8 order-detail">&#8377; {{invoiceData?.total_amount}}</div>
+          </div>
+        <div class="row">
+          <div class="col-md-4" class="table-key">Delivery Fee:</div>
+          <div class="col-md-8 order-detail">&#8377; {{invoiceData?.delivery_fee}}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-4" class="table-key">Voucher Amount:</div>
+          <div class="col-md-8 order-detail">&#8377; {{invoiceData?.discount_amount}}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-4" class="table-key">Bill Amount:</div>
+          <div class="col-md-8 order-detail">&#8377; {{invoiceData?.merchant_bill_amount}}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-4" class="table-key">Payable Amount:</div>
+            <div class="col-md-8 order-detail">&#8377; {{invoiceData?.payable_amount}}</div>
+          </div>
+
+        <div class="row">
+          <div class="col-md-4" class="table-key">Delivery Person Assinged :</div>
           <div class="col-md-8">
+            <a target="_blank" [routerLink]="['/delivery/',invoiceData?.delivery_person_id,'info']">
+              {{invoiceData?.delivery_person_name}} - {{invoiceData?.delivery_person_phone}}
+            </a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4" class="table-key">Delivery Slot:</div>
+          <div class="col-md-8 order-detail">
             <span>{{invoiceData?.deliver_now ? 'Deliver Now' : 'Deliver Later'}}</span>
             -
             <span> {{invoiceData?.delivery_slot}}</span>
@@ -56,7 +69,7 @@
         </div>
         <div class="row">
           <div class="col-md-4" class="table-key">Payment Mode:</div>
-          <div class="col-md-8">{{invoiceData?.type}}</div>
+          <div class="col-md-8 order-detail">{{invoiceData?.type}}</div>
         </div>
         <div class="row">
           <div class="col-md-4" class="table-key">Created Date:</div>
@@ -68,7 +81,7 @@
         </div>
         <div class="row">
           <div class="col-md-4" class="table-key">Order Status:</div>
-          <div class="col-md-8">{{invoiceData?.order_status}}</div>
+          <div class="col-md-8 order-detail">{{invoiceData?.order_status}}</div>
         </div>
       </div>
 
@@ -79,9 +92,8 @@
         <img (click)="downloadBillImage(invoiceData?.bill_image,invoiceData?.order_id)" class='center-block img-responsive' *ngIf="invoiceData?.bill_image"
           src='{{invoiceData?.bill_image}}' [title]='invoiceData?.customer_name' [style.width.px]='250' [style.margin.px]='2'>
 
-          <a href="{{invoiceData?.bill_image}}" class="btn clss"
-          target="_self" download>Download</a>
-
+        <a href="{{invoiceData?.bill_image}}" class="btn clss" target="_self" download>Download</a>
+        <button style="display:block" (click)="repairOrder()">REPAIR ORDER</button>
       </div>
     </div>
   </div>

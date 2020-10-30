@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CustomerService } from './customer.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { tap, distinctUntilChanged, debounceTime, switchMap } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-customer-dashboard',
@@ -12,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 export class CustomerDashboardComponent implements OnInit {
 
   searchCriteriaForm: FormGroup;
+  customerIds: any = [];
   pageTitle: any = 'Customers Dashboard';
   total_customer_count: any;
   displaytype: any = 'AM';
@@ -26,8 +27,9 @@ export class CustomerDashboardComponent implements OnInit {
   imageMargin = 2;
   selectedAll: any;
   constructor(private _customerService: CustomerService,
-    private activatedRoute: ActivatedRoute,
-    private formBuilder: FormBuilder) {
+              private activatedRoute: ActivatedRoute,
+              private router: Router,
+              private formBuilder: FormBuilder) {
     this.searchCriteriaForm = this.formBuilder.group({
       searchCriteria: ['']
     });
@@ -98,8 +100,11 @@ export class CustomerDashboardComponent implements OnInit {
         customerIds.push(customer.customer_id);
       }
     });
+    this.customerIds = customerIds;
     console.log(customerIds);
-    alert ('Work under progress');
+    this._customerService.customerNotificationIds = this.customerIds;
+    this.router.navigate([`customer/notification/add/${notificationType}`]);
+    // alert ('Work under progress');
   }
 
 }

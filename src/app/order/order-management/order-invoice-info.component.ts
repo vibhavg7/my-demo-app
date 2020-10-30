@@ -20,6 +20,10 @@ export class OrderInvoiceInfoComponent implements OnInit {
     this.errorMessage = this.activatedRoute.snapshot.data.resolvedInvoice.error;
   }
 
+  repairOrder() {
+    alert('Work under progres');
+  }
+
   downloadBillImage(downloadLink, orderid) {
     // console.log(downloadLink);
     // this.orderService.getImage(downloadLink).subscribe(

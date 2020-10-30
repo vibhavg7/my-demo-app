@@ -6,13 +6,15 @@ import { CriteriaComponent } from './criteria/criteria.component';
 import { RouterModule } from '@angular/router';
 import { PaginationComponent } from './pagination/pagination.component';
 import { UpperCaseName } from './upper-case-name';
+import { NotificationComponent } from './notification/notification.component';
 
 @NgModule({
   declarations: [
     StarComponent,
     CriteriaComponent,
     PaginationComponent,
-    UpperCaseName
+    UpperCaseName,
+    NotificationComponent
   ],
   imports: [
     CommonModule,

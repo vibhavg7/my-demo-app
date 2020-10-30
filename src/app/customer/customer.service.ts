@@ -12,7 +12,16 @@ export class CustomerService {
 
   private customerServiceUrl = 'https://api.grostep.com/customerapi/';
   customerData: any;
+  customerIds: any;
   customerDeliveryAddresses: any;
+
+  get customerNotificationIds() {
+    return this.customerIds;
+  }
+
+  set customerNotificationIds(value) {
+    this.customerIds = value;
+  }
 
   fetchAllCustomers(pagenumber: number, pagesize: any, filterBy: any): Observable<any> {
 
@@ -103,22 +112,22 @@ export class CustomerService {
     );
   }
 
-  sendNotification(notificationType: any, customerIds: any, messageTitle: any, messageBody: any) {
-    // const obj: any = {};
-    // obj.notificationType = notificationType; obj.customerIds = customerIds;
-    // obj.messageTitle = messageTitle; obj.messageBody = messageBody;
-    // console.log(obj);
+  sendNotification(notificationType: any, addNotificationForm: any) {
+    const obj: any = {};
+    obj.notificationType = +notificationType; obj.customerIds = this.customerNotificationIds;
+    obj.messageTitle = addNotificationForm.messageTitle; obj.messageBody = addNotificationForm.messageBody;
+    console.log(obj);
 
-    // return this.http.post<any[]>(`${this.customerServiceUrl}/sendUserNotificationFromAdminPanel`, obj)
-    //   .pipe(
-    //     tap(data => {
-    //       console.log(data);
-    //     })
-    //     , map((data) => {
-    //       return data;
-    //     })
-    //     , catchError(this.handleError)
-    //   );
+    return this.http.post<any[]>(`${this.customerServiceUrl}/sendUserNotificationFromAdminPanel`, obj)
+      .pipe(
+        tap(data => {
+          console.log(data);
+        })
+        , map((data) => {
+          return data;
+        })
+        , catchError(this.handleError)
+      );
   }
 
   private handleError(err: HttpErrorResponse) {

@@ -13,6 +13,7 @@ import { CustomerFeedbackComponent } from './customer-detail/customer-feedback.c
 import { CustomerAddFeedbackComponent } from './customer-detail/customer-add-feedback.component';
 import { FeedbackEditComponent } from '../feedbacks/feedback-edit.component';
 import { CustomerNotificationComponent } from './customer-detail/customer-notification.component';
+import { NotificationComponent } from '../shared/notification/notification.component';
 
 const routes: Routes = [
   {
@@ -41,6 +42,10 @@ const routes: Routes = [
   {
     path: ':customerId/customerfeedbacks/:feedbackId/edit',
     component: FeedbackEditComponent
+  },
+  {
+    path: 'notification/add/:notificationType',
+    component: NotificationComponent
   }
 ];
 
