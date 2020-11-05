@@ -17,9 +17,11 @@
     {{ storeProductsInfo?.store_discount }}%
 </td>
 <td>
-    {{ storeProductsInfo?.store_margin }}%
+  {{ storeProductsInfo?.store_margin }}%
 </td>
-
+<td>
+  {{ storeProductsInfo?.store_product_caping }}
+</td>
 <td>
     <input class="stockcheckbox" type='checkbox' [(ngModel)]='checkbox' (ngModelChange)='updateProductStock()'>
 </td>

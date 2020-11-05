@@ -35,6 +35,7 @@ export class MerchantProductEditComponent implements OnInit {
       productMarkedPrice: ['', Validators.required],
       productSellingPrice: ['', Validators.required],
       storeMargin: ['', Validators.required],
+      productLimit: ['', Validators.required],
       status: ['']
     });
   }
@@ -52,6 +53,7 @@ export class MerchantProductEditComponent implements OnInit {
         this.addStoreProductForm.get('productMarkedPrice').setValue(productdata[0].product_marked_price);
         this.addStoreProductForm.get('productSellingPrice').setValue(productdata[0].store_selling_price);
         this.addStoreProductForm.get('storeMargin').setValue(productdata[0].store_margin);
+        this.addStoreProductForm.get('productLimit').setValue(productdata[0].store_product_caping);
         this.addStoreProductForm.get('status').setValue(productdata[0].status);
       });
     }

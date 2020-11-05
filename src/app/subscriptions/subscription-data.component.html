@@ -1,4 +1,8 @@
 <td>
+    <input  type="checkbox" value="{{subscriptionInfo?.customer_id}}"
+    [(ngModel)]="subscriptionInfo.selected" (change)="checkIfAllSelect(subscriptionInfo?.customer_id)">
+</td>
+<td>
     {{ subscriptionInfo?.user_subscribed_id }}
 </td>
 <td>

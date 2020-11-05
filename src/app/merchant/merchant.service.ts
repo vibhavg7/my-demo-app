@@ -67,6 +67,7 @@ export class MerchantService {
     obj.status = storeProductForm.status;
     obj.product_marked_price = storeProductForm.productMarkedPrice;
     obj.stock = 1;
+    obj.store_product_caping = +storeProductForm.productLimit;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this._http.post(url, obj, { headers }).pipe(
       tap(data => {
@@ -195,6 +196,7 @@ export class MerchantService {
   addStoreProducts(addStoreProductForm, selectedProduct: any, storeId): Observable<any> {
     const obj: any = {};
     obj.store_cost_price =  0;
+    obj.caping = +addStoreProductForm.productLimit;
     obj.store_marked_price = addStoreProductForm.productMarkedPrice;
     obj.store_selling_price = addStoreProductForm.productSellingPrice;
     obj.store_discount = ((addStoreProductForm.productMarkedPrice - addStoreProductForm.productSellingPrice) /

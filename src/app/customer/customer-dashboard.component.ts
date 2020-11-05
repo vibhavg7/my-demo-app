@@ -3,6 +3,8 @@ import { CustomerService } from './customer.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { tap, distinctUntilChanged, debounceTime, switchMap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NotificationComponent } from '../shared/notification/notification.component';
 
 @Component({
   selector: 'app-customer-dashboard',
@@ -29,6 +31,7 @@ export class CustomerDashboardComponent implements OnInit {
   constructor(private _customerService: CustomerService,
               private activatedRoute: ActivatedRoute,
               private router: Router,
+              private modalService: NgbModal,
               private formBuilder: FormBuilder) {
     this.searchCriteriaForm = this.formBuilder.group({
       searchCriteria: ['']
@@ -103,6 +106,9 @@ export class CustomerDashboardComponent implements OnInit {
     this.customerIds = customerIds;
     console.log(customerIds);
     this._customerService.customerNotificationIds = this.customerIds;
+    // const modalRef = this.modalService.open(NotificationComponent);
+    // modalRef.componentInstance['title']= 'Send Notification';
+    // modalRef.componentInstance['notificationType']= notificationType;
     this.router.navigate([`customer/notification/add/${notificationType}`]);
     // alert ('Work under progress');
   }

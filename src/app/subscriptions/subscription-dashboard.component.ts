@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ErrorTracker } from '../shared/errorTracker';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { tap, distinctUntilChanged, debounceTime, switchMap } from 'rxjs/operators';
 import { SubscriptionService } from './subscription.service';
+import { CustomerService } from '../customer/customer.service';
 @Component({
   selector: 'app-subscription-dashboard',
   templateUrl: './subscription-dashboard.component.html',
@@ -11,6 +12,9 @@ import { SubscriptionService } from './subscription.service';
 })
 export class SubscriptionDashboardComponent implements OnInit {
 
+  disableButton = true;
+  selectedAll: boolean;
+  customerIds: any[];
   subscriptions: any;
   subscriptiontotalcount: any;
   filterBy: any = '';
@@ -22,6 +26,8 @@ export class SubscriptionDashboardComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
+    private customerService: CustomerService,
+    private router: Router,
     private subscriptionService: SubscriptionService
   ) {
     this.searchCriteriaForm = this.formBuilder.group({
@@ -62,6 +68,54 @@ export class SubscriptionDashboardComponent implements OnInit {
         this.subscriptiontotalcount = data.subscriptions_count[0].subscriptions_count;
         this.subscriptions = data.subscriptions_info;
       });
+  }
+
+  selectAll() {
+    this.selectedAll = !this.selectedAll;
+    let totalSelected = 0;
+    // tslint:disable-next-line:prefer-for-of
+    for (let i = 0; i < this.subscriptions.length; i++) {
+        this.subscriptions[i].selected = this.selectedAll;
+        if (this.subscriptions[i].selected) {
+          totalSelected++;
+        }
+    }
+    this.disableButton = (totalSelected > 0 ? false : true);
+    console.log(totalSelected);
+    console.log(this.subscriptions);
+  }
+
+  checkIfAllSelected(customerId: any) {
+    let totalSelected = 0;
+    // tslint:disable-next-line:prefer-for-of
+    for (let i = 0; i < this.subscriptions.length; i++) {
+      // if (this.customers[i].customer_id === +customerId) {
+      //   this.customers[i].selected = !this.customers[i].selected;
+      // }
+      if (this.subscriptions[i].selected) {
+        totalSelected++;
+      }
+    }
+    this.selectedAll = totalSelected === this.subscriptions.length;
+    this.disableButton = (totalSelected > 0 ? false : true);
+    console.log(this.subscriptions);
+    console.log(totalSelected);
+    return true;
+  }
+
+  sendNotification(notificationType) {
+    const customerIds = [];
+    this.subscriptions.forEach(subscription => {
+      if (subscription.selected === true) {
+        customerIds.push(subscription.customer_id);
+      }
+    });
+    this.customerIds = customerIds;
+    console.log(customerIds);
+    this.customerService.customerNotificationIds = this.customerIds;
+    // this.router.navigate([`subscriptions`]);
+    this.router.navigate([`subscriptions/notification/add/${notificationType}`]);
+    // alert ('Work under progress');
   }
 
 }

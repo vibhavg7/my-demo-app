@@ -1,55 +1,59 @@
 <div class='card'>
   <div class='card-header'>
-      {{pageTitle}}
+    {{pageTitle}}
   </div>
   <div class='card-body'>
-      <div class="row">
-          <!-- <div class='row'> -->
-          <div class='col-md-2'>Filter by:</div>
-          <div class='col-md-4'>
-              <form [formGroup]="searchCriteriaForm">
-                  <input formControlName="searchCriteria" class="form-control"
-                  (keyup)="onChanges()"
-                  type="text" id="keyword"
-                  placeholder="Search By Phone Number"
-                      autocomplete="off" autofocus/>
-              </form>
-          </div>
-          <div class="col-md-6">
-              <!-- target="_blank"  -->
-              <a type="button" class="btn btn-outline-secondary"
-              style="float:right;font-size:14px" [routerLink]="['/subscriptions/',0,'edit']">
-                  Add New Subscriber
-              </a>
-          </div>
+    <div class="row">
+      <!-- <div class='row'> -->
+      <div class='col-md-2'>Filter by:</div>
+      <div class='col-md-4'>
+        <form [formGroup]="searchCriteriaForm">
+          <input formControlName="searchCriteria" class="form-control" (keyup)="onChanges()" type="text" id="keyword" placeholder="Search By Phone Number"
+            autocomplete="off" autofocus/>
+        </form>
       </div>
-      <div class='table-responsive'>
-          <table style="width:1200px !important" class='table' *ngIf='subscriptiontotalcount'>
-              <thead>
-                  <tr>
-                      <th style="width:90px !important">Id</th>
-                      <th>Customer Id</th>
-                      <th>Phone</th>
-                      <th>Name</th>
-                      <th>Subscribed</th>
-                      <th>Channel</th>
-                      <th>Added Date</th>
-                      <th>Registration Date</th>
-                      <!-- <th></th> -->
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr *ngFor='let subscription of subscriptions' app-subscription-data [subscriptionInfo]="subscription">
+      <div class="col-md-6">
+        <!-- target="_blank"  -->
+        <a type="button" class="btn btn-outline-secondary" style="float:right;font-size:14px" [routerLink]="['/subscriptions/',0,'edit']">
+          Add New Subscriber
+        </a>
+        <button [disabled]="disableButton" class="btn btn-outline-secondary" style="float:right" (click)="sendNotification(2)">
+          Send SMS
+        </button>
+        <!-- <a type="button" [disabled]="disableButton" class="btn btn-outline-secondary" style="float:right;font-size:14px" (click)="sendNotification(2)">
+          Send SMS
+        </a> -->
+      </div>
+    </div>
+    <div class='table-responsive'>
+      <table style="width:1200px !important" class='table' *ngIf='subscriptiontotalcount'>
+        <thead>
+          <tr>
+            <th>
+              <input type="checkbox" (change)="selectAll()" [checked]="selectedAll">
+            </th>
+            <th style="width:90px !important">Id</th>
+            <th>Customer Id</th>
+            <th>Phone</th>
+            <th>Name</th>
+            <th>Subscribed</th>
+            <th>Channel</th>
+            <th>Added Date</th>
+            <th>Registration Date</th>
+            <!-- <th></th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor='let subscription of subscriptions' app-subscription-data (checkIfAllSelected)=checkIfAllSelected($event) [subscriptionInfo]="subscription">
 
-                  </tr>
-              </tbody>
-          </table>
-          <app-pagination *ngIf='subscriptiontotalcount' [totalItemCount]="subscriptiontotalcount"
-                (currentPage)="currentPageFn($event)"></app-pagination>
-          <div *ngIf='subscriptiontotalcount == 0'>
-              No Subscription Data Found
-          </div>
+          </tr>
+        </tbody>
+      </table>
+      <app-pagination *ngIf='subscriptiontotalcount' [totalItemCount]="subscriptiontotalcount" (currentPage)="currentPageFn($event)"></app-pagination>
+      <div *ngIf='subscriptiontotalcount == 0'>
+        No Subscription Data Found
       </div>
+    </div>
   </div>
 </div>
 <div *ngIf='errorMessage' class='alert alert-danger'>
