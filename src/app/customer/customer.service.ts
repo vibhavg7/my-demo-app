@@ -8,9 +8,10 @@ import { tap, map, catchError } from 'rxjs/operators';
 })
 export class CustomerService {
 
+  customerCarts: any = [];
   constructor(private http: HttpClient) { }
 
-  private customerServiceUrl = 'https://api.grostep.com/customerapi/';
+  private customerServiceUrl = 'https://api.grostep.com/v2/customerapi/';
   customerData: any;
   customerIds: any;
   customerDeliveryAddresses: any;
@@ -58,13 +59,14 @@ export class CustomerService {
       );
   }
 
+
   fetchCustomerInfoById(customerId: any): Observable<any> {
-    // if (this.customerData){
-    //   return of(this.customerData);
-    // }
+    if (this.customerData) {
+      return of(this.customerData);
+    }
     return this.http.get(`${this.customerServiceUrl}customerinfo/${customerId}`).pipe(
       tap(data => {
-        // this.customerData = data;
+        this.customerData = data;
       })
       , map((customerData) => {
         return customerData;

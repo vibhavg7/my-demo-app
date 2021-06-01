@@ -31,7 +31,7 @@ export class CustomerOrdersComponent implements OnInit {
 
   ViewOrderedProducts(order_id:any)
   {
-    const modalRef = this.modalService.open(MerchantOrderProductListComponent);
+    const modalRef = this.modalService.open(MerchantOrderProductListComponent, { scrollable: true });
     modalRef.componentInstance['title']= 'View Products';
     modalRef.componentInstance['order_id']= order_id;
   }

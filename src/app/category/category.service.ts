@@ -12,7 +12,7 @@ export class CategoryService {
   constructor(private http: HttpClient) { }
   public storecategories: any;
   public categoryData: any = [];
-  private categoryServiceUrl = 'https://api.grostep.com/categoryapi';
+  private categoryServiceUrl = 'https://api.grostep.com/v2/categoryapi';
 
 
 

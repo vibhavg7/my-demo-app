@@ -1,0 +1,24 @@
+<div class="card">
+    <div class="card-header">
+        <div class="wizard">
+            <a [routerLink]="['info']" routerLinkActive="active">
+                Cart Info
+            </a>
+            <a [routerLink]="['productsinfo']" routerLinkActive="active">
+                Cart Product Info
+            </a>
+            <a [routerLink]="['customerinfo']" routerLinkActive="active">
+                Cart Customer Info
+            </a>
+            <a [routerLink]="['merchantinfo']" routerLinkActive="active">
+                Cart Merchant Info
+            </a>
+            <!-- <a [routerLink]="['deliveryinfo']" routerLinkActive="active">
+                Delivery Info
+            </a> -->
+        </div>
+    </div>
+    <div class="card-body">
+        <router-outlet></router-outlet>
+    </div>
+  </div>

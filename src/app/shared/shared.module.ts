@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { PaginationComponent } from './pagination/pagination.component';
 import { UpperCaseName } from './upper-case-name';
 import { NotificationComponent } from './notification/notification.component';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { NotificationComponent } from './notification/notification.component';
     CriteriaComponent,
     PaginationComponent,
     UpperCaseName,
-    NotificationComponent
+    NotificationComponent,
+    UnauthorizedComponent
   ],
   imports: [
     CommonModule,

@@ -24,7 +24,8 @@ export class DashboardResolverService implements Resolve<any> {
         ),
         catchError(error => {
           const message = `Retrieval error: ${error}`;
-          return of({ product: null, error: message });
+          console.log(message);
+          return of({ employee_dashboard_info: null, dashboardDataCount: 0, error: message });
         })
       );
   }

@@ -10,7 +10,7 @@ export class DeliveryService {
 
   constructor(private http: HttpClient) { }
 
-  private deliveryServiceUrl = 'https://api.grostep.com/deliveryapi/';
+  private deliveryServiceUrl = 'http://13.233.10.240:3000/deliveryapi/';
   customerData: any;
   customerDeliveryAddresses: any;
 

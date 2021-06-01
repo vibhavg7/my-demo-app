@@ -11,7 +11,7 @@ import { ProductResolved } from './product-resolved';
 )
 export class ProductService implements OnDestroy {
   // tslint:disable-next-line:variable-name
-  private _productServiceUrl = 'https://api.grostep.com/productsapi/';
+  private _productServiceUrl = 'https://api.grostep.com/v2/productsapi/';
   private products: IProduct[];
   public productResolved: ProductResolved;
   private selectedProductSource = new Subject<IProduct | null>();

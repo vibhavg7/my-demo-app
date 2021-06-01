@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, OnChanges } from '@angular/core';
 import { ProductService } from '../product.service';
 import { IProduct } from '../product';
 import {NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -10,7 +10,7 @@ import { ImageUploadComponent } from '../image-upload/image-upload.component';
   templateUrl: './product-shell-detail.component.html',
   styleUrls: ['./product-shell-detail.component.css']
 })
-export class ProductShellDetailComponent implements OnInit, OnDestroy {
+export class ProductShellDetailComponent implements OnInit, OnDestroy, OnChanges {
 
   constructor(private productService: ProductService, private modalService: NgbModal) { }
   errorMessage: string;
@@ -32,6 +32,10 @@ export class ProductShellDetailComponent implements OnInit, OnDestroy {
 
   onRatingClicked(data) {
 
+  }
+
+  ngOnChanges() {
+    console.log('child component');
   }
 
   uploadImage() {

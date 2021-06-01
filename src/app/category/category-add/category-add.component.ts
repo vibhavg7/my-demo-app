@@ -51,7 +51,6 @@ export class CategoryAddComponent implements OnInit {
 
   onSubmit() {
     if (!this.disableForm) {
-      if (this.disableForm) {
         this.submitted = true;
         this.disableForm = true;
         if (this.addCategoryForm.invalid) {
@@ -89,6 +88,5 @@ export class CategoryAddComponent implements OnInit {
             });
         }
       }
-    }
   }
 }

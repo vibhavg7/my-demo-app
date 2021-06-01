@@ -1,6 +1,6 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { tap, map } from 'rxjs/operators';
 @Component({
   selector: 'app-image-upload',
@@ -21,20 +21,35 @@ export class ImageUploadComponent implements OnInit {
 
   }
 
-  fileChangeEvent(fileInput: any) {
-    this.filesToUpload = fileInput.target.files as Array<File>;
+  fileChangeEvent(event: any) {
+    this.filesToUpload = event.target.files as Array<File>;
+    console.log(this.filesToUpload);
   }
 
   upload() {
     const formData: any = new FormData();
     const files: Array<File> = this.filesToUpload;
 
+    // console.log(files);
+
     // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < files.length; i++) {
+
       formData.append('image', files[i], files[i].name);
+      // console.log(files[i]);
+      // formData.append('image', files[i]);
+      // formData.append('labelName', 'test');
+      // formData.append('formPart', 'test');
+      // console.log(JSON.stringify(formData));
     }
+
+    // formData.forEach((value, key) => {
+    //   console.log(key+" "+ value);
+    // });
+
     // tslint:disable-next-line:max-line-length
-    this.http.post(`https://api.grostep.com/imageuploadapi/${this.image_type}/${this.id}`, formData).pipe(
+    // const headers = new HttpHeaders({ 'Content-Type': 'undefined' });
+    this.http.post(`https://api.grostep.com/v2/imageuploadapi/${this.image_type}/${this.id}`, formData).pipe(
       tap(data => {
       }),
       map((fileData: any) => {

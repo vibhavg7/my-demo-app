@@ -9,7 +9,7 @@ import { ErrorTracker } from '../shared/errorTracker';
 })
 export class FeedbackService {
 
-  private customerServiceUrl = 'https://api.grostep.com/customerapi/';
+  private customerServiceUrl = 'https://api.grostep.com/v2/customerapi/';
   constructor(private httpClient: HttpClient) { }
 
   fetchAllFeedBacks(pageNumber: number, pageSize: any, filterBy: any, customerId: any): Observable<any> {

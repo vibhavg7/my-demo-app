@@ -15,7 +15,6 @@ export class CustomerDetailInfoComponent implements OnInit {
   errorMessage: any = '';
   ngOnInit() {
     this.customerId = +this.activatedRoute.parent.params['_value']['customerId'];
-    console.log(this.customerId);
     this.customerService.fetchCustomerInfoById(this.customerId).subscribe((data: any) => {
       this.customerData = data.customer_info[0];
       console.log(this.customerData);

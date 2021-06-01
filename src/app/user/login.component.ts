@@ -36,23 +36,22 @@ export class LoginComponent implements OnInit {
     if (loginForm && loginForm.valid) {
       const userName = loginForm.form.value.userName;
       const password = loginForm.form.value.password;
-      this.employee["user_name"] = userName;
-      this.employee["password"] = password;
-      this.authService.login(this.employee).subscribe((data) => {
-        console.log(data);
-        if (data['employeeData'][0] != undefined && data['employeeData'].length > 0) {
+      this.employee.user_name = userName;
+      this.employee.password = password;
+      this.authService.login(this.employee).subscribe((data: any) => {
+        // && data.employeeData[0] !== undefined && data.employeeData.length > 0
+        if (+data.status === 200) {
+          console.log('inside login' + this.authService.redirectUrl);
           if (this.authService.redirectUrl) {
             this.router.navigateByUrl(this.authService.redirectUrl);
           } else {
-            this.router.navigate(['/dashboard']);
+            console.log('/user/dashboard');
+            this.router.navigate(['/user/dashboard']);
           }
-        }
-        else {
-          this.errorMessage = "Please enter valid username and password";
-          console.log(this.errorMessage);
+        } else {
+          this.errorMessage = 'Please enter valid username and password';
         }
       });
-      // Navigate to the Product List page after log in.
     } else {
       this.errorMessage = 'Please enter a user name and password.';
     }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MerchantService } from '../merchant.service';
 import { ActivatedRoute } from '@angular/router';
@@ -10,7 +10,21 @@ import { MerchantOrderProductListComponent } from './merchant-order-product-list
 @Component({
   selector: 'app-merchant-orders',
   templateUrl: './merchant-orders.component.html',
-  styleUrls: ['./merchant-orders.component.css']
+  encapsulation: ViewEncapsulation.None,
+  styles: [`
+    .dark-modal .modal-content {
+      background-color: #292b2c;
+      color: white;
+    }
+    .dark-modal .close {
+      color: white;
+    }
+    .light-blue-backdrop {
+      background-color: #5cb3fd;
+    }
+    .myCustomModalClass {
+    }
+  `]
 })
 export class MerchantOrdersComponent implements OnInit {
 
@@ -44,7 +58,9 @@ export class MerchantOrdersComponent implements OnInit {
   }
 
   ViewOrderedProducts(orderid: any) {
-    const modalRef: any = this.modalService.open(MerchantOrderProductListComponent);
+    const modalRef: any = this.modalService.open(MerchantOrderProductListComponent,
+                 { windowClass : 'myCustomModalClass',  size: 'lg',
+                  backdropClass: 'light-blue-backdrop', centered: true, scrollable: true });
     modalRef.componentInstance.title = 'View Products';
     modalRef.componentInstance.order_id = orderid;
   }

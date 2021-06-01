@@ -9,13 +9,19 @@ import { AuthService } from './auth.service';
 })
 export class DashboardComponent implements OnInit {
 
+  errorMessage: any;
   dashboardDataCount: any;
   dashboardData: any;
   constructor(private route: Router, private auth: AuthService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    this.dashboardData = this.activatedRoute.snapshot.data['dashboards']['employee_dashboard_info'];
-    this.dashboardDataCount = +this.activatedRoute.snapshot.data['dashboards']['dashboardDataCount'];
+    const dashboardData = this.activatedRoute.snapshot.data.dashboards;
+    this.dashboardData = dashboardData.employee_dashboard_info;
+    this.dashboardDataCount = +dashboardData.dashboardDataCount;
+    this.errorMessage = dashboardData.error;
+    console.log(this.errorMessage);
+    console.log(this.dashboardData);
+    console.log(this.dashboardDataCount);
   }
 
   dashboardClick(category) {

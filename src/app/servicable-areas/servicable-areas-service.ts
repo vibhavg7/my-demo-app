@@ -8,7 +8,7 @@ import { tap, map, catchError } from 'rxjs/operators';
 })
 export class ServicableAreasService {
 
-  private deliveryAreasServiceUrl = 'https://api.grostep.com/deliveryapi/';
+  private deliveryAreasServiceUrl = 'http://13.233.10.240:3000/deliveryapi/';
   constructor(private http: HttpClient) { }
 
   fetchAllDeliveryAreas(pagenumber: number, pagesize: any, filterBy: any): Observable<any> {

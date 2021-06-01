@@ -91,7 +91,7 @@ export class OrderDashboardComponent implements OnInit {
   }
 
   ViewOrderedProducts(orderid: any) {
-    const modalRef: any = this.modalService.open(MerchantOrderProductListComponent);
+    const modalRef: any = this.modalService.open(MerchantOrderProductListComponent, { scrollable: true });
     modalRef.componentInstance.title = 'View Products';
     modalRef.componentInstance.order_id = orderid;
   }

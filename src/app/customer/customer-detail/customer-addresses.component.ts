@@ -16,11 +16,10 @@ export class CustomerAddressesComponent implements OnInit {
   errorMessage:any = "";
   ngOnInit() {
     this.customerId = +this._activatedRoute.parent.params['_value']['customerId'];
-    this._customerService.fetchCustomerInfoById(this.customerId).subscribe((data) => {  
-      // console.log(data);    
-      this.addresses = data['customer_delivery_addresses'];    
-      console.log(this.addresses);  
-    })
+    this._customerService.fetchCustomerInfoById(this.customerId).subscribe((data: any) => {
+      this.addresses = data.customer_delivery_addresses;
+      console.log(this.addresses);
+    });
   }
 
 }

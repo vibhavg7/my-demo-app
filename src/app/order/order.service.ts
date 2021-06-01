@@ -10,7 +10,7 @@ import { ErrorTracker } from '../shared/errorTracker';
 export class OrderService {
 
   constructor(private http: HttpClient) { }
-  private orderService: any = 'https://api.grostep.com/ordersapi/';
+  private orderService: any = 'https://api.grostep.com/v2/ordersapi/';
   public orderDetails: any = '';
 
   fetchAllOrders(pagenumber: number, pagesize: any, filterBy: any): Observable<any> {

@@ -36,19 +36,21 @@ export class ProductShellListComponent implements OnInit, OnDestroy {
   Pages: any = [];
   currentPage: any;
   pageSize: number = 20;
-  displayCode:boolean;
+  displayCode: boolean;
   ngOnInit() {
     this.currentPage = 1;
     this.sub = this._productService.selectProductChanges$.subscribe((data) => {
       this.selectedProduct = data;
     });
 
-    this.store.pipe(select(fromProduct.getShowProductCode)).subscribe((data)=>{
+    this.store.pipe(select(fromProduct.getShowProductCode)).subscribe((data) => {
       this.displayCode = data;
     });
 
-    let productsData = this._activatedRoute.snapshot.data['products']['product'];
+    const productsData = this._activatedRoute.snapshot.data['products']['product'];
     this.productsCount = +this._activatedRoute.snapshot.data['products']['product_total_count'];
+    console.log(productsData);
+    console.log(this.productsCount);
     this.onProductRetrieved(productsData);
   }
 
@@ -59,8 +61,8 @@ export class ProductShellListComponent implements OnInit, OnDestroy {
       // tslint:disable-next-line:max-line-length
       switchMap(query => (this.filterBy = query, console.log(this.filterBy), this._productService.getProducts(this.currentPage, this.pageSize, this.filterBy)))
     )
-    // console.log(res);
-      .subscribe(res => {this.onProductRetrieved(res['products']), this.productsCount = res['productCount']; })
+      // console.log(res);
+      .subscribe(res => { this.onProductRetrieved(res['products']), this.productsCount = res['productCount']; })
   }
 
   currentPageFn(page) {

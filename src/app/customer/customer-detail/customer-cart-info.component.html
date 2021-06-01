@@ -1,1 +1,102 @@
-<p>customer-cart-info works!</p>
+<div class='card'>
+  <div class='card-header'>
+    {{pageTitle}}
+  </div>
+  <div class='card-body'>
+    <div class="row">
+      <div class='col-md-2'>Filter by:</div>
+      <div class='col-md-4'>
+        <form [formGroup]="searchCriteriaForm">
+          <input formControlName="searchCriteria" (keyup)="onChanges()" class="form-control" type="text" id="keyword"
+          placeholder="Search Customer Cart By Id"
+            autocomplete="off" autofocus/>
+        </form>
+      </div>
+    </div>
+    <div class='table-responsive'>
+      <table style="width:1000px !important" class='table' *ngIf='customerCarts?.length'>
+        <thead>
+          <tr>
+            <th style="width:90px !important">Cart Id</th>
+            <th>Product Details</th>
+            <th>Store Name</th>
+            <th>Order Amount</th>
+            <th>Voucher</th>
+            <th>Discount</th>
+            <th>Delivery Fee</th>
+            <th>Payable Amount</th>
+            <!-- <th>Payment Mode</th> -->
+            <th><span>
+                Last updated
+            </span>
+            <span style="display:block;margin-left:10px">(M/D/Y)</span>
+          </th>
+            <!-- <th>Status</th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor='let customerCart of customerCarts'>
+            <td style="width:90px !important">
+                <!-- target="_blank" -->
+              <a [routerLink]="['/cart/',customerCart?.cart_id,'productsinfo']">
+                {{ customerCart?.cart_id }}
+              </a>
+            </td>
+            <td>
+              <span (click)="ViewCartProducts(customerCart?.cart_id)"
+              style="display:block;font-size:14px;cursor:pointer;color:blue;text-decoration: underline;">
+                Cart Products
+              </span>
+            </td>
+            <td>
+              <a target="_blank" [routerLink]="['/merchant/',customerCart?.store_id,'info']">
+                {{ customerCart?.store_name }}
+              </a>
+            </td>
+            <td>
+              &#8377; {{ customerCart?.order_amount }}
+            </td>
+            <td>
+              <span *ngIf="customerCart?.voucher_code">{{customerCart?.voucher_code}}</span>
+            </td>
+            <td>
+                <!-- *ngIf="customerCart?.discount_amount" -->
+              <span>
+                  &#8377; {{customerCart?.discount_amount}}
+              </span>
+            </td>
+            <td>
+                <!-- *ngIf="customerCart?.delivery_cost" -->
+              <span>
+                  &#8377; {{customerCart?.delivery_cost}}
+              </span>
+            </td>
+            <td>
+              <span *ngIf="customerCart?.total">
+                  &#8377; {{ customerCart?.total }}
+              </span>
+            </td>
+            <!-- <td>{{ customerOrder?.payment_mode == 1 ? 'Online':'Cash' }}</td> -->
+            <td>
+              <span>
+                  {{customerCart?.last_updated | date:'short':'UTC +5:30'}}
+              </span>
+              <!-- {{ customerCart?.last_updated |date:'medium':'UTC +4' }} -->
+            </td>
+            <!-- <td style="font-weight:bold">{{ customerCart?.status}}</td> -->
+
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- {{customerOrder?.length}} -->
+      <app-pagination *ngIf='customerCarts?.length' [totalItemCount]="cartTotalCount" (currentPage)="currentPageFn($event)"></app-pagination>
+      <div *ngIf='customerCarts?.length == 0'>
+        No Customer cart Data Found
+      </div>
+    </div>
+    </div>
+  </div>
+  <div *ngIf='errorMessage' class='alert alert-danger'>
+    Error: {{ errorMessage }}
+  </div>

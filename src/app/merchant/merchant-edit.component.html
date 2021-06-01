@@ -19,15 +19,8 @@
                 <option *ngFor="let storeCategory of storeCategories" value="{{storeCategory?.store_category_id}}">
                   {{storeCategory.store_category_name}}
                 </option>
-                <!-- <option value="0">Disabled</option> -->
               </select>
             </div>
-            <!-- <input type="text" formControlName="storeCategoryName" class="form-control"
-                            [ngClass]="{ 'is-invalid': submitted && f.storeCategoryName.errors }"
-                        />
-                        <div *ngIf="submitted && f.storeCategoryName.errors" class="invalid-feedback">
-                            <div *ngIf="f.storeCategoryName.errors.required">Store Category Name is required</div>
-                        </div> -->
           </div>
           <div class="form-group">
             <label>Store Email</label>
@@ -180,10 +173,6 @@
                 <option value="0">Disabled</option>
               </select>
             </div>
-            <!-- <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-                            <div *ngIf="f.email.errors.required">Email is required</div>
-                            <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
-                        </div> -->
           </div>
 
           <div class="form-group">

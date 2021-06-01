@@ -1,0 +1,51 @@
+<div class='card'>
+    <div class='card-header'>
+        {{pageTitle}}
+    </div>
+    <div class='card-body'>
+        <div class='table-responsive'>
+            <table style="width:1000px !important" class='table' *ngIf='cartProducts?.length > 0'>
+                <thead>
+                    <tr>
+                        <th style="width:90px !important">Id</th>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total Amount</th>
+                        <th>Last Updated</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor='let cartProduct of cartProducts'>
+                        <td style="width:90px !important">
+                            {{ cartProduct?.store_product_mapping_id }}
+                        </td>
+                        <td>
+                            <img class='center-block img-responsive' *ngIf="!cartProduct?.image_url" src='assets/product_images/default_image.jpg' [style.width.px]='80'
+                                [style.margin.px]='2'>
+                            <img class='center-block img-responsive' *ngIf="cartProduct?.image_url" src='{{cartProduct?.image_url}}'
+                                [title]='cartProduct?.product_name' [style.width.px]='80' [style.margin.px]='2'>
+                        </td>
+                        <td>
+                            {{ cartProduct?.product_name }}
+                        </td>
+                        <td>
+                            &#8377;  {{cartProduct?.store_selling_price}}
+                        </td>
+
+                        <td>{{ cartProduct?.quantity }}</td>
+                        <td>&#8377;  {{ cartProduct?.store_selling_price * cartProduct?.quantity }}</td>
+                        <td>{{ cartProduct?.last_updated |date:'short':'UTC +5:30' }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div *ngIf='cartProducts?.length == 0'>
+                No Products Data Found
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf='errorMessage' class='alert alert-danger'>
+    Error: {{ errorMessage }}
+</div>

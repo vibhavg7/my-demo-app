@@ -3,6 +3,7 @@ import { User } from './user';
 import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { tap, catchError, map } from 'rxjs/operators';
 import { throwError, Observable, of } from 'rxjs';
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -17,19 +18,21 @@ export class AuthService {
   }
   // currentUser: User;
   redirectUrl: any;
-  authURL: any = 'https://api.grostep.com/employeeapi';
+  authURL: any = 'https://api.grostep.com/v2/employeeapi';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
 
   }
 
 
   login(employee): Observable<any> {
-    return this.http.post(`${this.authURL}/validate`, employee).pipe(
+    return this.http.post(`${this.authURL}/login`, employee).pipe(
       tap(),
       map((employeeData: any) => {
-        if (employeeData.status === 200 && employeeData.employeeData[0] !== undefined) {
-          localStorage.setItem('currentUser', JSON.stringify(employeeData.employeeData[0]));
+        // && employeeData.employeeData[0] !== undefined
+        if (employeeData.status === 200) {
+          localStorage.setItem('currentUser', JSON.stringify(employeeData.employeeData));
+          localStorage.setItem('bearertoken', employeeData.token);
         }
         return employeeData;
       })
@@ -53,6 +56,7 @@ export class AuthService {
   logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('currentUser');
+    localStorage.removeItem('bearertoken');
   }
 
   private handleError(err: HttpErrorResponse) {
@@ -68,6 +72,25 @@ export class AuthService {
       errorMessage = `Server returned code: ${err.status}, error message is: ${err.message}`;
     }
     console.error(errorMessage);
-    return throwError(errorMessage);
+
+    // if (error instanceof HttpErrorResponse) {
+    //   if (error.error instanceof ErrorEvent) {
+    //     console.error('Error Event');
+    //   } else {
+    //     console.log(`error status : ${error.status} ${error.statusText}`);
+    //     switch (error.status) {
+    //       case 401:      // login
+    //         // this.router.navigateByUrl("/login");
+    //         this.router.navigateByUrl('/login');
+    //         break;
+    //       case 403:     // forbidden
+    //         this.router.navigateByUrl('/login');
+    //         break;
+    //     }
+    //   }
+    // } else {
+    //   console.error('some thing else happened');
+    // }
+    return throwError(err);
   }
 }
