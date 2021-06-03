@@ -114,7 +114,6 @@ export class AreaWiseBannerEditComponent implements OnInit {
       } else  {
       this.servicableAreasService.editAreWiseBanner(this.addAreaWiseBannerForm.value, this.areabannerId)
       .subscribe((data: any) => {
-        console.log(data);
         if (data.status === 200) {
           this.router.navigate([`servicableareas/${this.areaId}/banners`]);
         }

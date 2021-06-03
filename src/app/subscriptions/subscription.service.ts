@@ -9,7 +9,7 @@ import { ErrorTracker } from '../shared/errorTracker';
 })
 export class SubscriptionService {
 
-  private subscriptionServiceUrl = 'http://13.233.10.240:3000/customerapi/';
+  private subscriptionServiceUrl = 'https://api.grostep.com/v2/customerapi/';
   constructor(private httpClient: HttpClient) { }
 
   fetchAllSubscriptons(pageNumber: number, pageSize: any, filterBy: any): Observable<any> {

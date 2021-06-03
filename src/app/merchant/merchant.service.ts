@@ -65,7 +65,7 @@ export class MerchantService {
       storeProductForm.productMarkedPrice) * 100;
     obj.status = storeProductForm.status;
     obj.product_marked_price = storeProductForm.productMarkedPrice;
-    obj.stock = 1;
+    // obj.stock = 1;
     obj.store_product_caping = +storeProductForm.productLimit;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post(url, obj, { headers }).pipe(
