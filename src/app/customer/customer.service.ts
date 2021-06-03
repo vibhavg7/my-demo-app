@@ -47,7 +47,7 @@ export class CustomerService {
     obj.filterBy = filterBy;
     console.log(obj);
 
-    return this.http.post<any[]>(`${this.customerServiceUrl}/customerinfo/customerorders`, obj)
+    return this.http.post<any[]>(`${this.customerServiceUrl}customerinfo/customerorders`, obj)
       .pipe(
         tap(data => {
           console.log(data);

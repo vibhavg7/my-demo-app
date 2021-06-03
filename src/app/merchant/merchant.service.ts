@@ -122,24 +122,24 @@ export class MerchantService {
   }
 
   fetchOrderProducts(orderId: any): Observable<any> {
-    if (this.storeOrders.length > 0) {
-      const filteredOrderData = this.storeOrders.filter(
-        (storeOrder: any) => {
-          return +storeOrder.order_id === +orderId;
-        }
+    // if (this.storeOrders.length > 0) {
+    //   const filteredOrderData = this.storeOrders.filter(
+    //     (storeOrder: any) => {
+    //       return +storeOrder.order_id === +orderId;
+    //     }
+    //   );
+    //   return of(filteredOrderData[0]);
+    // } else {
+    return this.http.get<any[]>(`${this.storeServiceUrl}storeinfo/storeorderproducts/${orderId}`)
+      .pipe(
+        tap(data => {
+        })
+        , map((data) => {
+          return data;
+        })
+        , catchError(this.handleError)
       );
-      return of(filteredOrderData[0]);
-    } else {
-      return this.http.get<any[]>(`${this.storeServiceUrl}storeinfo/storeorderproducts/${orderId}`)
-        .pipe(
-          tap(data => {
-          })
-          , map((data) => {
-            return data;
-          })
-          , catchError(this.handleError)
-        );
-    }
+    // }
   }
 
   fetchAllStoreOrders(storeId: number, pagenumber: number, pagesize: number, filterBy: any) {
@@ -311,7 +311,23 @@ export class MerchantService {
         return storeData;
       })
       , catchError(this.handleError)
-    )
+    );
+  }
+
+  updateStoreClosingStatus(storeId, storestatus) {
+    const obj: any = {};
+    obj.closed = +storestatus;
+    console.log(obj);
+    const url = `${this.storeServiceUrl}updatestoreclosingstatus/${storeId}`;
+    return this.http.put(url, obj).pipe(
+      tap(data => {
+        console.log(JSON.stringify(data));
+      }),
+      map((data1) => {
+        return data1;
+      }),
+      catchError(this.handleError)
+    );
   }
 
   private handleError(err: HttpErrorResponse): Observable<ErrorTracker> {

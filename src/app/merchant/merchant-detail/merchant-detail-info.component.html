@@ -3,8 +3,12 @@
     <button class="btn btn-primary mr-3" [routerLink]="['/merchant',merchantData.store_id,'edit']">
       <i class='fa fa-chevron-left'></i> Edit
     </button>
-    {{merchantData?.store_name}}
-
+    <span>{{merchantData?.store_name}}</span>
+    <span style="float:right">
+      <mat-slide-toggle [(ngModel)]="open" class="example-margin" [color]="color" (change)="changeStoreClosingStatus()">
+        OPEN
+      </mat-slide-toggle>
+    </span>
   </div>
   <div class="card-body">
     <div class="row">
@@ -20,8 +24,8 @@
         <div class="row">
           <div class="col-md-4" class="table-key">Store Timings:</div>
           <div class="col-md-8">
-            {{merchantData?.store_opening_time % 12 }} {{merchantData?.store_opening_time_clock }}
-              - {{merchantData?.store_closing_time % 12}} {{merchantData?.store_closing_time_clock }}
+            {{merchantData?.store_opening_time % 12 }} {{merchantData?.store_opening_time_clock }} - {{merchantData?.store_closing_time
+            % 12}} {{merchantData?.store_closing_time_clock }}
 
           </div>
         </div>

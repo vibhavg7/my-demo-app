@@ -16,6 +16,7 @@ import { MerchantDataComponent } from './merchant-data.component';
 import { MerchantProductsCatalogDataComponent } from './merchant-detail/merchant-products-catalog-data.component';
 
 import { NgbDate, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MaterialModule } from '../shared/material.module';
 
 // import { HTTP_INTERCEPTORS } from '@angular/common/http';
 // import { AddHeaderInterceptor } from './add-header.interceptor';
@@ -33,6 +34,7 @@ import { NgbDate, NgbModule } from '@ng-bootstrap/ng-bootstrap';
     CommonModule,
     ReactiveFormsModule,
     MerchantRoutingModule,
+    MaterialModule,
     SharedModule
   ]
   // providers:[

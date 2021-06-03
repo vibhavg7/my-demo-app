@@ -4,23 +4,27 @@
 
 
 @import "~font-awesome/css/font-awesome.min.css";
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
+
 div.card-header {
     font-size: large;
    }
-   
+
    div.card {
      margin-top: 10px
    }
-   
+
    .table {
      margin-top: 10px
    }
-   
+
    body
    {
        /* background-color:#F4F3EC !important */
    }
-   
+
    header{
      /* background-color:#F4F3EC !important */
    }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
