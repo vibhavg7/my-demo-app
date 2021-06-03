@@ -10,7 +10,7 @@ import { ErrorTracker } from '../shared/errorTracker';
 export class BannerService {
 
   constructor(private http: HttpClient) { }
-  private bannerServiceUrl = 'http://13.233.10.240:3000/bannerapi/';
+  private bannerServiceUrl = 'https://api.grostep.com/v2/bannerapi/';
 
   fetchAllBanners( pageNumber: number, pageSize: any, filterBy: any): Observable<any> {
     const obj: any = {};
@@ -76,7 +76,6 @@ export class BannerService {
     obj.status = +banner.status;
 
     const url = `${this.bannerServiceUrl}bannerinfo/${bannerId}`;
-    console.log(url);
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.put(url, obj, { headers }).pipe(
       tap(data => { console.log(JSON.stringify(data));
