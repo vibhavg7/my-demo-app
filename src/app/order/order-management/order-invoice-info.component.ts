@@ -12,9 +12,11 @@ export class OrderInvoiceInfoComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute, private orderService: OrderService) { }
   invoiceData: any = [];
   errorMessage: any;
-  orderid: any;
+  orderId: any;
   ngOnInit() {
-    this.orderid = this.activatedRoute.parent.snapshot.params.orderid;
+    this.orderId = this.activatedRoute.parent.snapshot.params.orderId;
+    // console.log(this.activatedRoute.snapshot.data.resolvedInvoice);
+    // console.log(this.orderId);
     this.invoiceData = this.activatedRoute.snapshot.data.resolvedInvoice.orderInvoice[0];
     console.log(this.invoiceData);
     this.errorMessage = this.activatedRoute.snapshot.data.resolvedInvoice.error;

@@ -16,7 +16,7 @@ export class CustomerCartInfoComponent implements OnInit {
 
   cartTotalCount: any;
   customerCarts: any;
-  filterBy: {};
+  filterBy = '';
   customerId: number;
   searchCriteriaForm: FormGroup;
   currentPage = 1;
@@ -25,7 +25,7 @@ export class CustomerCartInfoComponent implements OnInit {
   pageTitle: any;
   refreshData = true;
   constructor(private activatedRoute: ActivatedRoute, private formBuilder: FormBuilder,
-              private cartService: CartService, private modalService: NgbModal) {
+    private cartService: CartService, private modalService: NgbModal) {
     this.searchCriteriaForm = this.formBuilder.group({
       searchCriteria: ['']
     });
@@ -34,10 +34,12 @@ export class CustomerCartInfoComponent implements OnInit {
   ngOnInit() {
     // tslint:disable-next-line:no-string-literal
     this.customerId = +this.activatedRoute.parent.params['_value']['customerId'];
-    this.cartService.fetchAllCustomerCart(this.customerId, this.currentPage, this.pageSize, '', this.refreshData).subscribe((data: any) => {
-      this.cartTotalCount = data.customer_carts_count;
-      this.customerCarts = data.customer_carts_info;
-    });
+    this.cartService.fetchAllCartInformation(this.currentPage, this.pageSize, this.filterBy, this.customerId)
+      .subscribe((data: any) => {
+        console.log(data);
+        this.cartTotalCount = data.cart_total_count[0].customer_cart_count;
+        this.customerCarts = data.carts_info;
+      });
     this.onChanges();
   }
 
@@ -54,19 +56,19 @@ export class CustomerCartInfoComponent implements OnInit {
   onChanges() {
     this.searchCriteriaForm.get('searchCriteria').valueChanges.pipe(tap((data1: any) => {
     }), distinctUntilChanged(), debounceTime(200),
-      switchMap(query => (this.filterBy = query, this.cartService.fetchAllCustomerCart(this.customerId, this.currentPage,
-        this.pageSize, query, false)))
+      switchMap(query => (this.filterBy = query, this.cartService.fetchAllCartInformation(this.currentPage,
+        this.pageSize, query, this.customerId)))
     )
       .subscribe((data: any) => {
-        this.cartTotalCount = data.customer_carts_count;
-        this.customerCarts = data.customer_carts_info;
+        this.cartTotalCount = data.cart_total_count[0].customer_cart_count;
+        this.customerCarts = data.carts_info;
       });
   }
 
   currentPageFn(page) {
-    this.cartService.fetchAllCustomerCart(this.customerId, page, this.pageSize, this.filterBy, this.refreshData)
+    this.cartService.fetchAllCartInformation(page, this.pageSize, this.filterBy, this.customerId)
       .subscribe((data: any) => {
-        this.customerCarts = data.customer_carts_info;
+        this.customerCarts = data.carts_info;
       });
   }
 

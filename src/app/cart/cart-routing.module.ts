@@ -10,6 +10,8 @@ import { CartMerchantInfoComponent } from './cart-detail/cart-merchant-info.comp
 import { CartDeliveryInfoComponent } from './cart-detail/cart-delivery-info.component';
 import { CartDetailInfoComponent } from './cart-detail/cart-detail-info.component';
 import { CartProductsResolver } from './cart-products-resolver';
+import { CartCustomerResolver } from './cart-customer-resolver';
+import { CartMerchantResolver } from './cart-merchant-resolver';
 
 const routes: Routes = [
   {
@@ -22,7 +24,11 @@ const routes: Routes = [
     component: CartDetailComponent,
     children: [
       { path: '', redirectTo: 'info', pathMatch: 'full' },
-      { path: 'info', component: CartDetailInfoComponent },
+      {
+        path: 'info',
+        component: CartDetailInfoComponent,
+        resolve: { resolvedCustomer: CartCustomerResolver }
+      },
       {
         path: 'productsinfo',
         component: CartProductInfoComponent,
@@ -31,12 +37,12 @@ const routes: Routes = [
       {
         path: 'customerinfo',
         component: CartCustomerInfoComponent,
-        // resolve: { resolvedCustomer: OrderCustomerInfoResolver }
+        resolve: { resolvedCustomer: CartCustomerResolver }
       },
       {
         path: 'merchantinfo',
         component: CartMerchantInfoComponent,
-        // resolve: { resolvedMerchant: CartMerchantInfoComponent }
+        resolve: { resolvedMerchant: CartMerchantResolver }
       },
       { path: 'deliveryinfo', component: CartDeliveryInfoComponent },
     ]

@@ -7,6 +7,7 @@ import { ErrorTracker } from '../shared/errorTracker';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MerchantOrderProductListComponent } from '../merchant/merchant-detail/merchant-order-product-list.component';
 import { of } from 'rxjs';
+import { MerchantService } from '../merchant/merchant.service';
 
 @Component({
   selector: 'app-order-dashboard',
@@ -19,6 +20,7 @@ export class OrderDashboardComponent implements OnInit {
   searchCriteriaForm: FormGroup;
   constructor(
           private orderService: OrderService,
+          private merchantService: MerchantService,
           private activatedRoute: ActivatedRoute,
           private formBuilder: FormBuilder,
           private modalService: NgbModal) {
@@ -46,10 +48,11 @@ export class OrderDashboardComponent implements OnInit {
     if (resolvedData instanceof ErrorTracker) {
       this.errorMessage = resolvedData.errorMessage;
     } else {
-      this.ordertotalcount = resolvedData.order_count.store_orders_count;
-      this.ordersinfo = resolvedData.orders_info;
-      console.log(this.ordertotalcount);
-      console.log(this.ordersinfo);
+      console.log(resolvedData);
+      this.ordertotalcount = resolvedData.store_order_count[0].store_orders_count;
+      this.ordersinfo = resolvedData.store_orders_info;
+      // console.log(this.ordertotalcount);
+      // console.log(this.ordersinfo);
     }
   }
 
@@ -60,14 +63,15 @@ export class OrderDashboardComponent implements OnInit {
     }), distinctUntilChanged(), debounceTime(200),
       switchMap((query) => {
         if (!this.orderValueSet) {
-          return this.orderService.fetchAllOrders(this.currentPage,this.pageSize, query);
+          this.filterBy = query;
+          return this.merchantService.fetchAllStoreOrders('', this.currentPage, this.pageSize, query);
         } else {
           this.orderValueSet = true;
           return of([]);
         }
       }))
-      .subscribe((res: any) => { this.ordertotalcount = res.order_count.store_orders_count;
-                                 this.ordersinfo = res.orders_info; console.log(this.ordersinfo); });
+      .subscribe((res: any) => { this.ordertotalcount = res.store_order_count[0].store_orders_count;
+                                 this.ordersinfo = res.store_orders_info; console.log(this.ordersinfo); });
     // // console.log('Huiiii');
     // this.searchCriteriaForm.get('searchCriteria').valueChanges.pipe(tap(data => {
     //   console.log(data);
@@ -83,10 +87,10 @@ export class OrderDashboardComponent implements OnInit {
   }
 
   currentPageFn(page) {
-    this.orderService.fetchAllOrders(page, this.pageSize, this.filterBy)
+    this.merchantService.fetchAllStoreOrders('', page, this.pageSize, this.filterBy)
       .subscribe((data) => {
-        this.ordertotalcount = data.order_count.store_orders_count;
-        this.ordersinfo = data.orders_info;
+        this.ordertotalcount = data.store_order_count[0].store_orders_count;
+        this.ordersinfo = data.store_orders_info;
       });
   }
 

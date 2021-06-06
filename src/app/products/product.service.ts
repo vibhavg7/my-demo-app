@@ -86,9 +86,9 @@ export class ProductService implements OnDestroy {
   }
 
 
-  deleteProduct(product_id: any): any {
+  deleteProduct(productId: any): any {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    const url = `${this._productServiceUrl}${product_id}`;
+    const url = `${this._productServiceUrl}${productId}`;
     return this._http.delete(url, { headers }).pipe(
       tap(data => {
         // console.log(JSON.stringify(data))

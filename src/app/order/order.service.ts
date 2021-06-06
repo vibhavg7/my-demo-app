@@ -12,6 +12,7 @@ export class OrderService {
   constructor(private http: HttpClient) { }
   private orderService: any = 'https://api.grostep.com/v2/ordersapi/';
   public orderDetails: any = '';
+  public orders: any = [];
 
   fetchAllOrders(pagenumber: number, pagesize: any, filterBy: any): Observable<any> {
     const obj: any = {};
@@ -20,7 +21,9 @@ export class OrderService {
     obj.storeId = '';
     return this.http.post<any[]>(`${this.orderService}fetchallOrders`, obj)
       .pipe(
-        tap(data => {
+        tap((data: any) => {
+          this.orders = data.orders_info;
+          console.log(this.orders);
           console.log(JSON.stringify(data));
         })
         , map((data) => {

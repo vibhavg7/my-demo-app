@@ -26,7 +26,6 @@ export class ProductShellDetailComponent implements OnInit, OnDestroy, OnChanges
         this.productid = data.productId;
       }
       this.productData = data;
-      console.log(this.productData);
     });
   }
 
@@ -35,7 +34,6 @@ export class ProductShellDetailComponent implements OnInit, OnDestroy, OnChanges
   }
 
   ngOnChanges() {
-    console.log('child component');
   }
 
   uploadImage() {

@@ -54,7 +54,7 @@ export class CartDashboardComponent implements OnInit {
   onChanges() {
     this.searchCriteriaForm.get('searchCriteria').valueChanges.pipe(tap(data => {
     }), distinctUntilChanged(), debounceTime(200),
-      switchMap(query => (this.filterBy = query, this.cartService.fetchAllCartInformation(this.currentPage, this.pageSize, query)))
+      switchMap(query => (this.filterBy = query, this.cartService.fetchAllCartInformation(this.currentPage, this.pageSize, query, '')))
     )
       .subscribe((res: any) => {
         this.cartTotalCount = res.cart_total_count[0].total_carts_count;
@@ -63,7 +63,7 @@ export class CartDashboardComponent implements OnInit {
   }
 
   currentPageFn(page) {
-    this.cartService.fetchAllCartInformation(page, this.pageSize, this.filterBy)
+    this.cartService.fetchAllCartInformation(page, this.pageSize, this.filterBy, '')
       .subscribe((data: any) => {
         this.cartTotalCount = data.cart_total_count.cart_count;
         this.customerCarts = data.carts;

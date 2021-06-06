@@ -1,1 +1,107 @@
-<p>cart-detail-info works!</p>
+<div class="card card-primary" *ngIf="cartData">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="row">
+            <div class="col-md-4" class="table-key">Cart Id:</div>
+            <div class="col-md-8">{{cartData?.cart_id}}</div>
+          </div>
+
+          <!-- <div class="row">
+            <div class="col-md-4" class="table-key">Total Items:</div>
+            <div class="col-md-8 order-detail">&#8377; {{invoiceData?.total_item_count}}</div>
+          </div> -->
+          <div class="row">
+            <div class="col-md-4" class="table-key">Voucher Code Used :</div>
+            <div class="col-md-8 order-detail">{{cartData?.voucher_code}}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-4" class="table-key">Total Order Amount:</div>
+            <div class="col-md-8 order-detail">&#8377; {{cartData?.order_amount}}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-4" class="table-key">Delivery Fee:</div>
+            <div class="col-md-8 order-detail" *ngIf="cartData?.delivery_cost">
+              <span>
+                &#8377; {{cartData?.delivery_cost}}
+              </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4" class="table-key">Voucher Amount:</div>
+            <div class="col-md-8 order-detail" *ngIf="cartData?.voucher_amount">
+              <span>
+                &#8377; {{cartData?.voucher_amount}}
+              </span>
+            </div>
+          </div>
+          <!-- <div class="row">
+            <div class="col-md-4" class="table-key">Bill Amount:</div>
+            <div class="col-md-8 order-detail" *ngIf="invoiceData?.merchant_bill_amount">
+              <span>&#8377; {{invoiceData?.merchant_bill_amount}}</span>
+            </div>
+          </div> -->
+          <!-- <div class="row">
+            <div class="col-md-4" class="table-key">Payable Amount:</div>
+            <div class="col-md-8 order-detail" *ngIf="invoiceData?.payable_amount">
+              <span>
+                &#8377; {{invoiceData?.payable_amount}}
+              </span>
+            </div>
+          </div> -->
+
+          <!-- <div class="row">
+            <div class="col-md-4" class="table-key">Delivery Person Assinged :</div>
+            <div class="col-md-8" *ngIf="invoiceData?.delivery_person_id">
+              <a target="_blank" [routerLink]="['/delivery/',invoiceData?.delivery_person_id,'info']">
+                {{invoiceData?.delivery_person_name}} - {{invoiceData?.delivery_person_phone}}
+              </a>
+            </div>
+          </div> -->
+          <!-- <div class="row">
+            <div class="col-md-4" class="table-key">Delivery Slot:</div>
+            <div class="col-md-8 order-detail">
+              <span>{{invoiceData?.deliver_now ? 'Deliver Now' : 'Deliver Later'}}</span>
+              -
+              <span> {{invoiceData?.delivery_slot}}</span>
+            </div>
+          </div> -->
+
+
+          <!-- <div class="row">
+            <div class="col-md-4" class="table-key">Payment Mode:</div>
+            <div class="col-md-8 order-detail">{{invoiceData?.type}}</div>
+          </div> -->
+          <div class="row">
+            <div class="col-md-4" class="table-key">Last Updated:</div>
+            <div class="col-md-8">{{cartData?.last_updated | date:'medium'}}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-4" class="table-key">Instructions:</div>
+            <div class="col-md-8">{{cartData?.instructions}}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-4" class="table-key">Order Status:</div>
+            <div class="col-md-8 order-detail">{{cartData?.status}}</div>
+          </div>
+        </div>
+        <!-- <div class="col-md-4">
+          <img class='center-block img-responsive' *ngIf="!invoiceData?.bill_image" src='assets/product_images/default_image.jpg' [style.width.px]='250'
+            [style.margin.px]='2'>
+
+          <ng-container *ngIf="invoiceData?.bill_image">
+            <img *ngIf="invoiceData?.bill_image" (click)="downloadBillImage(invoiceData?.bill_image,invoiceData?.order_id)" class='center-block img-responsive'
+              src='{{invoiceData?.bill_image}}' [title]='invoiceData?.customer_name' [style.width.px]='250' [style.margin.px]='2'>
+
+            <a href="{{invoiceData?.bill_image}}" class="btn clss" target="_self" download>Download</a>
+            <button style="display:block" (click)="repairOrder()">REPAIR ORDER</button>
+          </ng-container>
+
+        </div> -->
+      </div>
+    </div>
+
+
+    <div class='alert alert-danger' *ngIf='errorMessage'>{{errorMessage}}
+    </div>
+  </div>

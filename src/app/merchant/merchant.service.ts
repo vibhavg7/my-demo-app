@@ -14,6 +14,7 @@ export class MerchantService {
   storeOrders: any = [];
   private storeServiceUrl = 'https://api.grostep.com/v2/storesapi/';
   private categoryServiceUrl = 'https://api.grostep.com/v2/categoryapi';
+  private orderService: any = 'https://api.grostep.com/v2/ordersapi/';
 
   fetchAllStores(pageNumber: number, pageSize: any, filterBy: any): Observable<any> {
     const obj: any = {};
@@ -122,14 +123,15 @@ export class MerchantService {
   }
 
   fetchOrderProducts(orderId: any): Observable<any> {
-    // if (this.storeOrders.length > 0) {
-    //   const filteredOrderData = this.storeOrders.filter(
-    //     (storeOrder: any) => {
-    //       return +storeOrder.order_id === +orderId;
-    //     }
-    //   );
-    //   return of(filteredOrderData[0]);
-    // } else {
+    if (this.storeOrders.length > 0) {
+      console.log('inside');
+      const filteredOrderData = this.storeOrders.filter(
+        (storeOrder: any) => {
+          return +storeOrder.order_id === +orderId;
+        }
+      );
+      return of(filteredOrderData[0]);
+    }
     return this.http.get<any[]>(`${this.storeServiceUrl}storeinfo/storeorderproducts/${orderId}`)
       .pipe(
         tap(data => {
@@ -142,17 +144,39 @@ export class MerchantService {
     // }
   }
 
-  fetchAllStoreOrders(storeId: number, pagenumber: number, pagesize: number, filterBy: any) {
+  fetchOrderDetails(orderId): Observable<any> {
+    if (this.storeOrders.length > 0) {
+      console.log('inside');
+      const filteredOrderData = this.storeOrders.filter(
+        (storeOrder: any) => {
+          return +storeOrder.order_id === +orderId;
+        }
+      );
+      return of(filteredOrderData[0]);
+    }
+    return this.http.get<any>(`${this.orderService}${orderId}`).pipe(
+      tap(data => {
+        console.log(data);
+      })
+      , map((data) => {
+          return data;
+      })
+      , catchError(this.handleError)
+    );
+  }
+
+  fetchAllStoreOrders(storeId: any, pagenumber: number, pagesize: number, filterBy: any) {
     const obj: any = {};
     obj.page_number = pagenumber; obj.page_size = pagesize; obj.storeId = storeId;
-    obj.filterBy = filterBy; obj.order_type = filterBy;
+    obj.filterBy = filterBy; obj.order_type = '';
 
-    // console.log(obj);
+    console.log(obj);
 
     return this.http.post<any[]>(`${this.storeServiceUrl}storeinfo/storeorders`, obj)
       .pipe(
         tap((data: any) => {
           this.storeOrders = data.store_orders_info;
+          console.log(this.storeOrders);
         })
         , map((data) => {
           return data;

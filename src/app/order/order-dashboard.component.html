@@ -34,7 +34,8 @@
               <tbody>
                   <tr *ngFor='let storeOrder of ordersinfo'>
                       <td style="width:90px !important">
-                          <a target="_blank" [routerLink]="['/order/',storeOrder?.order_id,'invoiceinfo']">
+                          <!-- target="_blank" -->
+                          <a [routerLink]="['/order/',storeOrder?.order_id,'productsinfo']">
                               {{ storeOrder?.order_id }}
                           </a>
                       </td>

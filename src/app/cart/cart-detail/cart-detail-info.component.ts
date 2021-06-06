@@ -9,15 +9,21 @@ import { CartService } from '../cart.service';
 })
 export class CartDetailInfoComponent implements OnInit {
 
+  errorMessage: any;
   cartId: number;
+  cartData: any;
   constructor(private activatedRoute: ActivatedRoute, private cartService: CartService) { }
 
   ngOnInit(): void {
-    this.cartId = +this.activatedRoute.parent.params['_value']['cartId'];
-    this.cartService.fetchCustomerInfoById(this.cartId).subscribe((data: any) => {
-      // this.customerData = data.customer_info[0];
-      // console.log(this.customerData);
-    });
+    this.cartId = this.activatedRoute.parent.snapshot.params.cartId;
+    this.cartData = this.activatedRoute.snapshot.data.resolvedCustomer.cartInfo;
+    this.errorMessage = this.activatedRoute.snapshot.data.resolvedCustomer.error;
+    console.log(this.cartData);
+    // this.cartId = +this.activatedRoute.parent.params['_value']['cartId'];
+    // this.cartService.fetchCartDetails(this.cartId).subscribe((data: any) => {
+    //   this.cartData = data.cartInfo[0];
+    //   console.log(this.cartData);
+    // });
   }
 
 }

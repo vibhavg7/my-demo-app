@@ -103,7 +103,6 @@ export class ProductShellAddComponent implements OnInit {
           });
       } else {
         this.productService.updateProduct(this.addProductForm.value, this.productId).subscribe((data) => {
-          console.log(data);
           if (data.status === 200) {
             this.router.navigate(['products']);
           } else if (data.status === 400) {

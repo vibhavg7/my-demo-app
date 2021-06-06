@@ -3,13 +3,14 @@ import { OrderService } from './order.service';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { MerchantService } from '../merchant/merchant.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrderResolverService implements Resolve<any> {
 
-  constructor(private orderService: OrderService) {
+  constructor(private merchantService: MerchantService) {
 
   }
   pagenumber = 1;
@@ -17,7 +18,7 @@ export class OrderResolverService implements Resolve<any> {
   filterBy = '';
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
-    return this.orderService.fetchAllOrders(this.pagenumber, this.pagesize, this.filterBy).pipe(
+    return this.merchantService.fetchAllStoreOrders('', this.pagenumber, this.pagesize, '').pipe(
       catchError(err => of(err))
     );
   }

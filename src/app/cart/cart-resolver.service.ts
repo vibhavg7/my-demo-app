@@ -12,13 +12,13 @@ export class CartResolverService implements Resolve<any> {
   constructor(private cartService: CartService) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
-    return this.cartService.fetchAllCartInformation(1, 20, '')
+    return this.cartService.fetchAllCartInformation(1, 20, '', '')
       .pipe(
         map((customerResolver: any) => {
           console.log(customerResolver);
           return {
             carts: customerResolver.carts_info,
-            cart_total_count: customerResolver.cart_total_count[0].total_carts_count, error: ''
+            cart_total_count: customerResolver.cart_total_count[0].customer_cart_count, error: ''
           };
         }),
         catchError(error => {

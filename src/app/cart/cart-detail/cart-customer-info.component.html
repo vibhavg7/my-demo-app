@@ -1,1 +1,36 @@
-<p>cart-customer-info works!</p>
+<div class="card card-primary" *ngIf="customerData">
+
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="row">
+            <div class="col-md-4" class="table-key">Customer Id:</div>
+            <div class="col-md-8">
+              <a target="_blank" [routerLink]="['/customer/',customerData?.customer_id,'info']">
+                {{customerData?.customer_id}}
+              </a>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4" class="table-key">Customer Name:</div>
+            <div class="col-md-8">
+              <a target="_blank" [routerLink]="['/customer/',customerData?.customer_id,'info']">
+                {{customerData?.customer_name}}
+              </a>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4" class="table-key">Customer Email:</div>
+            <div class="col-md-8">{{customerData?.customer_email}}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-4" class="table-key">Registered Phone Number:</div>
+            <div class="col-md-8">{{customerData?.registered_number}}</div>
+          </div>
+      </div>
+    </div>
+
+
+    <div class='alert alert-danger' *ngIf='errorMessage'>{{errorMessage}}
+    </div>
+  </div>

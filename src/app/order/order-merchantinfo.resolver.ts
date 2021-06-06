@@ -3,17 +3,18 @@ import { ActivatedRouteSnapshot, RouterStateSnapshot, Resolve } from '@angular/r
 import { Observable, of } from 'rxjs';
 import { OrderService } from './order.service';
 import { map, catchError } from 'rxjs/operators';
+import { MerchantService } from '../merchant/merchant.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class OrderMerchantInfoResolver implements Resolve<any> {
-  constructor(private orderService: OrderService) {
+  constructor(private merchantService: MerchantService) {
 
   }
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
     const orderid = route.parent.params.orderId;
-    return this.orderService.fetchOrderDetails(orderid)
+    return this.merchantService.fetchOrderDetails(orderid)
       .pipe(
         map(ordermerchantResolver => (
           { orderMerchant: ordermerchantResolver.storeInfo, error: '' }

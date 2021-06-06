@@ -15,7 +15,7 @@ import * as fromProduct from '../state/product.reducer';
 })
 export class ProductShellListComponent implements OnInit, OnDestroy {
 
-  filterBy: any = "";
+  filterBy: any = '';
   searchCriteriaForm: FormGroup;
   constructor(private _productService: ProductService,
     private router: Router, private formBuilder: FormBuilder,
@@ -49,8 +49,6 @@ export class ProductShellListComponent implements OnInit, OnDestroy {
 
     const productsData = this._activatedRoute.snapshot.data['products']['product'];
     this.productsCount = +this._activatedRoute.snapshot.data['products']['product_total_count'];
-    console.log(productsData);
-    console.log(this.productsCount);
     this.onProductRetrieved(productsData);
   }
 
@@ -70,14 +68,14 @@ export class ProductShellListComponent implements OnInit, OnDestroy {
     this._productService.getProducts(this.currentPage, this.pageSize, this.filterBy)
       .subscribe((data) => {
         this.onProductRetrieved(data['products']);
-      })
+      });
   }
 
   checkChanged(value) {
     this.store.dispatch({
       type: 'TOGGLE_PRODUCT_CODE',
       payload: value
-    })
+    });
   }
 
 

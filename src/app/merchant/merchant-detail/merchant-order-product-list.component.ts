@@ -38,6 +38,7 @@ export class MerchantOrderProductListComponent implements OnInit {
     if (this.order_id !== '') {
       this.merchantService.fetchOrderProducts(this.order_id).subscribe(
         (data: any) => {
+          console.log(data);
           this.orderProducts = data.order_products_info;
         },
         (err) => {

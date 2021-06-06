@@ -19,13 +19,9 @@ export class DashboardComponent implements OnInit {
     this.dashboardData = dashboardData.employee_dashboard_info;
     this.dashboardDataCount = +dashboardData.dashboardDataCount;
     this.errorMessage = dashboardData.error;
-    console.log(this.errorMessage);
-    console.log(this.dashboardData);
-    console.log(this.dashboardDataCount);
   }
 
   dashboardClick(category) {
-    console.log(category);
     this.route.navigate([category]);
   }
 

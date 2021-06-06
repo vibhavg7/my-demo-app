@@ -8,51 +8,24 @@ import { throwError, Observable, of } from 'rxjs';
 })
 export class CartService {
 
-  allCarts: any = [];
+  cartInfo: any = [];
   cartData: any;
   customerCarts: any = [];
   constructor(private http: HttpClient) { }
 
   private cartServiceUrl = 'https://api.grostep.com/v1/cartapi/';
 
-  fetchAllCartInformation(pagenumber: any, pagesize: any, filterBy: any) {
+  fetchAllCartInformation(pagenumber: any, pagesize: any, filterBy: any, customerId: any) {
     const obj: any = {};
     obj.page_number = pagenumber; obj.page_size = pagesize;
     obj.filterBy = filterBy;
+    obj.customerId = customerId;
 
-    // if (this.allCarts.length > 0) {
-    //   let filteredCartData = [];
-    //   if (filterBy) {
-    //     filteredCartData = this.allCarts.filter(
-    //       (cartInfo: any) => {
-    //         return +cartInfo.cart_id === +filterBy;
-    //       }
-    //     );
-    //   } else {
-    //     filteredCartData = this.allCarts;
-    //   }
-    //   console.log(filteredCartData);
-    //   return of({
-    //     status: 200,
-    //     cart_total_count: filteredCartData.length,
-    //     carts: filteredCartData
-    //   });
-    // }
-
-    // if (this.customerCarts.length > 0) {
-    //   const filteredOrderData = this.storeOrders.filter(
-    //     (storeOrder: any) => {
-    //       return +storeOrder.order_id === +orderId;
-    //     }
-    //   );
-    //   return of(filteredOrderData[0]);
-    // }
-
-    return this.http.post<any[]>(`${this.cartServiceUrl}fetchallcart`, obj)
+    return this.http.post<any[]>(`${this.cartServiceUrl}fetchcartsinfo`, obj)
       .pipe(
         tap((data: any) => {
-          this.allCarts = data.carts_info;
-          console.log(this.allCarts);
+          this.cartInfo = data.carts_info;
+          console.log(this.cartInfo);
         })
         , map((data) => {
           return data;
@@ -114,23 +87,38 @@ export class CartService {
       );
   }
 
+  fetchCartDetails(cartId: any): Observable<any> {
+    if (this.cartInfo.length > 0) {
+      const filteredCartData = this.cartInfo.filter(
+        (cartData: any) => {
+          return +cartData.cart_id === +cartId;
+        }
+      );
+      return of(filteredCartData[0]);
+    }
+
+    return this.http.get<any>(`${this.cartServiceUrl}${cartId}`).pipe(
+      tap(data => {
+        console.log(data);
+      })
+      , map((data) => {
+          return data;
+      })
+      , catchError(this.handleError)
+    );
+
+  }
+
+
   fetchCartProducts(cartId: any): Observable<any> {
-    // console.log(this.customerCarts);
-    // if (this.customerCarts.length > 0) {
-    //   const filteredCartData = this.customerCarts.filter(
-    //     (customerCart: any) => {
-    //       return +customerCart.cart_id === +cartId;
-    //     }
-    //   );
-    //   // console.log({
-    //   //   status: 200,
-    //   //   cartProducts: filteredCartData[0].cart_products_info
-    //   // });
-    //   return of({
-    //     status: 200,
-    //     cartProducts: filteredCartData[0].cart_products_info
-    //   });
-    // }
+    if (this.cartInfo.length > 0) {
+      const filteredCartData = this.cartInfo.filter(
+        (cartData: any) => {
+          return +cartData.cart_id === +cartId;
+        }
+      );
+      return of(filteredCartData[0]);
+    }
 
     return this.http.get<any[]>(`${this.cartServiceUrl}cartproducts/${cartId}`)
       .pipe(
