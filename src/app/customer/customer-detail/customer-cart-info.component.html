@@ -5,7 +5,7 @@
   <div class='card-body'>
     <div class="row">
       <div class='col-md-2'>Filter by:</div>
-      <div class='col-md-4'>
+      <div class='col-md-4' *ngIf="cartTotalCount > 0">
         <form [formGroup]="searchCriteriaForm">
           <input formControlName="searchCriteria" (keyup)="onChanges()" class="form-control" type="text" id="keyword"
           placeholder="Search Customer Cart By Id"
@@ -88,15 +88,13 @@
           </tr>
         </tbody>
       </table>
-
-      <!-- {{customerOrder?.length}} -->
       <app-pagination *ngIf='customerCarts?.length' [totalItemCount]="cartTotalCount" (currentPage)="currentPageFn($event)"></app-pagination>
-      <div *ngIf='customerCarts?.length == 0'>
+      <div *ngIf='customerCarts?.length == 0' class="cart_empty">
         No Customer cart Data Found
       </div>
     </div>
     </div>
   </div>
-  <div *ngIf='errorMessage' class='alert alert-danger'>
+  <div *ngIf='errorMessage' class='alert alert-danger' class="cart_empty">
     Error: {{ errorMessage }}
   </div>

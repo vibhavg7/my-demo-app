@@ -1,71 +1,74 @@
 <div class='card'>
   <div class='card-header'>
-      {{pageTitle}}
+    {{pageTitle}}
   </div>
   <div class='card-body'>
-      <div class="row">
-          <!-- <div class='row'> -->
-          <div class='col-md-2'>Filter by:</div>
-          <div class='col-md-4'>
-              <form [formGroup]="searchCriteriaForm">
-                  <input formControlName="searchCriteria"
-                  (keyup)="onChanges()"
-                    class="form-control" type="text" id="keyword" placeholder="Search Order By Id"
-                      autocomplete="off" autofocus/>
-              </form>
-          </div>
+    <div class="row">
+      <!-- <div class='row'> -->
+      <div class='col-md-2'>Filter by:</div>
+      <div class='col-md-4'>
+        <form [formGroup]="searchCriteriaForm">
+          <input formControlName="searchCriteria" (keyup)="onChanges()" class="form-control" type="text" id="keyword" placeholder="Search Order By Id"
+            autocomplete="off" autofocus/>
+        </form>
       </div>
-      <div class='table-responsive'>
-          <table style="width:1000px !important" class='table' *ngIf='ordersinfo?.length'>
-              <thead>
-                  <tr>
-                      <th style="width:90px !important">Transaction Id</th>
-                      <th>Product Details</th>
-                      <th>Order Amount</th>
-                      <th>Voucher</th>
-                      <th>Discount</th>
-                      <th>Delivery Fee</th>
-                      <th>Payable Amount</th>
-                      <th>Payment Mode</th>
-                      <th>Order Date</th>
-                      <th>Status</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr *ngFor='let storeOrder of ordersinfo'>
-                      <td style="width:90px !important">
-                          <!-- target="_blank" -->
-                          <a [routerLink]="['/order/',storeOrder?.order_id,'productsinfo']">
-                              {{ storeOrder?.order_id }}
-                          </a>
-                      </td>
-                      <td>
-                          <span (click)="ViewOrderedProducts(storeOrder?.order_id)"
-                                  style="display:block;font-size:14px;cursor:pointer;color:blue">
-                              Ordered Products
-                          </span>
-                      </td>
-                      <td>
-                          &#8377;  {{ storeOrder?.order_amount }}
-                      </td>
-                      <td>         {{storeOrder?.voucher_code}}</td>
-                      <td>&#8377;  {{storeOrder?.discount_amount}}</td>
-                      <td>&#8377;  {{storeOrder?.order_delivery_fee}}</td>
-                      <td>&#8377;   {{ storeOrder?.final_amount }}</td>
-                      <td>{{ storeOrder?.payment_mode_type }}</td>
-                      <td>{{ storeOrder?.order_placing_date |date:'medium' }}</td>
-                      <td style="font-weight:bold">{{ storeOrder?.order_status}}</td>
+    </div>
+    <div class='table-responsive'>
+      <table style="width:1000px !important" class='table' *ngIf='ordersinfo?.length'>
+        <thead>
+          <tr>
+            <th style="width:90px !important">Transaction Id</th>
+            <th>Product Details</th>
+            <th>Order Amount</th>
+            <!-- <th>Voucher</th> -->
+            <th>Discount</th>
+            <th>Delivery Fee</th>
+            <th>Payable Amount</th>
+            <th>Payment Mode</th>
+            <th>Order Date</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor='let storeOrder of ordersinfo'>
+            <td style="width:90px !important">
+              <!-- target="_blank" -->
+              <a [routerLink]="['/order/',storeOrder?.order_id,'productsinfo']">
+                {{ storeOrder?.order_id }}
+              </a>
+            </td>
+            <td>
+              <span (click)="ViewOrderedProducts(storeOrder?.order_id)" style="display:block;font-size:14px;cursor:pointer;color:blue">
+                Ordered Products
+              </span>
+            </td>
+            <td>
+              &#8377; {{ storeOrder?.order_amount }}
+            </td>
+            <!-- <td>         {{storeOrder?.voucher_code}}</td> -->
+            <td>&#8377; {{storeOrder?.discount_amount}}</td>
+            <td>&#8377; {{storeOrder?.order_delivery_fee}}</td>
+            <td>&#8377; {{ storeOrder?.final_amount }}</td>
+            <td>{{ storeOrder?.payment_mode_type }}</td>
+            <td>{{ storeOrder?.order_placing_date |date:'medium' }}</td>
+            <td style="font-weight:bold">{{ storeOrder?.order_status}}</td>
+            <td>
+              <a type="button" class="btn btn-outline-secondary" style="font-size:14px"
+              [routerLink]="[storeOrder?.order_id,'edit']">
+                Edit Order
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
-                  </tr>
-              </tbody>
-          </table>
-
-          <!-- {{store_order_total_count}} -->
-          <app-pagination *ngIf='ordersinfo?.length' [totalItemCount]="ordertotalcount" (currentPage)="currentPageFn($event)"></app-pagination>
-          <div *ngIf='ordersinfo?.length == 0'>
-              No Merchant Order Exists
-          </div>
+      <!-- {{store_order_total_count}} -->
+      <app-pagination *ngIf='ordersinfo?.length' [totalItemCount]="ordertotalcount" (currentPage)="currentPageFn($event)"></app-pagination>
+      <div *ngIf='ordersinfo?.length == 0'>
+        No Merchant Order Exists
       </div>
+    </div>
   </div>
 </div>
 <div *ngIf='errorMessage' class='alert alert-danger'>

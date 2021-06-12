@@ -190,10 +190,10 @@ export class MerchantService {
     obj.storeName = store.storeName;
     obj.storeCategoryName = store.storeCategoryName;
     obj.city = store.city;
-    obj.openingTime = store.openingTime;
-    obj.openingTimeClock = (store.openingTime / 12 > 1) ? 'PM' : 'AM';
-    obj.closingTime = store.closingTime;
-    obj.closingTimeClock = (store.closingTime / 12 > 1) ? 'PM' : 'AM';
+    obj.openingTime = store.starttime;
+    // obj.openingTimeClock = (store.openingTime / 12 > 1) ? 'PM' : 'AM';
+    obj.closingTime = store.endtime;
+    // obj.closingTimeClock = (store.closingTime / 12 > 1) ? 'PM' : 'AM';
     obj.country = store.country;
     obj.pinCode = store.pinCode;
     obj.state = store.state;
@@ -254,32 +254,32 @@ export class MerchantService {
     );
   }
 
-  editStore(store, storeId): Observable<any> {
+  editStore(store: any, storeId): Observable<any> {
     const obj: any = {};
 
-    obj['store_name'] = store['storeName'];
-    obj['store_parent_category'] = store['storeCategoryName'];
-    obj['city'] = store['city'];
-    obj['country'] = store['country'];
-    obj.store_opening_time = store.openingTime;
-    obj.store_opening_time_clock = (store.openingTime / 12 > 1) ? 'PM' : 'AM';
-    obj.store_closing_time = store.closingTime;
-    obj.store_closing_time_clock = (store.closingTime / 12 > 1) ? 'PM' : 'AM';
-    obj['pin_code'] = store['pinCode'];
-    obj['state'] = store['state'];
-    obj['status'] = store['status'];
-    obj['address'] = store['storeAddress'];
-    obj['alternative_number'] = store['storeAlternateNumber'];
-    obj['store_description'] = store['storeDescription'];
-    obj['store_email'] = store['storeEmail'];
-    obj['gst_number'] = store['storeGSTNumber'];
-    obj['landline_number'] = store['storeLandlineNumber'];
-    obj['latitude'] = store['storeLatitude'];
-    obj['longitude'] = store['storeLongitude'];
-    obj['pan_number'] = store['storePANNumber'];
-    obj['phone_number'] = store['storePhoneNumber'];
-    obj['store_rating'] = +store['storeRating'];
-    obj['status'] = +store['status'];
+    obj.store_name = store.storeName;
+    obj.store_parent_category = store.storeCategoryName;
+    obj.city = store.city;
+    obj.country = store.country;
+    obj.store_opening_time = store.starttime;
+    // obj.store_opening_time_clock = (store.openingTime / 12 > 1) ? 'PM' : 'AM';
+    obj.store_closing_time = store.endtime;
+    // obj.store_closing_time_clock = (store.closingTime / 12 > 1) ? 'PM' : 'AM';
+    obj.pin_code = store.pinCode;
+    obj.state = store.state;
+    obj.status = store.status;
+    obj.address = store.storeAddress;
+    obj.alternative_number = store.storeAlternateNumber;
+    obj.store_description = store.storeDescription;
+    obj.store_email = store.storeEmail;
+    obj.gst_number = store.storeGSTNumber;
+    obj.landline_number = store.storeLandlineNumber;
+    obj.latitude = store.storeLatitude;
+    obj.longitude = store.storeLongitude;
+    obj.pan_number = store.storePANNumber;
+    obj.phone_number = store.storePhoneNumber;
+    obj.store_rating = +store.storeRating;
+    obj.status = +store.status;
 
     console.log(obj);
 

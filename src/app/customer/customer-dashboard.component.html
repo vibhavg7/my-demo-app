@@ -13,44 +13,55 @@
         </form>
       </div>
       <div class="col-md-6">
-          <button class="btn btn-outline-secondary" style="float:right" [routerLink]="['/customer/',0,'edit']">
-            Add New Customer
-          </button>
-          <button [disabled]="disableButton" class="btn btn-outline-secondary" style="float:right" (click) = "sendNotification(1)">
-            Send Push Notification
-          </button>
-          <button [disabled]="disableButton" class="btn btn-outline-secondary" style="float:right" (click) = "sendNotification(2)">
-            Send SMS
-          </button>
+        <button class="btn btn-outline-secondary" style="float:right" [routerLink]="['/customer/',0,'edit']">
+          Add New Customer
+        </button>
+        <button [disabled]="disableButton" class="btn btn-outline-secondary" style="float:right" (click)="sendNotification(1)">
+          Send Push Notification
+        </button>
+        <button [disabled]="disableButton" class="btn btn-outline-secondary" style="float:right" (click)="sendNotification(2)">
+          Send SMS
+        </button>
       </div>
       <div class='table-responsive'>
         <table style="width:1200px !important" class='table' *ngIf='customers.length'>
-          <thead>
+          <thead class="thead">
             <tr>
-              <th>
-                  <input type="checkbox" (change)="selectAll()" [checked]="selectedAll">
+              <th class="header_css">
+                <input type="checkbox" (change)="selectAll()" [checked]="selectedAll">
               </th>
-              <th style="width:90px !important">Id</th>
-              <th>Name</th>
-              <th>Customer DOB</th>
-              <th>Phone</th>
-              <th>
+              <th style="width:90px !important" class="header_css">Id</th>
+              <th class="header_css">Name</th>
+              <th class="header_css">Customer DOB</th>
+              <th class="header_css">Phone</th>
+              <th class="header_css">
+                <span>
+                  Registration Date
+                </span>
+                <span style="display:block;margin-left:10px">(M/D/Y)</span>
+              </th>
+              <!-- <th>
                 <span style="display:block">Registration Date</span>
-              </th>
-              <th>
+              </th> -->
+              <!-- <th class="header_css">
                 <span style="display:block">Last Seen</span>
+              </th> -->
+              <th class="header_css">
+                <span>
+                  Last Seen
+                </span>
+                <span style="display:block;margin-left:10px">(M/D/Y)</span>
               </th>
-              <th>Status</th>
-              <th>Orders</th>
-              <th>Feedback</th>
+              <th class="header_css">Status</th>
+              <th class="header_css">Orders</th>
+              <th class="header_css">Feedback</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor='let customer of customers'>
               <td>
-                  <input  type="checkbox" value="{{customer?.customer_id}}"
-                  [(ngModel)]="customer.selected" (change)="checkIfAllSelected(customer?.customer_id)">
+                <input type="checkbox" value="{{customer?.customer_id}}" [(ngModel)]="customer.selected" (change)="checkIfAllSelected(customer?.customer_id)">
               </td>
               <td style="width:90px !important">
                 <a [routerLink]="['/customer', customer.customer_id]">
@@ -66,10 +77,22 @@
                 {{ customer?.customer_dob | date:'mediumDate' }}
               </td>
 
-              <td><a target="_blank" [routerLink]="['/customer', customer.customer_id]">{{ customer?.phone }}</a></td>
-              <td>{{ customer?.registered_date | date:'mediumDate' }},{{ customer?.registered_date | date:'shortTime' }} </td>
-              <td>{{ customer?.last_updated | date:'mediumDate' }},{{ customer?.last_updated | date:'shortTime' }}</td>
-              <td style="font-weight:bold;">{{ customer?.status ? 'VERIFIED' : 'NOT VERIFIED' }}</td>
+              <td>
+                <a target="_blank" [routerLink]="['/customer', customer.customer_id]">{{ customer?.phone }}</a>
+              </td>
+              <td>
+                <span>
+                  {{ customer?.registered_date | date:'short' }}
+                </span>
+                <!-- {{ customer?.registered_date | date:'mediumDate' }},{{ customer?.registered_date | date:'shortTime' }} -->
+              </td>
+              <td>
+                <span>
+                  {{ customer?.last_updated | date:'short' }}
+                </span>
+                <!-- {{ customer?.last_updated | date:'mediumDate' }},{{ customer?.last_updated | date:'shortTime' }} -->
+              </td>
+              <td style="font-weight:bold;">{{ customer?.status ? 'VERIFIED' : 'sNOT VERIFIED' }}</td>
               <td>
                 <a [routerLink]="[customer?.customer_id,'customerorders']">
                   {{customer?.orders_count}}
@@ -78,12 +101,10 @@
               <td>
                 <button style="font-size: 10px;width: 90px;" class="btn btn-outline-secondary mr-3" [routerLink]="[customer?.customer_id,'customerfeedbacks']">
                   Feedbacks
-                  <span
-                  style="border: 1px solid green;
+                  <span style="border: 1px solid green;
                   border-radius: 50%;
                   font-weight: 700;
-                  padding: 2px;color: #000;"
-                  >{{customer?.feedbacks_count}}</span>
+                  padding: 2px;color: #000;">{{customer?.feedbacks_count}}</span>
                 </button>
               </td>
               <td>
@@ -94,10 +115,9 @@
             </tr>
           </tbody>
         </table>
-        <app-pagination *ngIf='customers?.length' [totalItemCount]="total_customer_count"
-            (currentPage)="currentPageFn($event)"></app-pagination>
+        <app-pagination *ngIf='customers?.length' [totalItemCount]="total_customer_count" (currentPage)="currentPageFn($event)"></app-pagination>
         <div *ngIf='customers?.length == 0'>
-            No customer Data Found
+          No customer Data Found
         </div>
       </div>
 

@@ -42,6 +42,8 @@ export class CustomerOrdersComponent implements OnInit {
       this.customerOrders = data['customer_orders_info'];
       console.log(this.customerOrders);
       console.log(this.order_total_count);
+    }, (error) => {
+      this.errorMessage = error;
     });
     // this.onChanges();
   }

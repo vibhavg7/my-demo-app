@@ -11,10 +11,12 @@ import { OrderDeliveryInfoComponent } from './order-management/order-delivery-in
 import { OrderInvoiceInfoComponent } from './order-management/order-invoice-info.component';
 import { OrderDetailComponent } from './order-management/order-detail.component';
 import { OrderDashboardComponent } from './order-dashboard.component';
+import { OrderEditComponent } from './order-edit.component';
 
 
 @NgModule({
   declarations: [
+    OrderEditComponent,
     OrderInfoComponent,
     OrderCustomerInfoComponent,
     OrderDeliveryInfoComponent,

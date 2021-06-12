@@ -60,13 +60,13 @@
           </tbody>
         </table>
         <app-pagination *ngIf='customerfeedbackscount' [totalItemCount]="customerfeedbackscount" (currentPage)="currentPageFn($event)"></app-pagination>
-        <div *ngIf='customerfeedbackscount == 0'>
+        <div class="feedback_empty" *ngIf='customerfeedbackscount == 0'>
           No Feedback Data Found
         </div>
       </div>
 
     </div>
   </div>
-  <div *ngIf='errorMessage' class='alert alert-danger'>
+  <div class="feedback_empty" *ngIf='errorMessage' class='alert alert-danger'>
     Error: {{ errorMessage }}
   </div>

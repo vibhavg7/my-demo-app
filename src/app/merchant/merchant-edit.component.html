@@ -41,26 +41,31 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label>Opening Time</label>
+                  <label  style="margin-left:5px">Opening Time</label>
+                  <ngb-timepicker formControlName="starttime" [meridian]="meridian"></ngb-timepicker>
+
+                <!-- <label>Opening Time</label>
                 <div>
                   <select class="form-control" formControlName="openingTime">
                     <option *ngFor="let time of timeArray" value="{{time}}">
                       {{time}}
                     </option>
                   </select>
-                </div>
+                </div> -->
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label>Closing Time</label>
+                  <label  style="margin-left:5px">Closing Time</label>
+                  <ngb-timepicker [meridian]="meridian" formControlName="endtime"></ngb-timepicker>
+                <!-- <label>Closing Time</label>
                 <div>
                   <select class="form-control" formControlName="closingTime">
                     <option *ngFor="let time of timeArray" value="{{time}}">
                       {{time}}
                     </option>
                   </select>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>

@@ -1,3 +1,11 @@
-td,th,button {
+.header_css {
+  font-size: 13px;
+  text-align: center;
+  color: black;
+  font-weight: bold;
+}
+
+td,button {
   font-size: 14px;
 }
+

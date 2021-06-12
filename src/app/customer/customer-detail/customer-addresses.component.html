@@ -7,23 +7,25 @@
         </div>
         <div class='card-body'>
             <div class="row">
-             
+
             </div>
             <div class='table-responsive'>
                     <table style="width:1000px !important" class='table' *ngIf='addresses.length'>
                             <thead>
                                 <tr>
-                                    <th style="width:90px !important">Id</th>
-                                    <th>Customer Name</th>
-                                    <th>Address</th>
-                                    <th>Landmark</th>
-                                    <th>Address Type</th>
-                                    <th>Phone</th>
-                                    <th>Location</th>
-                                    <th>Pincode</th>
-                                    <th>Lat & Long</th>
-                                    <th>Last Update</th>
-                                    <th>Status</th>
+                                    <th class="header_css" style="width:90px !important">Id</th>
+                                    <th class="header_css">Customer Name</th>
+                                    <th class="header_css">Address</th>
+                                    <th class="header_css">Landmark</th>
+                                    <th class="header_css">Address Type</th>
+                                    <th class="header_css">Phone</th>
+                                    <th class="header_css">Location</th>
+                                    <th class="header_css">Pincode</th>
+                                    <th class="header_css">Lat & Long</th>
+                                    <th class="header_css">Last Updated
+                                      <span style="display:block;">(M/D/Y)</span>
+                                    </th>
+                                    <th class="header_css">Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -42,7 +44,7 @@
                                     <td>
                                         {{address?.landmark}}
                                     </td>
-            
+
                                     <td>
                                         {{address?.address_type}}
                                     </td>
@@ -58,13 +60,13 @@
                                     <td>
                                         {{address?.latitude | number:'2.1-2'}}/{{address?.longitude| number:'2.1-2'}}
                                     </td>
-                                    <td>{{address?.last_update | date:'medium'}}</td>
+                                    <td>{{address?.delivery_address_last_updated | date:'short'}}</td>
                                     <td style="font-weight:bold">{{ address?.status ? 'Available' : 'Not Available' }}</td>
-            
+
                                 </tr>
                             </tbody>
                         </table>
-            
+
                         <!-- {{store_order_total_count}} -->
                         <!-- <app-pagination *ngIf='storeOrders?.length' [totalItemCount]="store_order_total_count" (currentPage)="currentPageFn($event)"></app-pagination> -->
                         <div *ngIf='addresses?.length == 0'>

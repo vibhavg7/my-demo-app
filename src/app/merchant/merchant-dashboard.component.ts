@@ -54,6 +54,11 @@ export class MerchantDashboardComponent implements OnInit {
     } else {
       this.storetotalcount = resolvedData.store_total_count.stores_count;
       this.stores = resolvedData.store;
+      // const starttime = this.stores.store_opening_time.split(':');
+      // const endtime = this.stores.store_closing_time.split(':');
+
+      // console.log(starttime);
+      // console.log(endtime);
     }
     this.onChanges();
   }

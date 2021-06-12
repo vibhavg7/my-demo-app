@@ -24,8 +24,10 @@
         <div class="row">
           <div class="col-md-4" class="table-key">Store Timings:</div>
           <div class="col-md-8">
-            {{merchantData?.store_opening_time % 12 }} {{merchantData?.store_opening_time_clock }} - {{merchantData?.store_closing_time
-            % 12}} {{merchantData?.store_closing_time_clock }}
+
+              {{merchantData?.store_opening_time | convertTimeToAmPm}} - {{merchantData?.store_closing_time | convertTimeToAmPm}}
+            <!-- {{merchantData?.store_opening_time % 12 }} {{merchantData?.store_opening_time_clock }} - {{merchantData?.store_closing_time
+            % 12}} {{merchantData?.store_closing_time_clock }} -->
 
           </div>
         </div>
@@ -39,7 +41,11 @@
         </div>
         <div class="row">
           <div class="col-md-4" class="table-key">Store Phone Number:</div>
-          <div class="col-md-8">{{merchantData?.phone_number}} / {{merchantData?.alternative_number}}</div>
+          <div class="col-md-8">
+            <span *ngIf="merchantData?.phone_number">{{merchantData?.phone_number}}</span>
+            <span *ngIf="merchantData?.alternative_number && merchantData?.alternative_number != 0">
+              / {{merchantData?.alternative_number}}</span>
+          </div>
         </div>
         <div class="row">
           <div class="col-md-4" class="table-key">Store Location:</div>

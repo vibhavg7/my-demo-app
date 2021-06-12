@@ -24,7 +24,7 @@
 <td>{{ storeCategory?.store_category_ranking }}</td>
 <td style="font-weight:bold">{{ storeCategory?.status ? 'Available' : 'Not Available' }}</td>
 
-<td>{{ storeCategory.last_updated | date:'medium' }}</td>
+<td>{{ storeCategory.last_updated | date:'short' }}</td>
 
 <td>
   <button class="btn btn-outline-secondary mr-3" [routerLink]="['/category/storecategories',storeCategory?.store_category_id,'edit']">
