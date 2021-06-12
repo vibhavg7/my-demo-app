@@ -41,6 +41,23 @@ export class ServicableAreasService {
     );
   }
 
+  updateDeliveryAreaOpeningClosingTime(areaId, openingtime, closingtime) {
+    const obj: any = {};
+    obj.openingtime = openingtime;
+    obj.closingtime = closingtime;
+    const url = `${this.deliveryAreasServiceUrl}updateareatiming/${areaId}`;
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.put(url, obj, { headers }).pipe(
+      tap(data => {
+        console.log(JSON.stringify(data));
+      }),
+      map((deliveryAreaData) => {
+        return deliveryAreaData;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
   fetchAllDeliveryBannersById(areaId, pagenumber: number, pagesize: number, filterBy: any): Observable<any> {
     const obj: any = {};
     obj.pagenumber = pagenumber; obj.pagesize = pagesize; obj.areaId = areaId; obj.filterBy = filterBy;

@@ -15,6 +15,7 @@ export class MerchantOrderProductListComponent implements OnInit {
   errorMessage: any;
   constructor(public activeModal: NgbActiveModal,
               private cartService: CartService,
+              private customerService: CustomerService,
               private merchantService: MerchantService) { }
 
   title: any = '';
@@ -22,6 +23,8 @@ export class MerchantOrderProductListComponent implements OnInit {
   order_id = '';
   // tslint:disable-next-line:variable-name
   cart_id = '';
+  // tslint:disable-next-line:variable-name
+  customer_order_id = '';
   orderProducts = [];
   ngOnInit() {
     if (this.cart_id !== '') {
@@ -36,7 +39,19 @@ export class MerchantOrderProductListComponent implements OnInit {
       );
     }
     if (this.order_id !== '') {
+      console.log('inside it');
       this.merchantService.fetchOrderProducts(this.order_id).subscribe(
+        (data: any) => {
+          console.log(data);
+          this.orderProducts = data.order_products_info;
+        },
+        (err) => {
+          this.errorMessage = err;
+        }
+      );
+    }
+    if (this.customer_order_id !== '') {
+      this.customerService.fetchOrderProducts(this.customer_order_id).subscribe(
         (data: any) => {
           console.log(data);
           this.orderProducts = data.order_products_info;

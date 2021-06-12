@@ -15,6 +15,7 @@ import { AreaWiseBannerEditComponent } from './servicable-areas-detail/area-wise
 import { AreaWisePaymentOptionsComponent } from './servicable-areas-detail/area-wise-payment-options.component';
 import { AreaWiseCategoryEditComponent } from './servicable-areas-detail/area-wise-category-edit.component';
 
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { AreaWiseCategoryEditComponent } from './servicable-areas-detail/area-wi
                  AreaWisePaymentOptionsComponent,
                  AreaWiseCategoryEditComponent],
   imports: [
+    NgbModule,
     CommonModule,
     ReactiveFormsModule,
     ServicableAreasRoutingModule,

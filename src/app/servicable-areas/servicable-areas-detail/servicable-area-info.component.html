@@ -1,38 +1,74 @@
 <div class="card card-primary" *ngIf="deliveryAreaData">
   <div class="card-body">
-      <div class="row">
-          <div class="col-md-8">
-              <div class="row">
-                  <div class="col-md-4" class="table-key">Id:</div>
-                  <div class="col-md-8">{{deliveryAreaData?.serviceable_area_id}}</div>
-              </div>
-              <div class="row">
-                  <div class="col-md-4" class="table-key">City:</div>
-                  <div class="col-md-8">{{deliveryAreaData?.city}}</div>
-              </div>
-              <div class="row">
-                  <div class="col-md-4" class="table-key">Statel:</div>
-                  <div class="col-md-8">{{deliveryAreaData?.state}}</div>
-              </div>
-              <div class="row">
-                  <div class="col-md-4" class="table-key">Country:</div>
-                  <div class="col-md-8">{{deliveryAreaData?.country}}</div>
-              </div>
-              <div class="row">
-                  <div class="col-md-4" class="table-key">Alternate City Name:</div>
-                  <div class="col-md-8">{{deliveryAreaData?.city_alternate_name}}</div>
-              </div>
-              <!-- <div class="row">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="row">
+          <div class="col-md-4" class="table-key">Id:</div>
+          <div class="col-md-8">{{deliveryAreaData?.serviceable_area_id}}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-4" class="table-key">City:</div>
+          <div class="col-md-8">{{deliveryAreaData?.city}}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-4" class="table-key">Statel:</div>
+          <div class="col-md-8">{{deliveryAreaData?.state}}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-4" class="table-key">Country:</div>
+          <div class="col-md-8">{{deliveryAreaData?.country}}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-4" class="table-key">Alternate City Name:</div>
+          <div class="col-md-8">{{deliveryAreaData?.city_alternate_name}}</div>
+        </div>
+        <!-- <div class="row">
                   <div class="col-md-4" class="table-key">Last Updated</div>
                   <div class="col-md-8">{{customerData?.last_updated | date:'medium'}}</div>
               </div> -->
 
-              <div class="row">
-                  <div class="col-md-4" class="table-key">Available:</div>
-                  <div class="col-md-8">{{deliveryAreaData?.status == 1 ? 'Available':'Not Available' }}</div>
+        <div class="row">
+          <div class="col-md-4" class="table-key">Available:</div>
+          <div class="col-md-8">{{deliveryAreaData?.status == 1 ? 'Available':'Not Available' }}</div>
+        </div>
+        <div class="row">
+
+          <div class="col-md-4" class="table-key">Servicable Timing:</div>
+          <div class="col-md-8">
+            <div *ngIf="!editclosingTime">
+              <div *ngIf="timeAvailable;then content else other_content"></div>
+              <ng-template #content>
+                   <span style="font-weight: 500">Opening Time: </span>{{ deliveryAreaData?.opening_time | convertTimeToAmPm}} -->
+                   <span style="font-weight: 500">Closing Time : </span>{{deliveryAreaData?.closing_time | convertTimeToAmPm}}
+              </ng-template>
+              <ng-template #other_content>Not Available</ng-template>
+              <span style="color:blue;cursor:pointer;margin: 10px;
+                      text-decoration: underline;
+                      font-weight: 500;" (click)="changeDeliveryAreaOpeningClosingTime()">
+                Edit
+              </span>
+            </div>
+            <div *ngIf="editclosingTime">
+              <div style="width: 50%; height: 50%; float:left;">
+                <span style="margin: 20px;font-weight: 500;">Opening Time:</span>
+                <ngb-timepicker [(ngModel)]="starttime" [meridian]="meridian"></ngb-timepicker>
               </div>
+              <div style="width: 50%; height: 50%; float:right;">
+                <span style="margin: 20px;font-weight: 500;">Closing Time:</span>
+                <ngb-timepicker [meridian]="meridian" [(ngModel)]="endtime"></ngb-timepicker>
+              </div>
+              <div class="form-group">
+                <button type="button" style="border: 1px solid;" (click)="saveOpeningClosingTime()" class="btn btn-primary">Save</button>
+                <button type="button" style="border: 1px solid;" (click)="cancel()" class="btn btn-primary">Cancel</button>
+              </div>
+              <!-- <div>
+                  <button type="submit" value="SAVE" (click)="saveOpeningClosingTime()">SAVE</button>
+                </div> -->
+            </div>
           </div>
+        </div>
       </div>
+    </div>
   </div>
   <div class='alert alert-danger' *ngIf='errorMessage'>{{errorMessage}}
   </div>

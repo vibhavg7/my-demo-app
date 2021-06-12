@@ -4,7 +4,7 @@ td, th, button {
   /* white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis; */
-  display: inline-block;
+  /* display: inline-block; */
 }
 
 

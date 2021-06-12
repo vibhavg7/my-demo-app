@@ -5,9 +5,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CriteriaComponent } from './criteria/criteria.component';
 import { RouterModule } from '@angular/router';
 import { PaginationComponent } from './pagination/pagination.component';
-import { UpperCaseName } from './upper-case-name';
 import { NotificationComponent } from './notification/notification.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
+import { UpperCaseName } from './upper-case-name';
+import { ConvertTimeToAmPmPipe } from './convert-time-to-am-pm.pipe';
 
 
 
@@ -18,7 +19,8 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
     PaginationComponent,
     UpperCaseName,
     NotificationComponent,
-    UnauthorizedComponent
+    UnauthorizedComponent,
+    ConvertTimeToAmPmPipe
   ],
   imports: [
     CommonModule,
@@ -26,13 +28,14 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
     RouterModule,
     FormsModule
   ],
-  exports:[
+  exports: [
     StarComponent,
     CommonModule,
     FormsModule,
     CriteriaComponent,
     PaginationComponent,
-    UpperCaseName
+    UpperCaseName,
+    ConvertTimeToAmPmPipe
   ]
 })
 export class SharedModule { }

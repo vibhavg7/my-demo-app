@@ -8,6 +8,7 @@ import { tap, map, catchError } from 'rxjs/operators';
 })
 export class CustomerService {
 
+  customerOrders: any;
   customerCarts: any = [];
   constructor(private http: HttpClient) { }
 
@@ -49,8 +50,9 @@ export class CustomerService {
 
     return this.http.post<any[]>(`${this.customerServiceUrl}customerinfo/customerorders`, obj)
       .pipe(
-        tap(data => {
-          console.log(data);
+        tap((data: any) => {
+          this.customerOrders = data.customer_orders_info;
+          console.log(this.customerOrders);
         })
         , map((data) => {
           return data;
@@ -59,6 +61,28 @@ export class CustomerService {
       );
   }
 
+
+  fetchOrderProducts(orderId: any): Observable<any> {
+    if (this.customerOrders.length > 0) {
+      console.log('inside');
+      const filteredOrderData = this.customerOrders.filter(
+        (customerOrder: any) => {
+          return +customerOrder.order_id === +orderId;
+        }
+      );
+      return of(filteredOrderData[0]);
+    }
+    return this.http.get<any[]>(`${this.customerServiceUrl}customerinfo/customerorderproducts/${orderId}`)
+      .pipe(
+        tap(data => {
+        })
+        , map((data) => {
+          return data;
+        })
+        , catchError(this.handleError)
+      );
+    // }
+  }
 
   fetchCustomerInfoById(customerId: any): Observable<any> {
     if (this.customerData) {

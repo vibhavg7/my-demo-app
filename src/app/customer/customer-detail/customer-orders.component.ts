@@ -16,24 +16,23 @@ export class CustomerOrdersComponent implements OnInit {
   searchCriteriaForm: FormGroup;
   customerOrders: any = [];
   order_total_count: any;
-  customerId : any = "";
+  customerId: any = "";
   pageTitle: any = "Merchant Orders";
   filterBy: any = '';
-  errorMessage:any = "";
+  errorMessage: any = "";
   currentPage: number = 1;
   pageSize: number = 20;
-  constructor(private _activatedRoute:ActivatedRoute, private formBuilder: FormBuilder,
-              private _customerService:CustomerService,private modalService:NgbModal) {
+  constructor(private _activatedRoute: ActivatedRoute, private formBuilder: FormBuilder,
+    private _customerService: CustomerService, private modalService: NgbModal) {
     this.searchCriteriaForm = this.formBuilder.group({
       searchCriteria: ['']
     });
   }
 
-  ViewOrderedProducts(order_id:any)
-  {
+  ViewOrderedProducts(order_id: any) {
     const modalRef = this.modalService.open(MerchantOrderProductListComponent, { scrollable: true });
-    modalRef.componentInstance['title']= 'View Products';
-    modalRef.componentInstance['order_id']= order_id;
+    modalRef.componentInstance['title'] = 'View Products';
+    modalRef.componentInstance['customer_order_id'] = order_id;
   }
 
   ngOnInit() {
