@@ -30,6 +30,20 @@ export class DeliveryService {
       );
   }
 
+  fetchAllActiveDeliveryPersons(): Observable<any> {
+
+    return this.http.get<any[]>(`${this.deliveryServiceUrl}deliveryinfo/fetchactiveDeliveryPersons`)
+      .pipe(
+        tap(data => {
+          // console.log(JSON.stringify(data));
+        })
+        , map((data) => {
+          return data;
+        })
+        , catchError(this.handleError)
+      );
+  }
+
   fetchDeliveryPersonDetails(id: any) {
     return this.http.get<any[]>(`${this.deliveryServiceUrl}deliveryinfo/${id}`)
     .pipe(

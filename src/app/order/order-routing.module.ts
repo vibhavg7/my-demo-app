@@ -12,7 +12,12 @@ import { OrderInvoiceInfoResolver } from './order-invoiceinfo.resolver';
 import { OrderDetailComponent } from './order-management/order-detail.component';
 import { OrderDashboardComponent } from './order-dashboard.component';
 import { OrderResolverService } from './order-resolver.service';
-import { OrderEditComponent } from './order-edit.component';
+import { OrderEditDetailComponent } from './order-edit/order-edit-detail.component';
+import { EditOrderInfoComponent } from './order-edit/edit-order-info.component';
+import { EditProductInfoComponent } from './order-edit/edit-product-info.component';
+import { EditDeliveryInfoComponent } from './order-edit/edit-delivery-info.component';
+import { OrderStatusResolver } from './order-status.resolver';
+import { ActiveDeliveryPersonResolver } from './active-delivery-person.resolver';
 
 const routes: Routes = [
   {
@@ -49,7 +54,28 @@ const routes: Routes = [
   },
   {
     path: ':orderId/edit',
-    component: OrderEditComponent
+    component: OrderEditDetailComponent,
+    children: [
+      {
+        path: 'editorderinfo',
+        component: EditOrderInfoComponent,
+        resolve:
+        {
+          resolvedInvoice: OrderInvoiceInfoResolver,
+          resolvedorderStatusTypes: OrderStatusResolver,
+          resolvedActiveDP: ActiveDeliveryPersonResolver
+        }
+      },
+      {
+        path: 'editproductsinfo',
+        component: EditProductInfoComponent,
+        resolve: { resolvedProducts: OrderProductsResolver }
+      },
+      {
+        path: 'editdeliveryinfo',
+        component: EditDeliveryInfoComponent
+      }
+    ]
 }
 ];
 

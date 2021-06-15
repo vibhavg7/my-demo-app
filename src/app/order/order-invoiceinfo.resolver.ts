@@ -16,7 +16,10 @@ export class OrderInvoiceInfoResolver implements Resolve<any> {
     return this.orderService.fetchOrderDetails(orderid)
       .pipe(
         map(orderinvoiceResolver => (
-          { orderInvoice: orderinvoiceResolver.paymentInfo, error: '' }
+          {
+            orderInvoice: orderinvoiceResolver.paymentInfo,
+            storeInfo: orderinvoiceResolver.storeInfo,
+            customerInfo: orderinvoiceResolver.customerInfo, error: '' }
         )),
         catchError(error => {
           const message = `Retrieval error: ${error}`;

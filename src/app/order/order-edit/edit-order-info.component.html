@@ -1,0 +1,160 @@
+<form [formGroup]="editOrderInfoForm" (ngSubmit)="repairOrder()">
+  <div class="form-row">
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom01">Order Id</label>
+      <input type="text" formControlName="order_id" class="form-control" placeholder="Order Id" disabled>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom02">Order Customer Name</label>
+      <input type="text" class="form-control" formControlName="customer_name" disabled placeholder="Customer name">
+
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="validationCustomUsername">Store Name</label>
+      <input type="text" class="form-control" formControlName="store_name" disabled placeholder="Store name">
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom02">Delivery Fees</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroupPrepend">&#8377;</span>
+        </div>
+        <input type="text" class="form-control" formControlName="delivery_fee">
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom02">Order Amount</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroupPrepend">&#8377;</span>
+        </div>
+        <input type="text" class="form-control" disabled formControlName="total_amount">
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom02">Discount</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroupPrepend">&#8377;</span>
+        </div>
+        <input type="text" class="form-control" formControlName="discount_amount">
+      </div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-md-4 mb-3">
+      <div class="form-check" style="margin-left: 23px;">
+          <!-- margin-left: 26px;width: 1.05rem;height: 1.05rem; -->
+          <!-- (change)="isChecked =! isChecked" -->
+        <input style="margin-top: 26px;"
+        class="form-check-input" type="checkbox" id="defaultCheck1"
+        formControlName="isOrderEdit">
+        <label style="font-size:14px;margin-top:25px" class="form-check-label" for="defaultCheck1">
+          Edit Order Amount
+        </label>
+      </div>
+      <!-- {{ f.isOrderEdit.value }} -->
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="validationCustomUsername">Merchant Bill Amount</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroupPrepend">&#8377;</span>
+        </div>
+        <input type="text" class="form-control" formControlName="merchant_bill_amount"
+              [attr.disabled]="!f.isOrderEdit.value ? '' : null"/>
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom02">Payable Amount</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroupPrepend">&#8377;</span>
+        </div>
+        <input type="text" class="form-control" formControlName="payable_amount" disabled>
+      </div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom01">Order Status</label>
+      <select class="form-control" formControlName="status">
+        <option *ngFor="let orderStatus of orderStatusTypes" value="{{orderStatus?.order_type_id}}">
+          {{orderStatus?.type | upperCaseName}}
+        </option>
+      </select>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="validationCustomUsername">Merchant Status</label>
+      <select class="form-control" formControlName="order_merchant_status">
+        <option *ngFor="let merchantStatus of merchantStatusTypes" value="{{merchantStatus?.merchant_order_status_type_id}}">
+          {{merchantStatus?.type | upperCaseName}}
+        </option>
+      </select>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom01">Delivery Slot</label>
+      <input type="text" formControlName="delivery_slot" class="form-control" disabled>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom02">Payment Mode</label>
+      <input type="text" formControlName="type" class="form-control" disabled>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="validationCustomUsername">Payment Status</label>
+      <div class="input-group">
+        <input type="text" class="form-control" disabled="true" formControlName="payment_status">
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom01">Voucher Code Used</label>
+      <input type="text" class="form-control" formControlName="voucher_code" disabled>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-md-6 mb-3">
+      <label for="validationCustom02">Delivery Status</label>
+      <select class="form-control" formControlName="order_deliveryperson_status">
+        <option *ngFor="let deliveryStatus of deliveryStatusTypes" value="{{deliveryStatus?.deliveryperson_order_status_type_id}}">
+          {{deliveryStatus?.type | upperCaseName}}
+        </option>
+      </select>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="validationCustomUsername">Active Delivery Person</label>
+      <div class="input-group">
+        <select class="form-control" formControlName="assinged_delivery_person">
+          <option *ngFor="let activeDeliveryPerson of activeDeliveryPersons" value="{{activeDeliveryPerson?.delivery_person_id}}">
+            {{activeDeliveryPerson?.delivery_person_name | upperCaseName}} - {{activeDeliveryPerson?.phone}}
+          </option>
+        </select>
+        <!-- <input type="text" class="form-control" disabled="true" formControlName="payment_status"> -->
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="inputAddress">Delivery Address</label>
+    <input type="text" formControlName="address" class="form-control" disabled>
+  </div>
+  <div class="form-group">
+    <label for="inputAddress2">Instructions</label>
+    <input type="text" class="form-control" formControlName="instructions">
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputCity">Order Placing Date</label>
+      <input type="text" class="form-control" disabled formControlName="order_created_date">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputState">Order Last Updated</label>
+      <input type="text" class="form-control" disabled formControlName="order_last_updated_date">
+    </div>
+  </div>
+  <button [disabled]="!editOrderInfoForm.valid || disableForm" class="btn btn-primary">Save</button>
+</form>

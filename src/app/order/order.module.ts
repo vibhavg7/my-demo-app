@@ -11,12 +11,14 @@ import { OrderDeliveryInfoComponent } from './order-management/order-delivery-in
 import { OrderInvoiceInfoComponent } from './order-management/order-invoice-info.component';
 import { OrderDetailComponent } from './order-management/order-detail.component';
 import { OrderDashboardComponent } from './order-dashboard.component';
-import { OrderEditComponent } from './order-edit.component';
+import { OrderEditDetailComponent } from './order-edit/order-edit-detail.component';
+import { EditOrderInfoComponent } from './order-edit/edit-order-info.component';
+import { EditProductInfoComponent } from './order-edit/edit-product-info.component';
+import { EditDeliveryInfoComponent } from './order-edit/edit-delivery-info.component';
 
 
 @NgModule({
   declarations: [
-    OrderEditComponent,
     OrderInfoComponent,
     OrderCustomerInfoComponent,
     OrderDeliveryInfoComponent,
@@ -24,7 +26,11 @@ import { OrderEditComponent } from './order-edit.component';
     OrderMerchantInfoComponent,
     OrderProductInfoComponent,
     OrderDetailComponent,
-    OrderDashboardComponent
+    OrderDashboardComponent,
+    OrderEditDetailComponent,
+    EditOrderInfoComponent,
+    EditProductInfoComponent,
+    EditDeliveryInfoComponent
   ],
   imports: [
     CommonModule,

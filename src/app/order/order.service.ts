@@ -14,6 +14,18 @@ export class OrderService {
   public orderDetails: any = '';
   public orders: any = [];
 
+  fetchStatusTypes(): Observable<any> {
+    return this.http.get<any>(`${this.orderService}fetchOrderStatusTypes`).pipe(
+      tap(data => {
+        console.log(data);
+      })
+      , map((data) => {
+          return data;
+      })
+      , catchError(this.handleError)
+    );
+  }
+
   fetchAllOrders(pagenumber: number, pagesize: any, filterBy: any): Observable<any> {
     const obj: any = {};
     obj.page_number = pagenumber; obj.page_size = pagesize; obj.filterBy = filterBy;
@@ -42,6 +54,32 @@ export class OrderService {
           return data;
       })
       , catchError(this.handleError)
+    );
+  }
+
+  editOrderInfo(editorderForm: any, orderId): Observable<any> {
+
+    const url = `${this.orderService}${orderId}`;
+    const obj: any = {};
+    obj.delivery_fee = +editorderForm.delivery_fee;
+    obj.delivery_person_id = +editorderForm.assinged_delivery_person;
+    obj.discount_amount = +editorderForm.discount_amount;
+    obj.instructions = editorderForm.instructions;
+    obj.merchant_bill_amount = +editorderForm.merchant_bill_amount;
+    obj.order_deliveryperson_status = +editorderForm.order_deliveryperson_status;
+    obj.order_merchant_status = +editorderForm.order_merchant_status;
+    obj.payable_amount = +editorderForm.payable_amount;
+    obj.status = +editorderForm.status;
+    obj.is_order_edit = +editorderForm.isOrderEdit;
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.put(url, obj, { headers }).pipe(
+      tap(data => {
+        // console.log(JSON.stringify(data))
+      }),
+      map((data) => {
+        return data;
+      }),
+      catchError(this.handleError)
     );
   }
 
