@@ -1,9 +1,10 @@
 <div class="container">
-  <div class="row">
+  <div class="row justify-content-center align-items-center">
     <ng-container *ngIf="dashboardData">
       <div class="col-md-3 box" *ngFor="let item of dashboardData">
         <div (click)="dashboardClick(item?.employee_dashboard_value)">
-          <img src="./assets/images/{{item?.image_url}}" class="img-responsive center-block" style="max-height:180px;padding:30px 0 30px 0"
+          <img src="./assets/images/{{item?.image_url}}" class="img-responsive center-block"
+          style="max-height:180px;padding:30px 0 30px 0"
           />
           <h4>{{item?.employee_dashboard_text}}</h4>
         </div>
