@@ -15,7 +15,7 @@ export class CouponDataComponent implements OnInit {
   }
 
   // tslint:disable-next-line:no-input-rename
-  @Input('voucherInfo') voucher: any;
+  @Input('couponInfo') coupon: any;
 
   imageWidth = 80;
   imageHeight = 80;
@@ -23,20 +23,9 @@ export class CouponDataComponent implements OnInit {
   ngOnInit() {
   }
 
-  uploadImage(bannerId: any) {
-    console.log(bannerId);
-    const modalRef: any = this.modalService.open(ImageUploadComponent);
-    modalRef.componentInstance.title = 'Image Upload';
-    modalRef.componentInstance.id = bannerId;
-    modalRef.componentInstance.image_type = 'banners';
-    // modalRef.componentInstance.bannerImage.subscribe((data) => {
-    //   console.log(data);
-    // });
-  }
-
-  disableCoupon(voucherid) {
+  disableCoupon(couponid) {
     if (confirm('Are you sure to delete')) {
-      this.couponService.deleteCoupon(voucherid).subscribe((data) => {
+      this.couponService.deleteCoupon(couponid).subscribe((data) => {
         console.log(data);
       });
     }

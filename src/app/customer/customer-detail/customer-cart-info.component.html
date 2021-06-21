@@ -57,12 +57,12 @@
               &#8377; {{ customerCart?.order_amount }}
             </td>
             <td>
-              <span *ngIf="customerCart?.voucher_code">{{customerCart?.voucher_code}}</span>
+              <span *ngIf="customerCart?.coupon_code">{{customerCart?.coupon_code}}</span>
             </td>
             <td>
                 <!-- *ngIf="customerCart?.discount_amount" -->
               <span>
-                  &#8377; {{customerCart?.discount_amount}}
+                  &#8377; {{customerCart?.voucher_amount}}
               </span>
             </td>
             <td>

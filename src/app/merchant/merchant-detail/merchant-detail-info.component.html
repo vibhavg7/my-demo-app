@@ -85,7 +85,14 @@
       </div>
 
       <div class="col-md-4">
-        <img class='center-block img-responsive' *ngIf="!merchantData?.image_url" src='assets/product_images/default_image.jpg' [title]='merchantData?.store_name'
+          <!-- style="float:right" -->
+          <button class="btn btn-outline-secondary"
+          [routerLink]="['/coupon/',0,'edit']"
+          [queryParams]="{storeId:merchantData?.store_id}">
+            Add Store Coupon
+          </button>
+        <img class='center-block img-responsive' *ngIf="!merchantData?.image_url"
+        src='assets/product_images/default_image.jpg' [title]='merchantData?.store_name'
           [style.width.px]='250' [style.margin.px]='2'>
         <span *ngIf="!merchantData?.image_url" (click)="uploadImage(merchantData.store_id)" style="display:block;font-size:14px;cursor:pointer;color:blue">
           Upload Image

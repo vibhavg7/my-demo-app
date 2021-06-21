@@ -13,7 +13,7 @@
           </div> -->
           <div class="row">
             <div class="col-md-4" class="table-key">Voucher Code Used :</div>
-            <div class="col-md-8 order-detail">{{cartData?.voucher_code}}</div>
+            <div class="col-md-8 order-detail">{{cartData?.coupon_code}}</div>
           </div>
           <div class="row">
             <div class="col-md-4" class="table-key">Total Order Amount:</div>
@@ -29,9 +29,9 @@
           </div>
           <div class="row">
             <div class="col-md-4" class="table-key">Voucher Amount:</div>
-            <div class="col-md-8 order-detail" *ngIf="cartData?.voucher_amount">
+            <div class="col-md-8 order-detail" *ngIf="cartData?.discount_amount">
               <span>
-                &#8377; {{cartData?.voucher_amount}}
+                &#8377; {{cartData?.discount_amount}}
               </span>
             </div>
           </div>

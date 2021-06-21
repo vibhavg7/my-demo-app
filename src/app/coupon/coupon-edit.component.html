@@ -5,52 +5,81 @@
         <h2>Add New Coupon</h2>
         <form [formGroup]="addCouponForm" (ngSubmit)="onSubmit()">
           <div class="form-group">
-            <label>Voucher Code</label>
-            <input type="text" formControlName="voucherCode" class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f.voucherCode.errors }"
+            <label>Coupon Code</label>
+            <input type="text" formControlName="couponCode" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.couponCode.errors }"
             />
-            <div *ngIf="submitted && f.voucherCode.errors" class="invalid-feedback">
-              <div *ngIf="f.voucherCode.errors.required">Voucher Code is required</div>
+            <div *ngIf="submitted && f.couponCode.errors" class="invalid-feedback">
+              <div *ngIf="f.couponCode.errors.required">Coupon Code is required</div>
             </div>
           </div>
-          <div class="form-group">
-            <label for="">Calculation Type</label>
-            <div>
-              <select class="form-control" formControlName="calculationType">
-                <option value="1">Percentage</option>
-                <option value="2">Value</option>
-              </select>
+          <div class="form-row">
+            <div class="col-md-6 mb-3">
+              <label for="">Calculation Type</label>
+              <div>
+                <select class="form-control" formControlName="calculationType">
+                  <option value="1">Percentage</option>
+                  <option value="2">Value</option>
+                </select>
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <label>Voucher Value</label>
-            <input type="text" formControlName="voucherValue" class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && f.voucherValue.errors }"
-            />
-            <div *ngIf="submitted && f.voucherValue.errors" class="invalid-feedback">
-              <div *ngIf="f.voucherValue.errors.required">Voucher value is required</div>
+            <div class="col-md-6 mb-3">
+              <label>Coupon Value</label>
+              <input type="text" formControlName="couponValue" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.couponValue.errors }"
+              />
+              <div *ngIf="submitted && f.couponValue.errors" class="invalid-feedback">
+                <div *ngIf="f.couponValue.errors.required">Coupon value is required</div>
+              </div>
             </div>
           </div>
 
-          <div class="form-group">
-            <label>Voucher Discount Max. Value</label>
-            <input type="text" formControlName="voucherMaxLimit" class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && f.voucherMaxLimit.errors }"
-            />
-            <div *ngIf="submitted && f.voucherMaxLimit.errors" class="invalid-feedback">
-              <div *ngIf="f.voucherMaxLimit.errors.required">Voucher Discount Max. Value is required</div>
+
+
+          <div class="form-row">
+              <div class="col-md-6 mb-3">
+                  <label for="">Coupon Type</label>
+                  <div>
+                    <select class="form-control" formControlName="couponType">
+                      <option value="0">General</option>
+                      <option value="1">Customer</option>
+                      <option value="2">Store</option>
+                    </select>
+                  </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <ng-container *ngIf="f.couponType.value == 1">
+                    <label>Customer Id</label>
+                    <input type="text" formControlName="customerId" class="form-control" />
+                </ng-container>
+                <ng-container *ngIf="f.couponType.value == 2">
+                    <label>Store Id</label>
+                    <input type="text" formControlName="storeId" class="form-control" />
+                </ng-container>
+              </div>
+            </div>
+
+
+          <div class="form-row">
+            <div class="col-md-6 mb-3">
+              <label>Discount Max. Value</label>
+              <input type="text" formControlName="couponMaxLimit" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.couponMaxLimit.errors }"
+              />
+              <div *ngIf="submitted && f.couponMaxLimit.errors" class="invalid-feedback">
+                <div *ngIf="f.couponMaxLimit.errors.required">Discount Max. Value is required</div>
+              </div>
+
+            </div>
+            <div class="col-md-6 mb-3">
+              <label>Min. Cart Amount</label>
+              <input type="text" formControlName="couponMinCartAmount" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.couponMinCartAmount.errors }"
+              />
+              <div *ngIf="submitted && f.couponMinCartAmount.errors" class="invalid-feedback">
+                <div *ngIf="f.couponMinCartAmount.errors.required">Min. Cart Amount is required</div>
+              </div>
             </div>
           </div>
 
-          <div class="form-group">
-            <label>Voucher Min. Cart Amount</label>
-            <input type="text" formControlName="voucherMinCartAmount" class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f.voucherMinCartAmount.errors }"
-            />
-            <div *ngIf="submitted && f.voucherMinCartAmount.errors" class="invalid-feedback">
-              <div *ngIf="f.voucherMinCartAmount.errors.required">Voucher Min. Cart Amount is required</div>
-            </div>
-          </div>
+
+
 
           <!-- <div class="form-group">
                   <label>Voucher Type</label>
@@ -63,42 +92,64 @@
               </div> -->
 
           <div class="form-group">
-            <label>Voucher Description</label>
-            <textarea formControlName="voucherDescription" class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f.voucherDescription.errors }"
+            <label>Description</label>
+            <textarea formControlName="description" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.description.errors }"
               row="10" cols="10">
                 </textarea>
-            <div *ngIf="submitted && f.voucherDescription.errors" class="invalid-feedback">
-              <div *ngIf="f.voucherDescription.errors.required">Voucher Description is required</div>
+            <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+              <div *ngIf="f.description.errors.required">Description is required</div>
+            </div>
+          </div>
+
+
+          <div class="form-row">
+            <div class="col-md-6 mb-3">
+              <mat-form-field appearance="fill">
+                <mat-label>Start Date</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="startdatetime">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+              <!-- <label>Start Date</label>
+                <input type="text" formControlName="startdatetime" class="form-control"
+                  [ngClass]="{ 'is-invalid': submitted && f.startdatetime.errors }"
+                />
+                <div *ngIf="submitted && f.startdatetime.errors" class="invalid-feedback">
+                  <div *ngIf="f.startdatetime.errors.required">Start Date is required</div>
+                </div> -->
+
+            </div>
+            <div class="col-md-6 mb-3">
+                <mat-form-field appearance="fill">
+                    <mat-label>End Date</mat-label>
+                    <input matInput [matDatepicker]="picker1" formControlName="enddatetime">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                  </mat-form-field>
+              <!-- <label>End Date</label>
+              <input type="text" formControlName="enddatetime" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.enddatetime.errors }"
+              />
+              <div *ngIf="submitted && f.enddatetime.errors" class="invalid-feedback">
+                <div *ngIf="f.enddatetime.errors.required">End Date is required</div>
+              </div> -->
             </div>
           </div>
 
           <div class="form-group">
-            <label>Expiry Date</label>
-            <input type="text" formControlName="expirydatetime" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.expirydatetime.errors }"
+            <label>Coupon Max. Usage Per day</label>
+            <input type="text" formControlName="couponMaxUsageCount" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.couponMaxUsageCount.errors }"
             />
-            <div *ngIf="submitted && f.expirydatetime.errors" class="invalid-feedback">
-              <div *ngIf="f.expirydatetime.errors.required">Expiry Date is required</div>
+            <div *ngIf="submitted && f.couponMaxUsageCount.errors" class="invalid-feedback">
+              <div *ngIf="f.couponMaxUsageCount.errors.required">Coupon Max. Usage Per day is required</div>
             </div>
           </div>
 
           <div class="form-group">
-            <label>Voucher Max. Usage Per day</label>
-            <input type="text" formControlName="voucherMaxUsageCount" class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && f.voucherMaxUsageCount.errors }"
+            <label>Coupon max limit per user</label>
+            <input type="text" formControlName="couponMaxLimitUser" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.couponMaxLimitUser.errors }"
             />
-            <div *ngIf="submitted && f.voucherMaxUsageCount.errors" class="invalid-feedback">
-              <div *ngIf="f.voucherMaxUsageCount.errors.required">Voucher Max. Usage Per day is required</div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label>Voucher max limit per user</label>
-            <input type="text" formControlName="voucherMaxLimitUser" class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && f.voucherMaxLimitUser.errors }"
-            />
-            <div *ngIf="submitted && f.voucherMaxLimitUser.errors" class="invalid-feedback">
-              <div *ngIf="f.voucherMaxLimitUser.errors.required">Voucher max limit per usere is required</div>
+            <div *ngIf="submitted && f.couponMaxLimitUser.errors" class="invalid-feedback">
+              <div *ngIf="f.couponMaxLimitUser.errors.required">Coupon max limit per user is required</div>
             </div>
           </div>
 
@@ -113,7 +164,7 @@
           </div>
 
           <div class="form-group">
-            <button [disabled]="!addCouponForm.valid || disableForm"  class="btn btn-primary">Save</button>
+            <button [disabled]="!addCouponForm.valid || disableForm" class="btn btn-primary">Save</button>
           </div>
         </form>
       </div>

@@ -1,40 +1,48 @@
 <td>
-  <a [routerLink]="['/coupon', voucher.voucher_id]">
-    {{ voucher?.voucher_code }}
+    <!-- ['/coupon', coupon.coupon_id] -->
+  <a [routerLink]="">
+    {{ coupon?.coupon_code }}
   </a>
 </td>
 <td>
-  {{ voucher?.voucher_value }} {{voucher?.calculation_type == 1? '%': ' Rs'}}
+  {{ coupon?.coupon_value }} {{coupon?.calculation_type == 1? '%': ' Rs'}}
 </td>
 <td>
-  &#8377;{{ voucher?.voucher_min_cart_value }}
+  <span>
+      {{coupon?.coupon_end_date | date:'mediumDate'}}
+  </span>
 </td>
 <td>
-  &#8377;{{ voucher?.voucher_max_value }}
+  &#8377;{{ coupon?.coupon_min_cart_value }}
 </td>
 <td>
-  {{ voucher?.voucher_description }}
+  &#8377;{{ coupon?.coupon_max_value }}
+</td>
+<!-- <td>
+  {{ coupon?.coupon_description }}
+</td> -->
+<td>
+    <a [routerLink]="">
+      {{ coupon?.created_by | upperCaseName }}
+    </a>
 </td>
 <td>
-  {{ voucher?.voucher_created_by }}
+  {{ coupon?.coupon_daily_usage_limit }}
 </td>
 <td>
-  {{ voucher?.voucher_max_usage_count }}
-</td>
-<td>
-  {{ voucher?.voucher_max_limit_user }}
+  {{ coupon?.coupon_max_limit_user }}
 </td>
 
 <td style="font-weight:bold"
 [ngClass]="{
-  'text-success':voucher?.status === 1,
-  'text-danger':voucher?.status === 0
+  'text-success':coupon?.status === 1,
+  'text-danger':coupon?.status === 0
 }">
-  {{ voucher?.status ? 'Active' : 'Not Active' }}
+  {{ coupon?.status ? 'Active' : 'Not Active' }}
 </td>
 <td>
-  <button class="btn btn-outline-secondary" [routerLink]="['/coupon',voucher?.voucher_id,'edit']">Edit</button>
-  <!-- <button class="btn btn-outline-secondary" style="margin-left:5px" (click)="disableCoupon(voucher?.voucher_id)">
+  <button class="btn btn-outline-secondary" [routerLink]="['/coupon',coupon?.coupon_id,'edit']">Edit</button>
+  <!-- <button class="btn btn-outline-secondary" style="margin-left:5px" (click)="disableCoupon(coupon?.coupon_id)">
     Disable
   </button> -->
 </td>

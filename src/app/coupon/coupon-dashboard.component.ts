@@ -8,19 +8,19 @@ import { CouponService } from './coupon.service';
 })
 export class CouponDashboardComponent implements OnInit {
 
-  voucherTotalCount: any;
+  couponTotalCount: any;
   currentPage = 1;
   pageSize = 20;
   filterBy: any = '';
   constructor(private couponservice: CouponService) { }
   pageTitle = 'Coupon Management';
-  vouchers: any = [];
+  coupons: any = [];
   errorMessage: any;
   ngOnInit() {
     this.couponservice.fetchAllCoupons(this.currentPage, this.pageSize, '').subscribe((data: any) => {
       console.log(data);
-      this.vouchers = data.vouchers;
-      this.voucherTotalCount = data.voucher_total_count.vouchers_count;
+      this.coupons = data.coupons;
+      this.couponTotalCount = data.coupon_total_count.coupon_count;
     }, (error) => {
       this.errorMessage = error;
     });
@@ -29,8 +29,8 @@ export class CouponDashboardComponent implements OnInit {
   currentPageFn(page) {
     this.couponservice.fetchAllCoupons(page, this.pageSize, this.filterBy)
       .subscribe((data: any) => {
-        this.vouchers = data.vouchers;
-        this.voucherTotalCount = data.voucher_total_count.vouchers_count;
+        this.coupons = data.coupons;
+        this.couponTotalCount = data.coupon_total_count.coupon_count;
       }, (error) => {
         this.errorMessage = error;
       });

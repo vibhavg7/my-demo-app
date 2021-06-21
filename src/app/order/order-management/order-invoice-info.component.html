@@ -94,9 +94,9 @@
             src='{{invoiceData?.bill_image}}' [title]='invoiceData?.customer_name' [style.width.px]='250' [style.margin.px]='2'>
 
           <a href="{{invoiceData?.bill_image}}" class="btn clss" target="_self" download>Download</a>
-          <button style="display:block" (click)="repairOrder()">REPAIR ORDER</button>
         </ng-container>
-
+        <!-- <button style="display:block" (click)="repairOrder()">REPAIR ORDER</button> -->
+        <button class="btn btn-outline-secondary" [routerLink]="['/order',invoiceData?.order_id,'edit','editorderinfo']">REPAIR ORDER</button>
       </div>
     </div>
   </div>

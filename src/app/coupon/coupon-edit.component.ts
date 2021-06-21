@@ -10,6 +10,8 @@ import { CouponService } from './coupon.service';
 })
 export class CouponEditComponent implements OnInit {
 
+  customerId: number;
+  storeId: number;
   errorMessage: any;
   submitted: boolean;
   addCouponForm: FormGroup;
@@ -22,15 +24,19 @@ export class CouponEditComponent implements OnInit {
     private router: Router
   ) {
     this.addCouponForm = this.formBuilder.group({
-      voucherCode: ['', Validators.required],
+      couponCode: ['', Validators.required],
       calculationType: ['', Validators.required],
-      voucherValue: ['', Validators.required],
-      voucherMaxLimit: ['', Validators.required],
-      voucherMinCartAmount: ['', Validators.required],
-      expirydatetime: [''],
-      voucherMaxUsageCount: ['', Validators.required],
-      voucherDescription: ['', Validators.required],
-      voucherMaxLimitUser: ['', Validators.required],
+      couponValue: ['', Validators.required],
+      couponMaxLimit: ['', Validators.required],
+      couponMinCartAmount: ['', Validators.required],
+      startdatetime: [''],
+      enddatetime: [''],
+      couponType: [''],
+      customerId: [''],
+      storeId: [''],
+      couponMaxUsageCount: ['', Validators.required],
+      description: ['', Validators.required],
+      couponMaxLimitUser: ['', Validators.required],
       status: ['']
     });
   }
@@ -39,21 +45,37 @@ export class CouponEditComponent implements OnInit {
 
   ngOnInit() {
     this.couponId = +this.activatedRoute.snapshot.params.couponId;
-    console.log(this.couponId);
+    this.storeId = +this.activatedRoute.snapshot.queryParamMap.get('storeId');
+    this.customerId = +this.activatedRoute.snapshot.queryParamMap.get('customerId');
+    this.addCouponForm.get('couponType').setValue(3);
+    if (this.customerId) {
+      this.addCouponForm.get('customerId').setValue(this.customerId);
+      this.addCouponForm.get('couponType').setValue(1);
+    }
+    if (this.storeId) {
+      this.addCouponForm.get('storeId').setValue(this.storeId);
+      this.addCouponForm.get('couponType').setValue(2);
+    }
     if (this.couponId !== 0) {
       this.couponService.fetchCouponDetails(this.couponId).subscribe((data: any) => {
         const couponData: any = data.coupon;
         console.log(couponData);
-        this.addCouponForm.get('voucherCode').setValue(couponData.voucher_code);
-        this.addCouponForm.get('voucherValue').setValue(couponData.voucher_value);
+        this.addCouponForm.get('couponCode').setValue(couponData.coupon_code);
+        this.addCouponForm.get('couponValue').setValue(couponData.coupon_value);
         this.addCouponForm.get('calculationType').setValue(couponData.calculation_type);
-        this.addCouponForm.get('voucherMaxLimit').setValue(couponData.voucher_max_value);
-        this.addCouponForm.get('voucherMinCartAmount').setValue(couponData.voucher_min_cart_value);
-        this.addCouponForm.get('voucherDescription').setValue(couponData.voucher_description);
-        this.addCouponForm.get('expirydatetime').setValue(couponData.voucher_expiry_date);
-        this.addCouponForm.get('voucherMaxUsageCount').setValue(couponData.voucher_max_usage_count);
-        this.addCouponForm.get('voucherMaxLimitUser').setValue(couponData.voucher_max_limit_user);
+        this.addCouponForm.get('couponMaxLimit').setValue(couponData.coupon_max_value);
+        this.addCouponForm.get('couponMinCartAmount').setValue(couponData.coupon_min_cart_value);
+        this.addCouponForm.get('description').setValue(couponData.coupon_description);
+        this.addCouponForm.get('startdatetime').setValue(couponData.coupon_start_date);
+        this.addCouponForm.get('enddatetime').setValue(couponData.coupon_end_date);
+        this.addCouponForm.get('couponMaxUsageCount').setValue(couponData.coupon_daily_usage_limit);
+        this.addCouponForm.get('couponMaxLimitUser').setValue(couponData.coupon_max_limit_user);
         this.addCouponForm.get('status').setValue(couponData.status);
+        this.addCouponForm.get('customerId').setValue(couponData.customer_id);
+        this.addCouponForm.get('storeId').setValue(couponData.store_id);
+        this.addCouponForm.get('couponType').setValue(couponData.coupon_type);
+        // this.customerId = couponData.customer_id;
+        // this.storeId = couponData.store_id;
       });
     }
   }
@@ -66,7 +88,9 @@ export class CouponEditComponent implements OnInit {
         this.disableForm = false;
         return;
       }
-      if (this.couponId === '') {
+      console.log(this.addCouponForm.value);
+      console.log(this.couponId);
+      if (+this.couponId === 0) {
         this.couponService.addNewCoupon(this.addCouponForm.value).subscribe((data: any) => {
           if (data.status === 200) {
             this.router.navigate(['coupon']);

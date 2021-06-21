@@ -85,7 +85,9 @@ export class CustomerService {
   }
 
   fetchCustomerInfoById(customerId: any): Observable<any> {
+    console.log(this.customerData);
     if (this.customerData) {
+      console.log(this.customerData);
       return of(this.customerData);
     }
     return this.http.get(`${this.customerServiceUrl}customerinfo/${customerId}`).pipe(

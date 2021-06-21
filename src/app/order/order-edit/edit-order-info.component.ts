@@ -69,7 +69,7 @@ export class EditOrderInfoComponent implements OnInit {
     // console.log(this.activeDeliveryPersons);
 
     this.editOrderInfoForm.get('order_id').setValue(this.invoiceData.order_id);
-    this.editOrderInfoForm.get('voucher_code').setValue(this.invoiceData.voucher_code);
+    this.editOrderInfoForm.get('voucher_code').setValue(this.invoiceData.coupon_code);
     this.editOrderInfoForm.get('total_amount').setValue(this.invoiceData.total_amount);
     this.editOrderInfoForm.get('payable_amount').setValue(this.invoiceData.payable_amount);
     this.editOrderInfoForm.get('bill_image').setValue(this.invoiceData.bill_image);
