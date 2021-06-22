@@ -30,19 +30,29 @@
               <div *ngIf="f.storeEmail.errors.required">Store Email is required</div>
             </div>
           </div>
-          <div class="form-group">
-            <label>Phone Number</label>
-            <input type="text" maxlength="10" minlength="10" formControlName="storePhoneNumber" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.storePhoneNumber.errors }"
-            />
-            <div *ngIf="submitted && f.storePhoneNumber.errors" class="invalid-feedback">
-              <div *ngIf="f.storePhoneNumber.errors.required">Store Phone Number is required</div>
+          <div class="form-row">
+            <div class="col-md-4 mb-3">
+              <label>Phone Number</label>
+              <input type="text" maxlength="10" minlength="10" formControlName="storePhoneNumber" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.storePhoneNumber.errors }"
+              />
+              <div *ngIf="submitted && f.storePhoneNumber.errors" class="invalid-feedback">
+                <div *ngIf="f.storePhoneNumber.errors.required">Store Phone Number is required</div>
+              </div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <label>Alternate Number</label>
+              <input type="text" formControlName="storeAlternateNumber" class="form-control" />
+            </div>
+            <div class="col-md-4 mb-3">
+              <label>Landline Number</label>
+              <input type="text" formControlName="storeLandlineNumber" class="form-control" />
             </div>
           </div>
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                  <label  style="margin-left:5px">Opening Time</label>
-                  <ngb-timepicker formControlName="starttime" [meridian]="meridian"></ngb-timepicker>
+                <label style="margin-left:5px">Opening Time</label>
+                <ngb-timepicker formControlName="starttime" [meridian]="meridian"></ngb-timepicker>
 
                 <!-- <label>Opening Time</label>
                 <div>
@@ -56,8 +66,8 @@
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                  <label  style="margin-left:5px">Closing Time</label>
-                  <ngb-timepicker [meridian]="meridian" formControlName="endtime"></ngb-timepicker>
+                <label style="margin-left:5px">Closing Time</label>
+                <ngb-timepicker [meridian]="meridian" formControlName="endtime"></ngb-timepicker>
                 <!-- <label>Closing Time</label>
                 <div>
                   <select class="form-control" formControlName="closingTime">
@@ -69,30 +79,26 @@
               </div>
             </div>
           </div>
-          <div class="form-group">
-            <label>Alternate Number</label>
-            <input type="text" formControlName="storeAlternateNumber" class="form-control" />
-          </div>
-          <div class="form-group">
-            <label>Landline Number</label>
-            <input type="text" formControlName="storeLandlineNumber" class="form-control" />
-          </div>
-          <div class="form-group">
-            <label>GST Number</label>
-            <input type="text" formControlName="storeGSTNumber" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.storeGSTNumber.errors }"
-            />
-            <div *ngIf="submitted && f.storeGSTNumber.errors" class="invalid-feedback">
-              <div *ngIf="f.storeGSTNumber.errors.required">Store GST Number is required</div>
+
+          <div class="form-row">
+            <div class="col-md-6 mb-3">
+              <label>GST Number</label>
+              <input type="text" formControlName="storeGSTNumber" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.storeGSTNumber.errors }"
+              />
+              <div *ngIf="submitted && f.storeGSTNumber.errors" class="invalid-feedback">
+                <div *ngIf="f.storeGSTNumber.errors.required">Store GST Number is required</div>
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label>PAN Number</label>
+              <input type="text" formControlName="storePANNumber" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.storePANNumber.errors }"
+              />
+              <div *ngIf="submitted && f.storePANNumber.errors" class="invalid-feedback">
+                <div *ngIf="f.storePANNumber.errors.required">Store PAN Number is required</div>
+              </div>
             </div>
           </div>
-          <div class="form-group">
-            <label>PAN Number</label>
-            <input type="text" formControlName="storePANNumber" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.storePANNumber.errors }"
-            />
-            <div *ngIf="submitted && f.storePANNumber.errors" class="invalid-feedback">
-              <div *ngIf="f.storePANNumber.errors.required">Store PAN Number is required</div>
-            </div>
-          </div>
+
           <div class="form-group">
             <label>Address</label>
             <textarea row="3" formControlName="storeAddress" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.storeAddress.errors }"></textarea>
@@ -101,35 +107,37 @@
             </div>
           </div>
 
-          <div class="form-group">
-            <label>Country</label>
-            <div>
-              <select class="form-control" formControlName="country">
-                <option selected value="India">India</option>
-              </select>
+          <div class="form-row">
+            <div class="col-md-4 mb-3">
+              <label>Country</label>
+              <div>
+                <select class="form-control" formControlName="country">
+                  <option selected value="India">India</option>
+                </select>
+              </div>
             </div>
+            <div class="col-md-4 mb-3">
+              <label>State</label>
+              <div>
+                <select class="form-control" formControlName="state">
+                  <option selected value="Uttar Pradesh">Uttar Pradesh</option>
+                  <option selected value="Haryana">Haryana</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <label>City</label>
+              <div>
+                <select class="form-control" formControlName="city">
+                  <option selected value="Noida">Noida</option>
+                  <option selected value="Gurgaon">Gurgaon</option>
+                  <option selected value="Ghaziabad">Ghaziabad</option>
+                  <option selected value="Agra">Agra</option>
+                </select>
+              </div>
+            </div>
+          </div>
 
-          </div>
-          <div class="form-group">
-            <label>State</label>
-            <div>
-              <select class="form-control" formControlName="state">
-                <option selected value="Uttar Pradesh">Uttar Pradesh</option>
-                <option selected value="Haryana">Haryana</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <label>City</label>
-            <div>
-              <select class="form-control" formControlName="city">
-                <option selected value="Noida">Noida</option>
-                <option selected value="Gurgaon">Gurgaon</option>
-                <option selected value="Ghaziabad">Ghaziabad</option>
-                <option selected value="Agra">Agra</option>
-              </select>
-            </div>
-          </div>
           <div class="form-group">
             <label>Pin Code</label>
             <input type="text" formControlName="pinCode" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.pinCode.errors }"
@@ -146,28 +154,45 @@
               <div *ngIf="f.storeDescription.errors.required">Store Description is required</div>
             </div>
           </div>
-          <div class="form-group">
-            <label>Store Rating</label>
-            <input type="text" formControlName="storeRating" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.storeRating.errors }"
-            />
-            <div *ngIf="submitted && f.storeRating.errors" class="invalid-feedback">
-              <div *ngIf="f.storeRating.errors.required">Store Rating is required</div>
+          <div class="form-row">
+              <div class="col-md-6 mb-3">
+                  <label>Store Rating</label>
+                  <input type="text" formControlName="storeRating" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.storeRating.errors }"
+                  />
+                  <div *ngIf="submitted && f.storeRating.errors" class="invalid-feedback">
+                    <div *ngIf="f.storeRating.errors.required">Store Rating is required</div>
+                  </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                  <label>Store Margin</label>
+                  <input type="text" formControlName="storeMargin" class="form-control"
+                      [ngClass]="{ 'is-invalid': submitted && f.storeMargin.errors }"
+                  />
+                  <div *ngIf="submitted && f.storeMargin.errors" class="invalid-feedback">
+                    <div *ngIf="f.storeMargin.errors.required">Store Margin is required</div>
+                  </div>
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <label>Store Latitude</label>
-            <input type="text" formControlName="storeLatitude" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.storeLatitude.errors }"
-            />
-            <div *ngIf="submitted && f.storeLatitude.errors" class="invalid-feedback">
-              <div *ngIf="f.storeLatitude.errors.required">Store Latitude is required</div>
+          <!-- <div class="form-group">
+
+          </div> -->
+
+          <div class="form-row">
+            <div class="col-md-6 mb-3">
+              <label>Store Latitude</label>
+              <input type="text" formControlName="storeLatitude" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.storeLatitude.errors }"
+              />
+              <div *ngIf="submitted && f.storeLatitude.errors" class="invalid-feedback">
+                <div *ngIf="f.storeLatitude.errors.required">Store Latitude is required</div>
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <label>Store Longitude</label>
-            <input type="text" formControlName="storeLongitude" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.storeLongitude.errors }"
-            />
-            <div *ngIf="submitted && f.storeLongitude.errors" class="invalid-feedback">
-              <div *ngIf="f.storeLongitude.errors.required">Store Longitude is required</div>
+            <div class="col-md-6 mb-3">
+              <label>Store Longitude</label>
+              <input type="text" formControlName="storeLongitude" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.storeLongitude.errors }"
+              />
+              <div *ngIf="submitted && f.storeLongitude.errors" class="invalid-feedback">
+                <div *ngIf="f.storeLongitude.errors.required">Store Longitude is required</div>
+              </div>
             </div>
           </div>
           <div class="form-group">

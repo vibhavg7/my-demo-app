@@ -54,6 +54,7 @@ export class MerchantEditComponent implements OnInit {
       pinCode: ['', Validators.required],
       storeDescription: ['', Validators.required],
       storeRating: ['', Validators.required],
+      storeMargin: ['', Validators.required],
       status: [''],
       starttime: [{hour: 0o0, minute: 0o0}],
       endtime: [{hour: 0o0, minute: 0o0}]
@@ -89,13 +90,15 @@ export class MerchantEditComponent implements OnInit {
         this.addStoreForm.get('storeLongitude').setValue(storedata[0].longitude);
         this.addStoreForm.get('storeDescription').setValue(storedata[0].store_description);
         this.addStoreForm.get('storeRating').setValue(storedata[0].store_rating);
+        this.addStoreForm.get('storeMargin').setValue(storedata[0].margin);
+
         this.addStoreForm.get('storeCategoryName').setValue(storedata[0].store_parent_category);
         this.storeCategories = responseList[1].store_categories;
         this.timeAvailable = storedata[0].store_opening_time && storedata[0].store_closing_time ? true : false;
 
         console.log(+storedata[0].store_opening_time);
         console.log(+storedata[0].store_closing_time);
-
+        console.log(storedata[0].margin);
         console.log(this.timeAvailable);
 
         if (this.timeAvailable) {

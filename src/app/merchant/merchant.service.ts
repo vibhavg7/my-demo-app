@@ -210,6 +210,7 @@ export class MerchantService {
     obj.storePhoneNumber = store.storePhoneNumber;
     obj.storeRating = +store.storeRating;
     obj.password = store.storePhoneNumber;
+    obj.storeMargin = store.storeMargin;
     const url = `${this.storeServiceUrl}addnewstore`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post(url, obj, { headers }).pipe(
@@ -280,7 +281,7 @@ export class MerchantService {
     obj.phone_number = store.storePhoneNumber;
     obj.store_rating = +store.storeRating;
     obj.status = +store.status;
-
+    obj.margin = store.storeMargin;
     console.log(obj);
 
     const url = `${this.storeServiceUrl}storeinfo/${storeId}`;
