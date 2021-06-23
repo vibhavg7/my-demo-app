@@ -9,6 +9,7 @@ import { MerchantProductsCatalogComponent } from './merchant-detail/merchant-pro
 import { MerchantProductEditComponent } from './merchant-detail/merchant-product-edit.component';
 import { MerchantResolverService } from './merchant-resolver.service';
 import { MerchantOrderDetailComponent } from './merchant-detail/merchant-order-detail.component';
+import { MerchantCategoriesComponent } from './merchant-detail/merchant-categories.component';
 
 const routes: Routes = [
     {
@@ -27,6 +28,7 @@ const routes: Routes = [
             { path: 'info', component: MerchantDetailInfoComponent },
             { path: 'merchantorders', component: MerchantOrdersComponent },
             { path: 'merchantproducts', component: MerchantProductsCatalogComponent },
+            { path: 'categories', component: MerchantCategoriesComponent },
             //   { path: 'merchantproducts/edit', component: MerchantProductEditComponent },
         ]
     },

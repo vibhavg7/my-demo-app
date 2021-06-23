@@ -5,6 +5,9 @@
                         Store Information
                         <!-- <span [ngClass]="{'fa fa-exclamation': !isValid('info')}"></span> -->
                     </a>
+                    <a [routerLink]="['categories']" routerLinkActive="active">
+                        Store Categories
+                    </a>
                     <a [routerLink]="['merchantproducts']" routerLinkActive="active">
                         Products Catelog
                         <!-- <span [ngClass]="{'fa fa-exclamation': !isValid('tags')}"></span> -->
@@ -17,7 +20,7 @@
     </div>
     <!-- *ngIf="merchantData" -->
     <div class="card-body">
-       
+
 
         <router-outlet></router-outlet>
 

@@ -16,6 +16,34 @@ export class MerchantService {
   private categoryServiceUrl = 'https://api.grostep.com/v2/categoryapi';
   private orderService: any = 'https://api.grostep.com/v2/ordersapi/';
 
+
+  fetchStoreCategories(storeId: any) {
+    const obj: any = {};
+    return this.http.post<any[]>(`${this.storeServiceUrl}storeinfo/categories/${storeId}`, obj)
+    .pipe(
+      tap(data => {
+      })
+      , map((data) => {
+        return data;
+      })
+      , catchError(this.handleError)
+    );
+  }
+
+  updateStoreCategory(storeCategory) {
+    const obj: any = {};
+    obj.status = +storeCategory.status;
+    const url = `${this.storeServiceUrl}storeinfo/categories/updateStatus/${storeCategory.store_category_mapping_id}`;
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.patch(url, obj, { headers }).pipe(
+      tap(data => { console.log(JSON.stringify(data)); }),
+      map((data) => {
+        return data;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
   fetchAllStores(pageNumber: number, pageSize: any, filterBy: any): Observable<any> {
     const obj: any = {};
     obj.page_number = pageNumber; obj.page_size = pageSize; obj.filterBy = filterBy;

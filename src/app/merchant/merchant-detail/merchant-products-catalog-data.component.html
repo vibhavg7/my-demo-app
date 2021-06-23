@@ -13,9 +13,9 @@
     &#8377;{{ storeProductsInfo?.product_marked_price }}</td>
 <td>
      &#8377;{{ storeProductsInfo?.store_selling_price }}</td>
-<td>
+<!-- <td>
     {{ storeProductsInfo?.store_discount }}%
-</td>
+</td> -->
 <td>
   {{ storeProductsInfo?.store_margin }}%
 </td>
@@ -24,6 +24,12 @@
 </td>
 <td>
     <input class="stockcheckbox" type='checkbox' [(ngModel)]='checkbox' (ngModelChange)='updateProductStock()'>
+</td>
+<td style="font-weight:bold" [ngClass]="{
+  'text-success':storeProductsInfo?.status === 1,
+  'text-danger':storeProductsInfo?.status === 0
+}">
+{{ storeProductsInfo?.status ? 'Active' : 'Inactive' }}
 </td>
 <td>
     <button class="btn btn-outline-secondary" [routerLink]="[storeProductsInfo.store_product_mapping_id,'edit']">Edit</button>

@@ -1,0 +1,55 @@
+<div class='card'>
+  <div class='card-body'>
+
+    <div class='table-responsive' *ngIf='storeCategories?.length > 0'>
+      <table style="width:1000px !important" class='table'>
+        <thead>
+          <tr>
+            <th>
+
+            </th>
+            <th style="width:90px !important">Name</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor='let storeCategory of storeCategories'>
+            <td>
+              <img *ngIf="!storeCategory.image_url" class='center-block img-responsive' src='assets/product_images/default_image.jpg' [title]='storeCategory?.name'
+                [style.width.px]='80' [style.margin.px]='0'>
+              <img *ngIf="storeCategory.image_url" class='center-block img-responsive' src='{{storeCategory.image_url}}' [title]='storeCategory?.name'
+                [style.width.px]='80' [style.margin.px]='0'>
+            </td>
+            <td style="width: 200px;">
+              <a>{{ storeCategory?.name }}</a>
+            </td>
+            <td style="font-weight:bold" [ngClass]="{
+                          'text-success':storeCategory?.status === 1,
+                          'text-danger':storeCategory?.status === 0
+                        }">
+              <span *ngIf="!storeCategory.isEditable">
+                {{ storeCategory?.status ? 'Active' : 'Inactive' }}
+                <button class="btn btn-secondary" (click)="storeCategory.isEditable=!storeCategory.isEditable">Edit</button>
+              </span>
+              <span *ngIf="storeCategory.isEditable">
+                <select class="form-control" [(ngModel)]="storeCategory.status">
+                  <option value="1">Active</option>
+                  <option value="0">Inactive</option>
+                </select>
+                <button class="btn btn-secondary" (click)="editStoreCategoryStatus(storeCategory)">Save</button>
+                <button class="btn btn-secondary" (click)="storeCategory.isEditable=false">Cancel</button>
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf='storeCategories?.length == 0'>
+      No Category available in store catelog
+    </div>
+
+  </div>
+</div>
+<div *ngIf='errorMessage' class='alert alert-danger'>
+  Error: {{ errorMessage }}
+</div>

@@ -86,6 +86,13 @@
           <div class="col-md-4" class="table-key">Available:</div>
           <div class="col-md-8">{{merchantData?.status == 1 ? 'Available':'Not Available' }}</div>
         </div>
+        <div class="row">
+            <div class="col-md-4" class="table-key">
+              <span style="cursor:pointer" [routerLink]="['/merchant/',merchantData?.store_id,'categories']">
+                  View All Store Categories
+              </span>
+            </div>
+          </div>
       </div>
 
       <div class="col-md-4">
