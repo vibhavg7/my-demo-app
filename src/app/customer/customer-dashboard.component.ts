@@ -56,6 +56,7 @@ export class CustomerDashboardComponent implements OnInit {
   }
 
   currentPageFn(page) {
+    console.log(page);
     this._customerService.fetchAllCustomers(page, this.pageSize, this.filterBy)
       .subscribe((data) => {
         this.total_customer_count = data['customer_total_count']['customer_count'];

@@ -30,6 +30,23 @@ export class MerchantService {
     );
   }
 
+  uploadStoreCategoryProducts(merchantData) {
+    const obj: any = {};
+    obj.margin = merchantData.margin;
+    obj.storeId = merchantData.store_id;
+    obj.store_parent_category = merchantData.store_parent_category;
+    const url = `${this.storeServiceUrl}uploadStoreCategoryProducts`;
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post(url, obj, { headers }).pipe(
+      tap(data => {
+      }),
+      map((data) => {
+        return data;
+      }),
+      catchError(err => this.handleError(err))
+    );
+  }
+
   updateStoreCategory(storeCategory) {
     const obj: any = {};
     obj.status = +storeCategory.status;

@@ -8,8 +8,9 @@
             <th>
 
             </th>
-            <th style="width:90px !important">Name</th>
+            <th style="width:90px !important">Category Name</th>
             <th>Status</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -29,16 +30,18 @@
                         }">
               <span *ngIf="!storeCategory.isEditable">
                 {{ storeCategory?.status ? 'Active' : 'Inactive' }}
-                <button class="btn btn-secondary" (click)="storeCategory.isEditable=!storeCategory.isEditable">Edit</button>
               </span>
               <span *ngIf="storeCategory.isEditable">
                 <select class="form-control" [(ngModel)]="storeCategory.status">
                   <option value="1">Active</option>
                   <option value="0">Inactive</option>
                 </select>
-                <button class="btn btn-secondary" (click)="editStoreCategoryStatus(storeCategory)">Save</button>
-                <button class="btn btn-secondary" (click)="storeCategory.isEditable=false">Cancel</button>
               </span>
+            </td>
+            <td>
+                <button *ngIf="!storeCategory.isEditable" class="btn btn-secondary" (click)="storeCategory.isEditable=!storeCategory.isEditable">Edit</button>
+                <button *ngIf="storeCategory.isEditable" class="btn btn-secondary" (click)="editStoreCategoryStatus(storeCategory)">Save</button>
+                <button *ngIf="storeCategory.isEditable" class="btn btn-secondary" (click)="storeCategory.isEditable=false">Cancel</button>
             </td>
           </tr>
         </tbody>
@@ -46,6 +49,7 @@
     </div>
     <div *ngIf='storeCategories?.length == 0'>
       No Category available in store catelog
+
     </div>
 
   </div>

@@ -21,6 +21,7 @@ export class PaginationComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     this.pager = this.pagerService.getPager(this.totalItemCount, 1);
+    console.log(this.pager);
   }
 
   setPage(page: number) {

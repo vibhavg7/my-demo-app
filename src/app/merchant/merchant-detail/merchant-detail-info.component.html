@@ -88,9 +88,13 @@
         </div>
         <div class="row">
             <div class="col-md-4" class="table-key">
-              <span style="cursor:pointer" [routerLink]="['/merchant/',merchantData?.store_id,'categories']">
+              <span style="cursor:pointer" *ngIf="storeProductsCount > 0"
+               [routerLink]="['/merchant/',merchantData?.store_id,'categories']">
                   View All Store Categories
               </span>
+              <button *ngIf="storeProductsCount == 0" (click)="uploadStoreCategoryProducts()" class="btn btn-outline-secondary">
+                  Upload Store Category products
+                </button>
             </div>
           </div>
       </div>

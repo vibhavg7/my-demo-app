@@ -48,5 +48,4 @@ export class MerchantCategoriesComponent implements OnInit {
       }
     );
   }
-
 }

@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs';
 })
 export class MerchantDetailInfoComponent implements OnInit, OnDestroy {
 
+  storeProductsCount: any;
   subscription: Subscription = new Subscription();
   merchantData: any;
   storeId: number;
@@ -28,9 +29,10 @@ export class MerchantDetailInfoComponent implements OnInit, OnDestroy {
     this.storeId = +this.activatedRoute.parent.params['_value']['storeId'];
     this.merchantService.fetchAllStoreById(this.storeId).subscribe((data: any) => {
       this.merchantData = data.store[0];
+      this.storeProductsCount = data.store_products_count;
       this.open = this.merchantData.closed ? false : true;
       console.log(this.merchantData);
-      // console.log(this.merchantData);
+      console.log(this.storeProductsCount);
     });
   }
 
@@ -73,6 +75,22 @@ export class MerchantDetailInfoComponent implements OnInit, OnDestroy {
       this.merchantData.image_url = data.image_url;
     });
   }
+
+  uploadStoreCategoryProducts() {
+    if (confirm('Are you sure you want to upload all the store category products')) {
+      this.merchantService.uploadStoreCategoryProducts(this.merchantData).subscribe(
+        (data: any) => {
+          if (+data.status === 200) {
+            alert('Store category products succesfully added');
+          }
+        },
+        (err) => {
+          this.errorMessage = err;
+        }
+      );
+    }
+  }
+
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
